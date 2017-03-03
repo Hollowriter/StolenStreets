@@ -28,7 +28,7 @@ class Enemigo extends FlxSprite{
 		timer = 0;
 		isHurt = false;
 	}
-	public function enemyMovement(){
+	public function enemyMovement(objective:Jugador){
 		if (isHurt == false){
 			if (direccion == false){
 				velocity.x = Reg.hSpeed;
@@ -52,12 +52,34 @@ class Enemigo extends FlxSprite{
 			}
 		}
 		else{
-			velocity.x = 0;
-			velocity.y = 0;
-			timer++;
-			if (timer >= Reg.effectTimer){
-				isHurt = false;
+			if (objective.getCombo() > 2){
+				trace("done it");
+				objective.setCombo(0);
 				timer = 0;
+				if (objective.getDireccion() == true){
+					while (timer <= Reg.effectTimer){
+						velocity.x = Reg.hSpeed;
+						velocity.y = Reg.vSpeed / ( -10);
+						timer++;
+					}
+				}
+				else{
+					while (timer <= Reg.effectTimer){
+						velocity.x = Reg.hSpeed * ( -1);
+						velocity.y = Reg.vSpeed / ( -10);
+						timer++;
+					}
+				}
+				timer = 0;
+			}
+			if (isTouching(FlxObject.FLOOR)){
+				velocity.x = 0;
+				velocity.y = 0;
+				timer++;
+				if (timer >= Reg.effectTimer){
+					isHurt = false;
+					timer = 0;
+				}
 			}
 		}
 	}

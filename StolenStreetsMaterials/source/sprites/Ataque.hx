@@ -22,7 +22,6 @@ class Ataque extends FlxSprite{
 	public function zasEnTodaLaBoca(Ouch:Jugador):Void{
 		if (overlaps(Ouch)){
 			posicionar();
-			trace("Gah");
 		}
 	}
 }

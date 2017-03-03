@@ -30,7 +30,7 @@ class Jugador extends FlxSprite{
 		direccion = false;
 		check = false;
 		time = 0;
-		thyHits = 0; // esta cosa la voy a usar para hacer combos, por ahora
+		thyHits = 0;
 		comboActivation = false;
 		jump = false;
 	}
@@ -110,15 +110,26 @@ class Jugador extends FlxSprite{
 	public function combo():Void{
 		if (FlxG.keys.justPressed.J && jump == false){
 			thyHits++;
-			trace(thyHits);
 		}
 		if (time > Reg.effectTimer || jump == true){
 			thyHits = 0;
 			time = 0;
 			comboActivation = false;
 		}
-		if (thyHits > 2){
+		if (thyHits > 3){
 			thyHits = 0;
 		}
+	}
+	public function getDireccion(){
+		return direccion;
+	}
+	public function setDireccion(esto:Bool){
+		direccion = esto;
+	}
+	public function getCombo(){
+		return thyHits;
+	}
+	public function setCombo(comboMaster:Int){
+		thyHits = comboMaster;
 	}
 }

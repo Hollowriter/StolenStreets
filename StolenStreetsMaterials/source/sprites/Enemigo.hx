@@ -53,21 +53,22 @@ class Enemigo extends FlxSprite{
 		}
 		else{
 			if (objective.getCombo() > 2){
-				trace("done it");
 				objective.setCombo(0);
 				timer = 0;
 				if (objective.getDireccion() == true){
 					while (timer <= Reg.effectTimer){
 						velocity.x = Reg.hSpeed;
-						velocity.y = Reg.vSpeed / ( -10);
+						velocity.y = Reg.vSpeed * ( -1);
 						timer++;
+						trace("check1");
 					}
 				}
 				else{
 					while (timer <= Reg.effectTimer){
 						velocity.x = Reg.hSpeed * ( -1);
-						velocity.y = Reg.vSpeed / ( -10);
+						velocity.y = Reg.vSpeed * ( -1);
 						timer++;
+						trace("check2");
 					}
 				}
 				timer = 0;

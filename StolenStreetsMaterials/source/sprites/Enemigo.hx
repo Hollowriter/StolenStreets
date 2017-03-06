@@ -52,35 +52,18 @@ class Enemigo extends FlxSprite{
 			}
 		}
 		else{
-			if (objective.getCombo() > 2){
-				objective.setCombo(0);
-				timer = 0;
-				if (objective.getDireccion() == true){
-					while (timer <= Reg.effectTimer){
-						velocity.x = Reg.hSpeed;
-						velocity.y = Reg.vSpeed * ( -1);
-						timer++;
-						trace("check1");
-					}
-				}
-				else{
-					while (timer <= Reg.effectTimer){
-						velocity.x = Reg.hSpeed * ( -1);
-						velocity.y = Reg.vSpeed * ( -1);
-						timer++;
-						trace("check2");
-					}
-				}
-				timer = 0;
-			}
-			if (isTouching(FlxObject.FLOOR)){
+			if (objective.getCombo() < 2){
 				velocity.x = 0;
 				velocity.y = 0;
-				timer++;
-				if (timer >= Reg.effectTimer){
-					isHurt = false;
-					timer = 0;
-				}
+			}
+			else{
+				velocity.x = 100;
+				velocity.y = -150;
+			}
+			timer++;
+			if (timer >= Reg.effectTimer){
+				isHurt = false;
+				timer = 0;
 			}
 		}
 	}

@@ -5,12 +5,12 @@ import sprites.Golpe;
 
 /**
  * ...
- * @author AfanadosDeOtroProyecto
+ * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan
  */
 class Reg{
-	public static inline var hSpeed:Float = 50;
-	public static inline var maxhSpeed:Float = 200;
-	public static inline var vSpeed:Float = -600;
-	public static inline var friction:Float = 15;
-	public static inline var effectTimer:Float = 20;
+	public static inline var hSpeed:Float = 50; // velocidad horizontal estandar
+	public static inline var maxhSpeed:Float = 200; // velocidad horizontal maxima
+	public static inline var vSpeed:Float = -600; // velocidad vertical estandar
+	public static inline var friction:Float = 15; // friccion estandar
+	public static inline var effectTimer:Float = 20; // maximo de un timer de comportamiento estandar (aunque por ahora estoy haciendo cualquier cosa)
 }

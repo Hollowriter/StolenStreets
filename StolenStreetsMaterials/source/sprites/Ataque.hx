@@ -8,17 +8,20 @@ import source.Reg;
 
 /**
  * ...
- * @author ...
+ * @author RodrigoDiazKlipphan
  */
+// esto se supone que era un golpe
 class Ataque extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 16, FlxColor.BROWN);
 	}
+	// hace desaparecer el golpe
 	public function posicionarse(){
 		x = -1000;
 		y = -1000;
 	}
+	// chequea si choco contra el jugador
 	public function zasEnTodaLaBoca(Ouch:Jugador):Void{
 		if (overlaps(Ouch)){
 			posicionar();

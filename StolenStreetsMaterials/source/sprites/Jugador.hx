@@ -14,18 +14,18 @@ import sprites.Golpe;
  * @author RodrigoDiazKlipphan
  */
 class Jugador extends FlxSprite{
-	private var punios:Golpe;
-	private var direccion:Bool;
-	private var check:Bool;
-	private var jump:Bool;
-	private var time:Int;
-	private var thyHits:Int;
-	private var comboActivation:Bool;
+	private var punios:Golpe; // los golpes
+	private var direccion:Bool; // donde mira el personaje
+	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
+	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
+	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
+	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (combo)
+	private var comboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (combo)
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
-		acceleration.y = 1500;
+		acceleration.y = 1500; // gravedad
 		makeGraphic(30, 30, FlxColor.PINK);
-		drag.x = 1000;
+		drag.x = 1000; // delimito la velocidad
 		punios = new Golpe(1000, 1000);
 		direccion = false;
 		check = false;
@@ -36,6 +36,7 @@ class Jugador extends FlxSprite{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		// camara
 		if (x <= FlxG.camera.scroll.x + 5)
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
@@ -45,13 +46,16 @@ class Jugador extends FlxSprite{
 		if (y + height >= FlxG.height)
 			y = FlxG.height - height;
 	}
+	// todos los aspectos del movimiento del personaje
 	public function playerMovement():Void{
+		// chequea si el personaje esta en el aire/saltando
 		if (isTouching(FlxObject.FLOOR)){
 			jump = false;
 		}
 		else{
 			jump = true;
 		}
+		// movimiento del personaje (derecha e izquierda)
 		if (FlxG.keys.pressed.D && check==false){
 			velocity.x += Reg.hSpeed;
 			facing = FlxObject.RIGHT;
@@ -62,6 +66,7 @@ class Jugador extends FlxSprite{
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
+		// salto
 		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check==false)
 			velocity.y = Reg.vSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
@@ -69,67 +74,76 @@ class Jugador extends FlxSprite{
 		if (velocity.x <= -Reg.maxhSpeed)
 			velocity.x = -Reg.maxhSpeed;
 	}
+	// getter del golpe
 	public function getGolpear(){
 		return punios;
 	}
+	// el personaje golpea
 	public function golpear():Void{
-		if (FlxG.keys.justPressed.J && check == false){
+		if (FlxG.keys.justPressed.J && check == false){ // aparicion del puño
 			check = true;
-			if (jump == false){
+			if (jump == false){ // si no saltas, puedes hacer un combo
 				comboActivation = true;
 			}
-			time = 0;
+			time = 0; // reinicia el timer
 		}
-		if (check == true){
-			punios.niapi(this, direccion, jump);
-			if (jump == false){
+		if (check == true){ // el puñetazo esta presente
+			punios.niapi(this, direccion, jump); // colocacion del puñetazo
+			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
 				velocity.y = 0;
 			}
-			else{
-				if (FlxG.keys.pressed.D){
+			else{ // pero si esta saltando no ignora el movimiento del salto
+				if (FlxG.keys.pressed.D){ // chequea si te mueves a la derecha
 					velocity.x += Reg.hSpeed;
 				}
-				else if (FlxG.keys.pressed.A){
+				else if (FlxG.keys.pressed.A){ // o a la izquierda
 					velocity.x -= Reg.hSpeed;
 				}
 			}
 		}
-		if (time > 5){
+		if (time > 5){ // en este tiempo, el puñetazo desaparece
 			punios.posicionar();
 			check = false;
 		}
-		if (check == true && comboActivation == false && isTouching(FlxObject.FLOOR)){
+		if (check == true && comboActivation == false && isTouching(FlxObject.FLOOR)){ // si tocas el piso si atacas saltando, el ataque desaparece
 			punios.posicionar();
 			check = false;
 		}
-		if (comboActivation == true){
+		if (comboActivation == true){ // timer para finalizar el combo
 			time++;
 		}
 	}
+	// contador de golpes consecutivos (combo)
 	public function combo():Void{
-		if (FlxG.keys.justPressed.J && jump == false){
+		if (FlxG.keys.justPressed.J && jump == false){ // si no saltas, puedes hacer combos en tierra
 			thyHits++;
 		}
-		if (time > Reg.effectTimer || jump == true){
+		if (time > Reg.effectTimer || jump == true){ // si saltas, no
 			thyHits = 0;
 			time = 0;
 			comboActivation = false;
 		}
-		if (thyHits > 3){
+		if (thyHits > 3){ // si haces mas de tres golpes, el combo se reinicia
 			thyHits = 0;
 		}
 	}
+	// setter y getter del bool de direccion (para donde esta mirando el personaje)
 	public function getDireccion(){
 		return direccion;
 	}
 	public function setDireccion(esto:Bool){
 		direccion = esto;
 	}
+	// setter y getter del combo (golpes consecutivos)
 	public function getCombo(){
 		return thyHits;
 	}
 	public function setCombo(comboMaster:Int){
 		thyHits = comboMaster;
+	}
+	// retorna si el personaje esta saltando
+	public function getJump(){
+		return jump;
 	}
 }

@@ -53,20 +53,26 @@ class Enemigo extends FlxSprite{
 			}
 		}
 		else if (isHurt == true){ // si el enemigo es lastimado
-			if (objective.getCombo() < 2 /*|| objective.getJump() == false*/){ // por los primeros golpes consecutivos
+			if (objective.getCombo() < 2){ // por los primeros golpes consecutivos
 				velocity.x = 0; // se detiene
 				velocity.y = 0; // se detiene
 			}
-			else /*if (objective.getCombo() > 1 || objective.getJump() == true)*/{ // sino
+			else{ // sino
 				velocity.x = 100; // el enemigo es empujado para atras
-				velocity.y = -150; // y es disparado al suelo
-				timer = 0; // y su timer de comportamiento es reiniciado
+				if (timer < Reg.effectTimer){
+					velocity.y = -150; // y es disparado al suelo
+				}
+				else{
+					velocity.y = 150;
+				}
 			}
 			punios.posicionar(); // su puñetazo desaparece
 			timer++; // y su timer de comportamiento
-			if (timer >= Reg.effectTimer){ // comienza a chequear cuando se recupera del golpe
-				isHurt = false; // se recupera
-				timer = 0; // se reinicia su timer de comportamiento
+			if (timer >= Reg.effectTimer){ // revisa cuando se recupera del golpe
+				if (isTouching(FlxObject.FLOOR)){ // y que no este en el aire
+					isHurt = false; // se recupera
+					timer = 0; // se reinicia su timer de comportamiento
+				}
 			}
 		}
 	}
@@ -76,7 +82,7 @@ class Enemigo extends FlxSprite{
 	}
 	// esto convierte sus puños en un ataque
 	public function atacar(){
-		if (alive){ // mientras este vivo/exista
+		if (alive && isHurt == false && isTouching(FlxObject.FLOOR)){ // mientras este vivo/exista, no este lastimado y no toque el piso
 			if (timer >= 50){ // y su patron de comportamiento sea mayor o igual a este numero
 				velocity.x = 0; // se detendra
 				punios.niapiDos(this, direccion); // y dara un golpe

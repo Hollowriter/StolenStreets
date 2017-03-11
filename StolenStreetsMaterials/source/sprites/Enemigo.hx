@@ -52,27 +52,12 @@ class Enemigo extends FlxSprite{
 				}
 			}
 		}
-		else if (isHurt == true){ // si el enemigo es lastimado
-			if (objective.getCombo() < 2){ // por los primeros golpes consecutivos
-				velocity.x = 0; // se detiene
-				velocity.y = 0; // se detiene
-			}
-			else{ // sino
-				velocity.x = 100; // el enemigo es empujado para atras
-				if (timer < Reg.effectTimer){
-					velocity.y = -150; // y es disparado al suelo
-				}
-				else{
-					velocity.y = 150;
-				}
-			}
-			punios.posicionar(); // su puñetazo desaparece
-			timer++; // y su timer de comportamiento
-			if (timer >= Reg.effectTimer){ // revisa cuando se recupera del golpe
-				if (isTouching(FlxObject.FLOOR)){ // y que no este en el aire
-					isHurt = false; // se recupera
-					timer = 0; // se reinicia su timer de comportamiento
-				}
+		else if (isHurt == true){ // si esta lastimado
+			timer++; // tiempo de recuperacion
+			punios.posicionar(); // elimina el ataque del enemigo
+			if (timer > Reg.effectTimer){ // si es mayor el timer que este numero
+				isHurt = false; // el enemigo se recupera
+				timer = 0; // y se reinicia su timer de comportamiento
 			}
 		}
 	}
@@ -90,13 +75,8 @@ class Enemigo extends FlxSprite{
 		}
 	}
 	// setter switch del dolor del enemigo
-	public function setHurt(){
-		if (isHurt == true){
-			isHurt = false;
-		}
-		else{
-			isHurt = true;
-		}
+	public function setHurt(hurted:Bool){
+		isHurt = hurted;
 	}
 	// retorna si el enemigo esta lastimado
 	public function getHurt(){

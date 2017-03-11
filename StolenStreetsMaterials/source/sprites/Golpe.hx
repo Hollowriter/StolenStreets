@@ -25,7 +25,7 @@ class Golpe extends FlxSprite{
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 	}
-	// hace desaparecer el puñetazo
+	// hace "desaparecer" el puñetazo
 	public function posicionar():Void{
 		x = 1000;
 		y = 1000;
@@ -64,8 +64,11 @@ class Golpe extends FlxSprite{
 		if (overlaps(Pum) && YouundMe == true){ // si el golpe es del jugador y choca con el enemigo
 			posicionar(); // lo hace desaparecer
 			if (Pum.getHurt() == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
-				Pum.setHurt(); // y lo lastima
+				Pum.setHurt(true); // y lo lastima
 				Pum.setTimer(0); // reseteando el timer de comportamiento del mismo
+				if (Ouch.getCombo() > 2){ // golpe duro comprobado
+					hardHit = true;
+				}
 			}
 		}
 		else if (overlaps(Ouch) && YouundMe == false){ // si el golpe es del enemigo y choca con el jugador

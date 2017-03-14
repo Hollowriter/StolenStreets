@@ -52,7 +52,7 @@ class Enemigo extends FlxSprite{
 				}
 			}
 		}
-		else if (isHurt == true){ // si esta lastimado
+		if (isHurt == true){ // si esta lastimado
 			timer++; // tiempo de recuperacion
 			punios.posicionar(); // elimina el ataque del enemigo
 			if (timer > Reg.effectTimer){ // si es mayor el timer que este numero

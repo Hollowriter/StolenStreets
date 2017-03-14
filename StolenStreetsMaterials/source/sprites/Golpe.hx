@@ -44,6 +44,12 @@ class Golpe extends FlxSprite{
 			if (saltando == true){ // esto es un salto y patada
 				y = personaje.y + 10; // por lo que se encuentra mas abajo
 			}
+			if (personaje.getCombo() > 2 || saltando == true){ // golpe duro comprobado
+				hardHit = true;
+			}
+			else{
+				hardHit = false;
+			}
 		}
 	}
 	// puñetazo del enemigo
@@ -66,14 +72,20 @@ class Golpe extends FlxSprite{
 			if (Pum.getHurt() == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
 				Pum.setHurt(true); // y lo lastima
 				Pum.setTimer(0); // reseteando el timer de comportamiento del mismo
-				if (Ouch.getCombo() > 2){ // golpe duro comprobado
-					hardHit = true;
-				}
 			}
 		}
 		else if (overlaps(Ouch) && YouundMe == false){ // si el golpe es del enemigo y choca con el jugador
 			posicionar(); // lo hace desaparecer
-			trace("Gah"); // y lo lastima
+			if (Ouch.getMeHurt() == false){ // chequea que el personaje no haya recibido un golpe con anterioridad
+				Ouch.setCombo(0); // rompe el combo
+				Ouch.setTime(0); // reinicia el timer
+				Ouch.setMeHurt(true); // lo lastima
+				Ouch.velocity.x = 0; // y lo detiene un rato
+			}
 		}
+	}
+	// getter del gancho o golpe duro
+	public function getHardHit(){
+		return hardHit;
 	}
 }

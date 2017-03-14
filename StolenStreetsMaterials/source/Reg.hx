@@ -8,7 +8,7 @@ import sprites.Golpe;
  * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan
  */
 class Reg{
-	public static inline var hSpeed:Float = 50; // velocidad horizontal estandar
+	public static inline var hSpeed:Float = 30; // velocidad horizontal estandar
 	public static inline var maxhSpeed:Float = 200; // velocidad horizontal maxima
 	public static inline var vSpeed:Float = -600; // velocidad vertical estandar
 	public static inline var friction:Float = 15; // friccion estandar

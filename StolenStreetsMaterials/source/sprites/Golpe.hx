@@ -69,17 +69,22 @@ class Golpe extends FlxSprite{
 	public function zasEnTodaLaBoca(Ouch:Jugador, Pum:Enemigo):Void{
 		if (overlaps(Pum) && YouundMe == true){ // si el golpe es del jugador y choca con el enemigo
 			posicionar(); // lo hace desaparecer
-			if (Pum.getHurt() == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
-				Pum.setHurt(true); // y lo lastima
-				Pum.setTimer(0); // reseteando el timer de comportamiento del mismo
+			if (Pum.getHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad
+				if (hardHit == false){ // si es un golpe normal
+					Pum.setHurt(1); // lo lastima
+				}
+				else if (hardHit == true){ // pero si es un golpe duro
+					Pum.setHurt(2); // lo lastima duramente
+				}
+				Pum.setTimer(0); // y reinicia el timer de comportamiento del mismo
 			}
 		}
 		else if (overlaps(Ouch) && YouundMe == false){ // si el golpe es del enemigo y choca con el jugador
 			posicionar(); // lo hace desaparecer
-			if (Ouch.getMeHurt() == false){ // chequea que el personaje no haya recibido un golpe con anterioridad
+			if (Ouch.getMeHurt() == 0){ // chequea que el personaje no haya recibido un golpe con anterioridad
 				Ouch.setCombo(0); // rompe el combo
 				Ouch.setTime(0); // reinicia el timer
-				Ouch.setMeHurt(true); // lo lastima
+				Ouch.setMeHurt(1); // lo lastima
 				Ouch.velocity.x = 0; // y lo detiene un rato
 			}
 		}

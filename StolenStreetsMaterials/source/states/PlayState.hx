@@ -41,6 +41,7 @@ class PlayState extends FlxState{
 		Mili.pain();
 		Chico.enemyMovement(Mili);
 		Chico.atacar();
+		Chico.thyPain();
 		golpes.members[0].zasEnTodaLaBoca(Mili, Chico);
 		golpes.members[1].zasEnTodaLaBoca(Mili, Chico);
 	}

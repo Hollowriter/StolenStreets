@@ -21,7 +21,7 @@ class Jugador extends FlxSprite{
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
 	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (combo)
 	private var comboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (combo)
-	private var meHurt:Bool; // se utiliza para saber si el personaje fue lastimado
+	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -34,7 +34,7 @@ class Jugador extends FlxSprite{
 		thyHits = 0;
 		comboActivation = false;
 		jump = false;
-		meHurt = false;
+		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
@@ -58,18 +58,18 @@ class Jugador extends FlxSprite{
 			jump = true;
 		}
 		// movimiento del personaje (derecha e izquierda)
-		if (FlxG.keys.pressed.D && check==false && meHurt==false){
+		if (FlxG.keys.pressed.D && check==false && meHurt==0){
 			velocity.x += Reg.hSpeed;
 			facing = FlxObject.RIGHT;
 			direccion = false;
 		}
-	    if (FlxG.keys.pressed.A && check==false && meHurt==false){
+	    if (FlxG.keys.pressed.A && check==false && meHurt==0){
 			velocity.x -= Reg.hSpeed;
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
 		// salto
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==false)
+		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.vSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -82,7 +82,7 @@ class Jugador extends FlxSprite{
 	}
 	// el personaje golpea
 	public function golpear():Void{
-		if (FlxG.keys.justPressed.J && check == false && meHurt==false){ // aparicion del puño
+		if (FlxG.keys.justPressed.J && check == false && meHurt==0){ // aparicion del puño
 			check = true;
 			if (jump == false){ // si no saltas, puedes hacer un combo
 				comboActivation = true;
@@ -118,7 +118,7 @@ class Jugador extends FlxSprite{
 	}
 	// contador de golpes consecutivos (combo)
 	public function combo():Void{
-		if (FlxG.keys.justPressed.J && jump == false && meHurt==false){ // si no saltas, puedes hacer combos en tierra
+		if (FlxG.keys.justPressed.J && jump == false && meHurt==0){ // si no saltas, puedes hacer combos en tierra
 			thyHits++;
 		}
 		if (time > Reg.effectTimer || jump == true){ // si saltas, no
@@ -128,16 +128,15 @@ class Jugador extends FlxSprite{
 		}
 		if (thyHits > 3){ // si haces mas de tres golpes, el combo se reinicia
 			thyHits = 0;
-			trace("clip");
 		}
 	}
 	// dolor despues del golpe
 	public function pain(){
-		if (meHurt==true){
+		if (meHurt==1){
 			time++;
 			if (time > Reg.effectTimer){
 				time = 0;
-				meHurt = false;
+				meHurt = 0;
 			}
 		}
 	}
@@ -160,7 +159,7 @@ class Jugador extends FlxSprite{
 		return jump;
 	}
 	// setter y getter de si el personaje esta lastimado
-	public function setMeHurt(duele:Bool){
+	public function setMeHurt(duele:UInt){
 		meHurt = duele;
 	}
 	public function getMeHurt(){

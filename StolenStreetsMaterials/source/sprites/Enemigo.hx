@@ -17,7 +17,7 @@ class Enemigo extends FlxSprite{
 	private var timer:Int; // timer de comportamiento (una AI de mierda)
 	private var punios:Golpe; // golpe del enemigo
 	private var direccion:Bool; // para donde esta mirando
-	private var isHurt:Bool; // chequea si recibio un golpe
+	private var isHurt:UInt; // chequea si recibio un golpe
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -26,11 +26,11 @@ class Enemigo extends FlxSprite{
 		punios = new Golpe(1000, 1000);
 		direccion = false;
 		timer = 0;
-		isHurt = false;
+		isHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
 	// patron de comportamiento general del enemigo
 	public function enemyMovement(objective:Jugador){
-		if (isHurt == false && isTouching(FlxObject.FLOOR)){ // si no esta lastimado y esta en el piso
+		if (isHurt == 0 && isTouching(FlxObject.FLOOR)){ // si no esta lastimado y esta en el piso
 			if (direccion == false){
 				velocity.x = Reg.hSpeed; // camina
 				timer++; // cada segundo
@@ -52,14 +52,6 @@ class Enemigo extends FlxSprite{
 				}
 			}
 		}
-		if (isHurt == true){ // si esta lastimado
-			timer++; // tiempo de recuperacion
-			punios.posicionar(); // elimina el ataque del enemigo
-			if (timer > Reg.effectTimer){ // si es mayor el timer que este numero
-				isHurt = false; // el enemigo se recupera
-				timer = 0; // y se reinicia su timer de comportamiento
-			}
-		}
 	}
 	// getter de su golpe
 	public function getPunch(){
@@ -67,15 +59,47 @@ class Enemigo extends FlxSprite{
 	}
 	// esto convierte sus puños en un ataque
 	public function atacar(){
-		if (alive && isHurt == false && isTouching(FlxObject.FLOOR)){ // mientras este vivo/exista, no este lastimado y no toque el piso
+		if (alive && isHurt == 0 && isTouching(FlxObject.FLOOR)){ // mientras este vivo/exista, no este lastimado y no toque el piso
 			if (timer >= 50){ // y su patron de comportamiento sea mayor o igual a este numero
 				velocity.x = 0; // se detendra
 				punios.niapiDos(this, direccion); // y dara un golpe
 			}
 		}
 	}
-	// setter switch del dolor del enemigo
-	public function setHurt(hurted:Bool){
+	// comportamiento de dolor del enemigo ante un golpe
+	public function thyPain(){
+		if (isHurt == 1){ // si esta lastimado normalmente
+			timer++; // tiempo de recuperacion
+			punios.posicionar(); // elimina el ataque del enemigo
+			if (timer > Reg.effectTimer){ // si es mayor el timer que este numero
+				isHurt = 0; // el enemigo se recupera
+				timer = 0; // y se reinicia su timer de comportamiento
+			}
+		}
+		else if (isHurt == 2){ // si esta lastimado por un golpe duro
+			timer++; // tiempo de recuperacion
+			punios.posicionar(); // elimina el ataque del enemigo
+			/* el enemigo es empujado al aire */
+			if (timer <= Reg.effectTimer){ // sale volando
+				velocity.y = Reg.vSpeed;
+			}
+			else if (timer >= Reg.effectTimer){ // y luego cae
+				velocity.y = Reg.vSpeed * (-1);
+			}
+			if (direccion == true){ // empujado en posicion contraria
+				velocity.x = Reg.hSpeed * 5;
+			}
+			else if (direccion == false){ // empujando en posicion contraria
+				velocity.x = Reg.hSpeed * ( -5);
+			}
+			if (timer > (Reg.effectTimer + Reg.effectTimer) && isTouching(FlxObject.FLOOR)){ // si es mayor el timer que este numero y esta tocando el piso
+				isHurt = 0; // el enemigo se recupera
+				timer = 0; // y se reinicia su timer de comportamiento
+			}
+		}
+	}
+	// setter del dolor del enemigo
+	public function setHurt(hurted:UInt){
 		isHurt = hurted;
 	}
 	// retorna si el enemigo esta lastimado

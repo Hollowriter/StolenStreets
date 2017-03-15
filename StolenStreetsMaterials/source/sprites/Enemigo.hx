@@ -67,7 +67,7 @@ class Enemigo extends FlxSprite{
 		}
 	}
 	// comportamiento de dolor del enemigo ante un golpe
-	public function thyPain(){
+	public function thyPain(agresor:Jugador){
 		if (isHurt == 1){ // si esta lastimado normalmente
 			timer++; // tiempo de recuperacion
 			punios.posicionar(); // elimina el ataque del enemigo
@@ -86,11 +86,11 @@ class Enemigo extends FlxSprite{
 			else if (timer >= Reg.effectTimer){ // y luego cae
 				velocity.y = Reg.vSpeed * (-1);
 			}
-			if (direccion == true){ // empujado en posicion contraria
-				velocity.x = Reg.hSpeed * 5;
-			}
-			else if (direccion == false){ // empujando en posicion contraria
+			if (agresor.getDireccion() == true){ // empujado segun la posicion del jugador
 				velocity.x = Reg.hSpeed * ( -5);
+			}
+			else if (agresor.getDireccion() == false){ // empujando segun la posicion del jugador
+				velocity.x = Reg.hSpeed * 5;
 			}
 			if (timer > (Reg.effectTimer + Reg.effectTimer) && isTouching(FlxObject.FLOOR)){ // si es mayor el timer que este numero y esta tocando el piso
 				isHurt = 0; // el enemigo se recupera

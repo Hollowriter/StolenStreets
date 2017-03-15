@@ -89,8 +89,11 @@ class Golpe extends FlxSprite{
 			}
 		}
 	}
-	// getter del gancho o golpe duro
+	// getter y setter del gancho o golpe duro
 	public function getHardHit(){
 		return hardHit;
+	}
+	public function setHardHit(dureza:Bool){
+		hardHit = dureza;
 	}
 }

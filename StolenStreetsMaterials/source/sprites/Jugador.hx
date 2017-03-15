@@ -70,7 +70,7 @@ class Jugador extends FlxSprite{
 		}
 		// salto
 		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
-			velocity.y = Reg.vSpeed;
+			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
 		if (velocity.x <= -Reg.maxhSpeed)

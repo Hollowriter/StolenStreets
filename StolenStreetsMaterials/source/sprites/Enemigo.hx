@@ -113,4 +113,11 @@ class Enemigo extends FlxSprite{
 	public function getTimer(){
 		return timer;
 	}
+	// setter y getter de la direccion del enemigo
+	public function setDireccion(mirando:Bool){
+		mirando = direccion;
+	}
+	public function getDireccion(){
+		return direccion;
+	}
 }

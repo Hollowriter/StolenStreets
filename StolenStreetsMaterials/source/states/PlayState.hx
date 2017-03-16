@@ -39,6 +39,7 @@ class PlayState extends FlxState{
 		Mili.golpear();
 		Mili.combo();
 		Mili.pain();
+		Mili.grab(Chico);
 		Chico.enemyMovement(Mili);
 		Chico.atacar();
 		Chico.thyPain(Mili);

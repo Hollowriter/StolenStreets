@@ -21,6 +21,7 @@ class Enemigo1 extends BaseEnemigo
 	{
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 30, FlxColor.BROWN);
+		acceleration.y = 1500;
 	}
 	override public function move(){
 		super.move();
@@ -29,10 +30,11 @@ class Enemigo1 extends BaseEnemigo
 			movimiento++;
 		}
 		if(etapa == 2){
-			y++;
-			x++;
+			x+=2;
+			movimiento++;
+			etapa = 1;
 		}
-		if (movimiento == 50 && etapa == 2){
+		if (movimiento == 10 && etapa == 1){
 			etapa++;
 			movimiento = 0;
 		}

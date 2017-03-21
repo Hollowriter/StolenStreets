@@ -14,6 +14,8 @@ import sprites.Golpe;
  */
 class Enemigo1 extends BaseEnemigo 
 {
+	private var etapa:Int = 1;
+	private var movimiento:Int = 0;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -22,6 +24,18 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function move(){
 		super.move();
+		if(etapa == 1){
+			x -= 1;
+			movimiento++;
+		}
+		if(etapa == 2){
+			y++;
+			x++;
+		}
+		if (movimiento == 50 && etapa == 2){
+			etapa++;
+			movimiento = 0;
+		}
 		
 	}
 }

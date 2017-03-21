@@ -15,4 +15,6 @@ class Reg{
 	public static inline var effectTimer:Float = 20; // maximo de un timer de comportamiento estandar (aunque por ahora estoy haciendo cualquier cosa)
 	public static inline var jumpSpeed:Float = -600; // velocidad estandar de un salto
 	public static inline var VidaMili:Int = 100; //Vida base de Mili
+	static public var posYjugador:Float;
+	static public var posXjugador:Float;
 }

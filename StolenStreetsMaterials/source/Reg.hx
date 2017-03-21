@@ -19,4 +19,5 @@ class Reg{
 	static public var posXjugador:Float; //guarda la posicion del jugador
 	static public var widthJugador:Float; //guarda el ancho del jugador
 	static public var heightJugador:Float; //guardar el alto del jugador
+	public static inline var VidaTotales:Int = 3;
 }

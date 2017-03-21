@@ -23,6 +23,7 @@ class Jugador extends FlxSprite{
 	private var comboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (combo)
 	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
+	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -53,10 +54,15 @@ class Jugador extends FlxSprite{
 		if (y + height >= FlxG.height)
 			y = FlxG.height - height;
 		//¿Cuanta vida tiene?
-		if (vidaActual <= 0)
+		if (vidaActual <= 0 && life != 0)
 		{
 			vidaActual = Reg.VidaMili;
+			life -= 1;
 			trace("Reinicio de vida");
+		}
+		if (vidaActual <= 0 && life == 0){
+			trace("No hay mas vida");
+			kill();
 		}
 	}
 	// todos los aspectos del movimiento del personaje
@@ -69,18 +75,18 @@ class Jugador extends FlxSprite{
 			jump = true;
 		}
 		// movimiento del personaje (derecha e izquierda)
-		if (FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT && check==false && meHurt==0){
+		if (FlxG.keys.pressed.D && check==false && meHurt==0|| FlxG.keys.pressed.RIGHT && check==false && meHurt==0){
 			velocity.x += Reg.hSpeed;
 			facing = FlxObject.RIGHT;
 			direccion = false;
 		}
-	    if (FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT && check==false && meHurt==0){
+	    if (FlxG.keys.pressed.A && check==false && meHurt==0|| FlxG.keys.pressed.LEFT && check==false && meHurt==0){
 			velocity.x -= Reg.hSpeed;
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
 		// salto
-		if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
+		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;

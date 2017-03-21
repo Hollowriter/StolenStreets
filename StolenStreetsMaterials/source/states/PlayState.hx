@@ -20,7 +20,7 @@ class PlayState extends FlxState{
 	private var golpes:FlxTypedGroup<Golpe>;
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
 	private var life:Int;
-	// private var ay:Int = 25; //descomentar si querer testear vida de jugador;
+	private var ay:Int = 25; //descomentar si querer testear vida de jugador;
 	override public function create():Void{
 		super.create();
 		Mili = new Jugador(30, 30);
@@ -45,12 +45,12 @@ class PlayState extends FlxState{
 			life = Mili.getVida();
 			life-= auch;
 			Mili.setVida(life);
-		}
+		}*/
 		if (FlxG.keys.justPressed.K){
 			life = Mili.getVida();
 			life -= ay;
 			Mili.setVida(life);
-		}*/ //Prueba la vida;
+		}  //Prueba la vida;
 		Mili.playerMovement();
 		Mili.golpear();
 		Mili.combo();
@@ -61,5 +61,10 @@ class PlayState extends FlxState{
 		Chico.thyPain(Mili);
 		golpes.members[0].zasEnTodaLaBoca(Mili, Chico);
 		golpes.members[1].zasEnTodaLaBoca(Mili, Chico);
+		//En caso que el personaje se quede sin vidas y muera;
+		if (FlxG.keys.justPressed.R)
+		{
+			FlxG.resetState();
+		}
 	}
 }

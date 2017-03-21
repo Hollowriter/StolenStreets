@@ -22,6 +22,7 @@ class Jugador extends FlxSprite{
 	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (combo)
 	private var comboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (combo)
 	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
+	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -39,6 +40,10 @@ class Jugador extends FlxSprite{
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// camara
+		Reg.posXjugador = x;
+		Reg.posYjugador = y;
+		Reg.widthJugador = width;
+		Reg.heightJugador = height; //actualiza el reg con los datos del jugador
 		if (x <= FlxG.camera.scroll.x + 5)
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
@@ -47,6 +52,9 @@ class Jugador extends FlxSprite{
 			y = 5;
 		if (y + height >= FlxG.height)
 			y = FlxG.height - height;
+		//¿Cuanta vida tiene?
+		if (vidaActual <= 0)
+			vidaActual = Reg.VidaMili;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function playerMovement():Void{
@@ -58,18 +66,18 @@ class Jugador extends FlxSprite{
 			jump = true;
 		}
 		// movimiento del personaje (derecha e izquierda)
-		if (FlxG.keys.pressed.D && check==false && meHurt==0){
+		if (FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT && check==false && meHurt==0){
 			velocity.x += Reg.hSpeed;
 			facing = FlxObject.RIGHT;
 			direccion = false;
 		}
-	    if (FlxG.keys.pressed.A && check==false && meHurt==0){
+	    if (FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT && check==false && meHurt==0){
 			velocity.x -= Reg.hSpeed;
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
 		// salto
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
+		if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -179,5 +187,12 @@ class Jugador extends FlxSprite{
 	}
 	public function getTime(){
 		return time;
+	}
+	// setter y getter de la vida actual del jugador
+	public function setVida(vida:Int){
+		vidaActual = vida;
+	}
+	public function getVida(){
+		return vidaActual;
 	}
 }

@@ -1,5 +1,4 @@
 package states;
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -10,12 +9,14 @@ import flixel.math.FlxMath;
 import sprites.Enemigo;
 import sprites.Golpe;
 import sprites.Jugador;
+import sprites.PlataformaFlotante;
 import sprites.PlataformaPrincipal;
 
 class PlayState extends FlxState{
 	private var Mili:Jugador;
 	private var Chico:Enemigo;
 	private var Platform:PlataformaPrincipal;
+	private var testFloatingPlatform:PlataformaFlotante;
 	private var golpes:FlxTypedGroup<Golpe>;
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
 	private var life:Int;
@@ -25,10 +26,12 @@ class PlayState extends FlxState{
 		Mili = new Jugador(30, 30);
 		Chico = new Enemigo(70, 30);
 		Platform = new PlataformaPrincipal(0, 300);
+		testFloatingPlatform = new PlataformaFlotante();
 		golpes = new FlxTypedGroup<Golpe>();
 		add(Mili);
 		add(Chico);
 		add(Platform);
+		add(testFloatingPlatform);
 		golpes.add(Mili.getGolpear());
 		golpes.add(Chico.getPunch());
 		add(golpes.members[0]);

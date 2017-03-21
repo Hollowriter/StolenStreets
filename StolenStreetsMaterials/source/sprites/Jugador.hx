@@ -54,7 +54,10 @@ class Jugador extends FlxSprite{
 			y = FlxG.height - height;
 		//¿Cuanta vida tiene?
 		if (vidaActual <= 0)
+		{
 			vidaActual = Reg.VidaMili;
+			trace("Reinicio de vida");
+		}
 	}
 	// todos los aspectos del movimiento del personaje
 	public function playerMovement():Void{

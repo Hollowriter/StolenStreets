@@ -24,6 +24,9 @@ class Jugador extends FlxSprite{
 	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
+	/*(Comentar en playstate y descomentar aca)*/
+	// private var ay:Int; //descomentar si querer testear vida de jugador;
+	// private var auch:Int; // descomentar si querer testear vida de jugador
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -37,33 +40,9 @@ class Jugador extends FlxSprite{
 		comboActivation = false;
 		jump = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
-	}
-	override public function update(elapsed:Float):Void{
-		super.update(elapsed);
-		// camara
-		Reg.posXjugador = x;
-		Reg.posYjugador = y;
-		Reg.widthJugador = width;
-		Reg.heightJugador = height; //actualiza el reg con los datos del jugador
-		if (x <= FlxG.camera.scroll.x + 5)
-			x = FlxG.camera.scroll.x + 5;
-		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
-			x = FlxG.camera.scroll.x + FlxG.camera.width - width;
-		if (y <= 5)
-			y = 5;
-		if (y + height >= FlxG.height)
-			y = FlxG.height - height;
-		//¿Cuanta vida tiene?
-		if (vidaActual <= 0 && life != 0)
-		{
-			vidaActual = Reg.VidaMili;
-			life -= 1;
-			trace("Reinicio de vida");
-		}
-		if (vidaActual <= 0 && life == 0){
-			trace("No hay mas vida");
-			kill();
-		}
+		/*(Comentar en playstate y descomentar aca)*/
+		// ay = 25;
+		// auch = 10;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function playerMovement():Void{
@@ -203,5 +182,51 @@ class Jugador extends FlxSprite{
 	}
 	public function getVida(){
 		return vidaActual;
+	}
+	override public function update(elapsed:Float):Void{
+		super.update(elapsed);
+		// camara
+		Reg.posXjugador = x;
+		Reg.posYjugador = y;
+		Reg.widthJugador = width;
+		Reg.heightJugador = height; //actualiza el reg con los datos del jugador
+		if (x <= FlxG.camera.scroll.x + 5)
+			x = FlxG.camera.scroll.x + 5;
+		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
+			x = FlxG.camera.scroll.x + FlxG.camera.width - width;
+		if (y <= 5)
+			y = 5;
+		if (y + height >= FlxG.height)
+			y = FlxG.height - height;
+		//¿Cuanta vida tiene?
+		if (vidaActual <= 0 && life != 0)
+		{
+			vidaActual = Reg.VidaMili;
+			life -= 1;
+			trace("Reinicio de vida");
+		}
+		if (vidaActual <= 0 && life == 0){
+			trace("No hay mas vida");
+			kill();
+		}
+		/*// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
+		playerMovement();
+		golpear();
+		combo();
+		pain();
+		// testeos de vida
+		if (FlxG.keys.justPressed.L){
+			life = getVida();
+			life -= auch;
+			setVida(life);
+		}
+		if (FlxG.keys.justPressed.K){
+			life = getVida();
+			life -= ay;
+			setVida(life);
+		}
+		if (jump == true){
+			trace('midair');
+		}*/
 	}
 }

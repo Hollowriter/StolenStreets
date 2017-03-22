@@ -120,4 +120,9 @@ class Enemigo extends FlxSprite{
 	public function getDireccion(){
 		return direccion;
 	}
+	// reformulacion comentada
+	/*override public function update(elapsed:Float):Void{
+		super.update(elapsed);
+		// atacar(); (Descomentar aca y comentar en playstate)
+	}*/	
 }

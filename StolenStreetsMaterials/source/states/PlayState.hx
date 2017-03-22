@@ -56,14 +56,14 @@ class PlayState extends FlxState{
 			life = Mili.getVida();
 			life -= ay;
 			Mili.setVida(life);
-		}  //Prueba la vida;
-		Mili.playerMovement();
-		Mili.golpear();
-		Mili.combo();
-		Mili.pain();
+		}  //Prueba la vida; // comentarla si querer probarla en la propia clase
+		Mili.playerMovement(); // comentar
+		Mili.golpear(); // comentar
+		Mili.combo(); // comentar
+		Mili.pain(); // comentar
 		Mili.grab(Chico);
 		Chico.enemyMovement(Mili);
-		Chico.atacar();
+		Chico.atacar(); // comentar
 		Chico.thyPain(Mili);
 		golpes.members[0].zasEnTodaLaBoca(Mili, Chico);
 		golpes.members[1].zasEnTodaLaBoca(Mili, Chico);

@@ -19,11 +19,10 @@ class PlataformaFlotante extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(50, 25, FlxColor.BLUE);
-		x = 300;
-		y = 150;
+		makeGraphic(70, 15, FlxColor.BLUE);
 		puntoMedioVertical = y;
 		puntoMedioHorizontal = x;
+		immovable = true;
 	}
 	public function moverseVertical()
 	{

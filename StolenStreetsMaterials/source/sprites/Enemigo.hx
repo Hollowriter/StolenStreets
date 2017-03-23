@@ -134,6 +134,10 @@ class Enemigo extends FlxSprite{
 			saltito = true;
 		}
 	}
+	private function morir()
+	{
+		destroy();
+	}
 	// reformulacion comentada
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

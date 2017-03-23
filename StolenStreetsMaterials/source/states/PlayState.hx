@@ -19,6 +19,7 @@ class PlayState extends FlxState{
 	private var Chico:Enemigo;
 	private var Platform:PlataformaPrincipal;
 	private var testFloatingPlatform:PlataformaFlotante;
+	private var testFloatingPlatform1:PlataformaFlotante;
 	private var golpes:FlxTypedGroup<Golpe>;
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
 	private var life:Int;
@@ -30,12 +31,15 @@ class PlayState extends FlxState{
 		Chico = new Enemigo(70, 30);
 		chico1 = new Enemigo1(90, 30); //nueva clase enemigo
 		Platform = new PlataformaPrincipal(0, 300);
-		testFloatingPlatform = new PlataformaFlotante();
+		testFloatingPlatform = new PlataformaFlotante(300, 200);
+		testFloatingPlatform1 = new PlataformaFlotante(50, 200);
 		golpes = new FlxTypedGroup<Golpe>();
 		add(Mili);
 		add(Chico);
 		add(Platform);
 		add(testFloatingPlatform);
+		add(testFloatingPlatform1);
+		testFloatingPlatform1.frenarHorizontal();
 		add(chico1);
 		golpes.add(Mili.getGolpear());
 		golpes.add(Chico.getPunch());
@@ -47,6 +51,12 @@ class PlayState extends FlxState{
 		FlxG.collide(Mili, Platform);
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);
+		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform.y)
+			FlxG.collide(Mili, testFloatingPlatform);
+		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform1.y) //Mas adelante estos if van a ser uno solo.
+			FlxG.collide(Mili, testFloatingPlatform1);
+		FlxG.collide(Chico, testFloatingPlatform);
+		FlxG.collide(Chico, testFloatingPlatform);
 		/*Por aca todo esto se puede sacar del playstate*/
 		/*if (FlxG.keys.justPressed.L){
 			life = Mili.getVida();
@@ -62,8 +72,8 @@ class PlayState extends FlxState{
 		// Mili.golpear();
 		// Mili.combo();
 		// Mili.pain();
-		/*Por aca todo esto se puede sacar del playstate*/
-		Mili.grab(Chico);
+		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
+		//Mili.grab(Chico); COMENTADO TEMPORAL
 		Mili.salto();
 		Chico.enemyMovement(Mili);
 		// Chico.atacar(); // esto se puede sacar del playstate

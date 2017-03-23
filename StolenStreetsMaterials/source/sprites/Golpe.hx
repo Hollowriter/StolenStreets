@@ -5,6 +5,7 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import source.Reg;
+import sprites.Jugador;
 
 /**
  * ...
@@ -14,6 +15,7 @@ class Golpe extends FlxSprite{
 	// private var Time:Int; (sin usar)
 	private var YouundMe:Bool; // chequea si es un golpe del jugador (true) o del enemigo (false)
 	private var hardHit:Bool; // detecta cuando es un golpe que te tira al piso
+	private var ljug:Int;
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		makeGraphic(11, 11, FlxColor.RED);
@@ -86,6 +88,9 @@ class Golpe extends FlxSprite{
 				Ouch.setTime(0); // reinicia el timer
 				Ouch.setMeHurt(1); // lo lastima
 				Ouch.velocity.x = 0; // y lo detiene un rato
+				ljug = Ouch.getVida();
+				ljug -= 25;
+				Ouch.setVida(ljug);
 			}
 		}
 	}

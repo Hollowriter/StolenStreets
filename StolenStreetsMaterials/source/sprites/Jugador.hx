@@ -232,7 +232,7 @@ class Jugador extends FlxSprite{
 		combo();
 		pain();
 		// testeos de vida
-		if (FlxG.keys.justPressed.L){
+		/*if (FlxG.keys.justPressed.L){
 			life = getVida();
 			life -= auch;
 			setVida(life);
@@ -241,7 +241,7 @@ class Jugador extends FlxSprite{
 			life = getVida();
 			life -= ay;
 			setVida(life);
-		}
+		}*/
 		if (jump == true){
 			trace('midair');
 		}

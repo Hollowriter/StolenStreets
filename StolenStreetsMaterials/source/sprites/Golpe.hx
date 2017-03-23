@@ -27,8 +27,8 @@ class Golpe extends FlxSprite{
 	}
 	// hace "desaparecer" el puñetazo
 	public function posicionar():Void{
-		x = 1000;
-		y = 1000;
+		x = Reg.posicionDeLosPunios;
+		y = Reg.posicionDeLosPunios;
 	}
 	// puñetazo del jugador
 	public function niapi(?personaje:Jugador = null, mirando:Bool, saltando:Bool):Void{ // Pendiente de testear

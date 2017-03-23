@@ -47,23 +47,26 @@ class PlayState extends FlxState{
 		FlxG.collide(Mili, Platform);
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);
+		/*Por aca todo esto se puede sacar del playstate*/
 		/*if (FlxG.keys.justPressed.L){
 			life = Mili.getVida();
 			life-= auch;
 			Mili.setVida(life);
 		}*/
-		if (FlxG.keys.justPressed.K){
+		/*if (FlxG.keys.justPressed.K){
 			life = Mili.getVida();
 			life -= ay;
 			Mili.setVida(life);
-		}  //Prueba la vida; // comentarla si querer probarla en la propia clase
-		Mili.playerMovement(); // comentar
-		Mili.golpear(); // comentar
-		Mili.combo(); // comentar
-		Mili.pain(); // comentar
+		}*/  //Prueba la vida;
+		// Mili.playerMovement();
+		// Mili.golpear();
+		// Mili.combo();
+		// Mili.pain();
+		/*Por aca todo esto se puede sacar del playstate*/
 		Mili.grab(Chico);
+		Mili.salto();
 		Chico.enemyMovement(Mili);
-		Chico.atacar(); // comentar
+		// Chico.atacar(); // esto se puede sacar del playstate
 		Chico.thyPain(Mili);
 		golpes.members[0].zasEnTodaLaBoca(Mili, Chico);
 		golpes.members[1].zasEnTodaLaBoca(Mili, Chico);

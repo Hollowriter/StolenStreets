@@ -18,21 +18,25 @@ class Enemigo extends FlxSprite{
 	private var punios:Golpe; // golpe del enemigo
 	private var direccion:Bool; // para donde esta mirando
 	private var isHurt:UInt; // chequea si recibio un golpe
+	private var saltito:Bool; // chequea si esta en el aire
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
 		makeGraphic(30, 30, FlxColor.GREEN);
 		drag.x = 1000;
-		punios = new Golpe(1000, 1000);
+		punios = new Golpe(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		direccion = false;
 		timer = 0;
 		isHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
+		saltito = false;
 	}
 	// patron de comportamiento general del enemigo
 	public function enemyMovement(objective:Jugador){
-		if (isHurt == 0 && isTouching(FlxObject.FLOOR)){ // si no esta lastimado y esta en el piso
+		if (isHurt == 0 && saltito == false){ // si no esta lastimado y esta en el piso
 			if (direccion == false){
-				velocity.x = Reg.hSpeed; // camina
+				if (timer < 50){ // para coordinar con el ataque
+					velocity.x = Reg.hSpeed; // camina
+				}
 				timer++; // cada segundo
 				if (timer == 60){ // si su timer de comportamiento llega a este numero
 					facing = FlxObject.RIGHT; // cambia de direccion
@@ -42,7 +46,9 @@ class Enemigo extends FlxSprite{
 				}
 			}
 			else if (direccion == true){ // misma historia aca pero hacia la otra direccion
-				velocity.x = Reg.hSpeed * (-1);
+				if (timer < 50){
+					velocity.x = Reg.hSpeed * ( -1);
+				}
 				timer++;
 				if (timer == 60){
 					facing = FlxObject.LEFT;
@@ -59,7 +65,7 @@ class Enemigo extends FlxSprite{
 	}
 	// esto convierte sus puños en un ataque
 	public function atacar(){
-		if (alive && isHurt == 0 && isTouching(FlxObject.FLOOR)){ // mientras este vivo/exista, no este lastimado y no toque el piso
+		if (alive && isHurt == 0 && saltito == false){ // mientras este vivo/exista, no este lastimado y no toque el piso
 			if (timer >= 50){ // y su patron de comportamiento sea mayor o igual a este numero
 				velocity.x = 0; // se detendra
 				punios.niapiDos(this, direccion); // y dara un golpe
@@ -92,7 +98,7 @@ class Enemigo extends FlxSprite{
 			else if (agresor.getDireccion() == false){ // empujando segun la posicion del jugador
 				velocity.x = Reg.hSpeed * 5;
 			}
-			if (timer > (Reg.effectTimer + Reg.effectTimer) && isTouching(FlxObject.FLOOR)){ // si es mayor el timer que este numero y esta tocando el piso
+			if (timer > (Reg.effectTimer + Reg.effectTimer) && saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
 				isHurt = 0; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 			}
@@ -120,9 +126,17 @@ class Enemigo extends FlxSprite{
 	public function getDireccion(){
 		return direccion;
 	}
+	public function enElAire(){
+		if (isTouching(FlxObject.FLOOR)){
+			saltito = false;
+		}
+		else{
+			saltito = true;
+		}
+	}
 	// reformulacion comentada
-	/*override public function update(elapsed:Float):Void{
+	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		// atacar(); (Descomentar aca y comentar en playstate)
-	}*/	
+		atacar();
+	}
 }

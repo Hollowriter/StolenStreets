@@ -25,8 +25,8 @@ class Jugador extends FlxSprite{
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
 	/*(Comentar en playstate y descomentar aca)*/
-	// private var ay:Int; //descomentar si querer testear vida de jugador;
-	// private var auch:Int; // descomentar si querer testear vida de jugador
+	private var ay:Int; //descomentar si querer testear vida de jugador;
+	private var auch:Int; // descomentar si querer testear vida de jugador
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -47,12 +47,12 @@ class Jugador extends FlxSprite{
 	// todos los aspectos del movimiento del personaje
 	public function playerMovement():Void{
 		// chequea si el personaje esta en el aire/saltando
-		if (isTouching(FlxObject.FLOOR)){
+		/*if (isTouching(FlxObject.FLOOR)){
 			jump = false;
 		}
 		else{
 			jump = true;
-		}
+		}*/
 		// movimiento del personaje (derecha e izquierda)
 		if (FlxG.keys.pressed.D && check==false && meHurt==0|| FlxG.keys.pressed.RIGHT && check==false && meHurt==0){
 			velocity.x += Reg.hSpeed;
@@ -65,12 +65,29 @@ class Jugador extends FlxSprite{
 			direccion = true;
 		}
 		// salto
+		/*if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
+			velocity.y = Reg.jumpSpeed;
+		if (velocity.x >= Reg.maxhSpeed)
+			velocity.x = Reg.maxhSpeed;
+		if (velocity.x <= -Reg.maxhSpeed)
+			velocity.x = -Reg.maxhSpeed;*/
+	}
+	// el salto 
+	public function salto(){
+		// para saltar
 		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
 		if (velocity.x <= -Reg.maxhSpeed)
 			velocity.x = -Reg.maxhSpeed;
+		// chequea si el personaje esta en el aire/saltando
+		if (isTouching(FlxObject.FLOOR)){
+			jump = false;
+		}
+		else{
+			jump = true;
+		}
 	}
 	// getter del golpe
 	public function getGolpear(){
@@ -104,7 +121,7 @@ class Jugador extends FlxSprite{
 			punios.posicionar();
 			check = false;
 		}
-		if (check == true && comboActivation == false && isTouching(FlxObject.FLOOR)){ // si tocas el piso si atacas saltando, el ataque desaparece
+		if (check == true && comboActivation == false && jump == false){ // si tocas el piso si atacas saltando, el ataque desaparece
 			punios.posicionar();
 			check = false;
 		}
@@ -209,7 +226,7 @@ class Jugador extends FlxSprite{
 			trace("No hay mas vida");
 			kill();
 		}
-		/*// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
+		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
 		playerMovement();
 		golpear();
 		combo();
@@ -227,6 +244,6 @@ class Jugador extends FlxSprite{
 		}
 		if (jump == true){
 			trace('midair');
-		}*/
+		}
 	}
 }

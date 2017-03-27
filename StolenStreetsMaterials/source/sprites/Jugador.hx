@@ -155,10 +155,20 @@ class Jugador extends FlxSprite{
 	}
 	// agarre
 	public function grab(pobreVictima:Enemigo){
-		if (overlaps(pobreVictima) && (pobreVictima.getDireccion() != direccion)){ // Si el jugador colisiona con el enemigo en su misma direccion
-			pobreVictima.setHurt(1); // evita que se mueva
-			pobreVictima.velocity.x = 0; // lo detiene
-			velocity.x = 0; // y el jugador se detiene sin poder avanzar a la direccion donde esta agarrando al enemigo
+		if (pobreVictima.getHurt() != 2){ // si la victima no esta lastimada
+			if (overlaps(pobreVictima) && (pobreVictima.getDireccion() != direccion)){ // Si el jugador colisiona con el enemigo en su misma direccion
+				pobreVictima.setHurt(1); // evita que se mueva
+				pobreVictima.velocity.x = 0; // lo detiene
+				velocity.x = 0; // y el jugador se detiene sin poder avanzar a la direccion donde esta agarrando al enemigo
+				if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas atacar y avanzar
+					pobreVictima.setHurt(2); // vuela en esa direccion
+					pobreVictima.setTimer(0); // y reinicia el timer
+				}
+				if(FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true){ // o si la sostenes del otro
+					pobreVictima.setHurt(2); // vuela en esa direccion
+					pobreVictima.setTimer(0); // y reinicia el timer
+				}
+			}
 		}
 	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)

@@ -73,7 +73,7 @@ class PlayState extends FlxState{
 		// Mili.combo();
 		// Mili.pain();
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
-		//Mili.grab(Chico); COMENTADO TEMPORAL
+		Mili.grab(Chico);
 		Mili.salto();
 		Chico.enemyMovement(Mili);
 		// Chico.atacar(); // esto se puede sacar del playstate

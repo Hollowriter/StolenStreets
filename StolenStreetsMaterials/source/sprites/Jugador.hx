@@ -7,14 +7,14 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
-import sprites.Golpe;
+import sprites.Golpejugador;
 
 /**
  * ...
  * @author RodrigoDiazKlipphan
  */
 class Jugador extends FlxSprite{
-	private var punios:Golpe; // los golpes
+	private var punios:Golpejugador; // los golpes
 	private var direccion:Bool; // donde mira el personaje
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
@@ -32,7 +32,7 @@ class Jugador extends FlxSprite{
 		acceleration.y = 1500; // gravedad
 		makeGraphic(30, 30, FlxColor.PINK);
 		drag.x = 1000; // delimito la velocidad
-		punios = new Golpe(1000, 1000);
+		punios = new Golpejugador(1000, 1000);
 		direccion = false;
 		check = false;
 		time = 0;

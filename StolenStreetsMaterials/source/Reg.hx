@@ -1,7 +1,7 @@
 package source;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
-import sprites.Golpe;
+import sprites.Golpejugador;
 
 /**
  * ...

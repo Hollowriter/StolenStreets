@@ -11,7 +11,7 @@ import sprites.Jugador;
  * ...
  * @author RodrigoDiazKlipphan
  */
-class Golpe extends FlxSprite{
+class Golpejugador extends FlxSprite{
 	// private var Time:Int; (sin usar)
 	// private var YouundMe:Bool; // chequea si es un golpe del jugador (true) o del enemigo (false)
 	private var hardHit:Bool; // detecta cuando es un golpe que te tira al piso

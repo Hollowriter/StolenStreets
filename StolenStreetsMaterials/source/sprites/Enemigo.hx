@@ -7,7 +7,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
-import sprites.Golpe;
+import sprites.Golpejugador;
 
 /**
  * ...
@@ -15,7 +15,7 @@ import sprites.Golpe;
  */
 class Enemigo extends FlxSprite{
 	private var timer:Int; // timer de comportamiento (una AI de mierda)
-	private var punios:Golpe; // golpe del enemigo
+	private var punios:Golpejugador; // golpe del enemigo
 	private var direccion:Bool; // para donde esta mirando
 	private var isHurt:UInt; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
@@ -24,7 +24,7 @@ class Enemigo extends FlxSprite{
 		acceleration.y = 1500; // gravedad
 		makeGraphic(30, 30, FlxColor.GREEN);
 		drag.x = 1000;
-		punios = new Golpe(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
+		punios = new Golpejugador(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		direccion = false;
 		timer = 0;
 		isHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
@@ -134,8 +134,7 @@ class Enemigo extends FlxSprite{
 			saltito = true;
 		}
 	}
-	private function morir()
-	{
+	private function morir(){
 		destroy();
 	}
 	// reformulacion comentada

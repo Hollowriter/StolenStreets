@@ -6,7 +6,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
-import sprites.Golpe;
+import sprites.Golpejugador;
 
 /**
  * ...

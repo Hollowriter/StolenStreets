@@ -20,7 +20,7 @@ class PlayState extends FlxState{
 	private var Platform:PlataformaPrincipal;
 	private var testFloatingPlatform:PlataformaFlotante;
 	private var testFloatingPlatform1:PlataformaFlotante;
-	private var golpes:FlxTypedGroup<Golpe>;
+	private var golpe:Golpe;
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
 	private var life:Int;
 	private var ay:Int = 25; //descomentar si querer testear vida de jugador;
@@ -33,7 +33,7 @@ class PlayState extends FlxState{
 		Platform = new PlataformaPrincipal(0, 300);
 		testFloatingPlatform = new PlataformaFlotante(300, 200);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 200);
-		golpes = new FlxTypedGroup<Golpe>();
+		golpe = new Golpe(1000, 1000);
 		add(Mili);
 		add(Chico);
 		add(Platform);
@@ -41,10 +41,11 @@ class PlayState extends FlxState{
 		add(testFloatingPlatform1);
 		testFloatingPlatform1.frenarHorizontal();
 		add(chico1);
-		golpes.add(Mili.getGolpear());
-		golpes.add(Chico.getPunch());
-		add(golpes.members[0]);
-		add(golpes.members[1]);
+		add(golpe);
+		/*golpe.add(Mili.getGolpear());*/
+		/*golpes.add(Chico.getPunch());*/
+		// add(golpe);
+		// add(golpes.members[1]);
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
@@ -78,8 +79,8 @@ class PlayState extends FlxState{
 		Chico.enemyMovement(Mili);
 		// Chico.atacar(); // esto se puede sacar del playstate
 		Chico.thyPain(Mili);
-		golpes.members[0].zasEnTodaLaBoca(Mili, Chico);
-		golpes.members[1].zasEnTodaLaBoca(Mili, Chico);
+		golpe.zasEnTodaLaBoca(/*Mili,*/ Chico);
+		// golpes.members[1].zasEnTodaLaBoca(Mili, Chico);
 		//En caso que el personaje se quede sin vidas y muera;
 		if (FlxG.keys.justPressed.R)
 		{

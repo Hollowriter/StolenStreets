@@ -68,7 +68,7 @@ class Enemigo extends FlxSprite{
 		if (alive && isHurt == 0 && saltito == false){ // mientras este vivo/exista, no este lastimado y no toque el piso
 			if (timer >= 50){ // y su patron de comportamiento sea mayor o igual a este numero
 				velocity.x = 0; // se detendra
-				punios.niapiDos(this, direccion); // y dara un golpe
+				// punios.niapiDos(this, direccion); // y dara un golpe
 			}
 		}
 	}

@@ -13,7 +13,7 @@ import sprites.Jugador;
  */
 class Golpe extends FlxSprite{
 	// private var Time:Int; (sin usar)
-	private var YouundMe:Bool; // chequea si es un golpe del jugador (true) o del enemigo (false)
+	// private var YouundMe:Bool; // chequea si es un golpe del jugador (true) o del enemigo (false)
 	private var hardHit:Bool; // detecta cuando es un golpe que te tira al piso
 	private var ljug:Int;
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
@@ -21,7 +21,7 @@ class Golpe extends FlxSprite{
 		makeGraphic(11, 11, FlxColor.RED);
 		// Reg.golpesGroup.add.(this);
 		// Time = 0;
-		YouundMe = false;
+		// YouundMe = false;
 		hardHit = false;
 	}
 	override public function update(elapsed:Float):Void{
@@ -35,7 +35,7 @@ class Golpe extends FlxSprite{
 	// puñetazo del jugador
 	public function niapi(?personaje:Jugador = null, mirando:Bool, saltando:Bool):Void{ // Pendiente de testear
 		if (personaje != null){ // si el personaje existe
-			YouundMe = true; // chequea que el golpe es del jugador
+			// YouundMe = true; // chequea que el golpe es del jugador
 			y = personaje.y; // se encuentra a la misma altura del personaje
 			if (mirando == false){
 				x = personaje.x + 25; // pero mas adelante de el
@@ -55,7 +55,7 @@ class Golpe extends FlxSprite{
 		}
 	}
 	// puñetazo del enemigo
-	public function niapiDos(?atacante:Enemigo = null, observando:Bool):Void{
+	/*public function niapiDos(?atacante:Enemigo = null, observando:Bool):Void{
 		if (atacante != null){ // si el enemigo existe
 			YouundMe = false; // chequea que el golpe no es del jugador
 			y = atacante.y; // esta a la misma altura del enemigo
@@ -66,10 +66,10 @@ class Golpe extends FlxSprite{
 				x = atacante.x - 5; // pero mas adelante de el
 			}
 		}
-	}
+	}*/
 	// colision del golpe
-	public function zasEnTodaLaBoca(Ouch:Jugador, Pum:Enemigo):Void{
-		if (overlaps(Pum) && YouundMe == true){ // si el golpe es del jugador y choca con el enemigo
+	public function zasEnTodaLaBoca(/*Ouch:Jugador,*/ Pum:Enemigo):Void{
+		if (overlaps(Pum) /*&& YouundMe == true*/){ // si el golpe es del jugador y choca con el enemigo
 			posicionar(); // lo hace desaparecer
 			if (Pum.getHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad
 				if (hardHit == false){ // si es un golpe normal
@@ -81,7 +81,7 @@ class Golpe extends FlxSprite{
 				Pum.setTimer(0); // y reinicia el timer de comportamiento del mismo
 			}
 		}
-		else if (overlaps(Ouch) && YouundMe == false){ // si el golpe es del enemigo y choca con el jugador
+		/*else if (overlaps(Ouch) && YouundMe == false){ // si el golpe es del enemigo y choca con el jugador
 			posicionar(); // lo hace desaparecer
 			if (Ouch.getMeHurt() == 0){ // chequea que el personaje no haya recibido un golpe con anterioridad
 				Ouch.setCombo(0); // rompe el combo
@@ -92,7 +92,7 @@ class Golpe extends FlxSprite{
 				ljug -= 25;
 				Ouch.setVida(ljug);
 			}
-		}
+		}*/
 	}
 	// getter y setter del gancho o golpe duro
 	public function getHardHit(){

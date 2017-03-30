@@ -25,19 +25,26 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function move(){
 		super.move();
-		if(etapa == 1){
-			x -= 1;
+		/*if(etapa == 1){
+			//x -= 1;
+			velocity.x = 0;
+			velocity.x =100;
 			movimiento++;
 		}
 		if(etapa == 2){
-			x+=2;
+			//x+=2;
+			velocity.x = 0;
+			velocity.x = -100;
 			movimiento++;
 			etapa = 1;
 		}
 		if (movimiento == 10 && etapa == 1){
 			etapa++;
 			movimiento = 0;
-		}
-		
+		}*/
+		if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador *2))
+			x++;
+		if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador *2))
+			x--;
 	}
 }

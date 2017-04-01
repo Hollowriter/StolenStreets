@@ -41,8 +41,9 @@ class PlayState extends FlxState{
 		add(testFloatingPlatform1);
 		testFloatingPlatform1.frenarHorizontal();
 		add(chico1);
-		add(Mili.getGolpear());
-		/*golpe.add(Mili.getGolpear());*/
+		add(Mili.GetGolpear());
+		add(Chico.GetGolpeEnemigo());
+		/*golpe.add(Mili.GetGolpear());*/
 		/*golpes.add(Chico.getPunch());*/
 		// add(golpe);
 		// add(golpes.members[1]);
@@ -60,26 +61,27 @@ class PlayState extends FlxState{
 		FlxG.collide(Chico, testFloatingPlatform);
 		/*Por aca todo esto se puede sacar del playstate*/
 		/*if (FlxG.keys.justPressed.L){
-			life = Mili.getVida();
+			life = Mili.GetVida();
 			life-= auch;
-			Mili.setVida(life);
+			Mili.SetVida(life);
 		}*/
 		/*if (FlxG.keys.justPressed.K){
-			life = Mili.getVida();
+			life = Mili.GetVida();
 			life -= ay;
-			Mili.setVida(life);
+			Mili.SetVida(life);
 		}*/  //Prueba la vida;
-		// Mili.playerMovement();
-		// Mili.golpear();
-		// Mili.combo();
-		// Mili.pain();
+		// Mili.MovimientoDelJugador();
+		// Mili.Golpear();
+		// Mili.Combo();
+		// Mili.DolorDelJugador();
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
-		Mili.grab(Chico);
-		Mili.salto();
-		Chico.enemyMovement(Mili);
-		// Chico.atacar(); // esto se puede sacar del playstate
-		Chico.thyPain(Mili);
-		Mili.getGolpear().zasEnTodaLaBoca(Chico);
+		Mili.Agarrar(Chico);
+		Mili.Salto();
+		Chico.MovimientoDelEnemigo(Mili);
+		// Chico.Atacar(); // esto se puede sacar del playstate
+		Chico.DolorDelEnemigo(Mili);
+		Mili.GetGolpear().ColisionDelGolpe(Chico);
+		Chico.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		// golpes.members[1].zasEnTodaLaBoca(Mili, Chico);
 		//En caso que el personaje se quede sin vidas y muera;
 		if (FlxG.keys.justPressed.R){

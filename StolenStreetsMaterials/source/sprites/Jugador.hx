@@ -19,8 +19,8 @@ class Jugador extends FlxSprite{
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
-	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (combo)
-	private var comboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (combo)
+	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
+	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
 	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
@@ -37,7 +37,7 @@ class Jugador extends FlxSprite{
 		check = false;
 		time = 0;
 		thyHits = 0;
-		comboActivation = false;
+		ComboActivation = false;
 		jump = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 		/*(Comentar en playstate y descomentar aca)*/
@@ -45,7 +45,7 @@ class Jugador extends FlxSprite{
 		// auch = 10;
 	}
 	// todos los aspectos del movimiento del personaje
-	public function playerMovement():Void{
+	public function MovimientoDelJugador():Void{
 		// chequea si el personaje esta en el aire/saltando
 		/*if (isTouching(FlxObject.FLOOR)){
 			jump = false;
@@ -64,7 +64,7 @@ class Jugador extends FlxSprite{
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
-		// salto
+		// Salto
 		/*if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
@@ -72,8 +72,8 @@ class Jugador extends FlxSprite{
 		if (velocity.x <= -Reg.maxhSpeed)
 			velocity.x = -Reg.maxhSpeed;*/
 	}
-	// el salto 
-	public function salto(){
+	// el Salto 
+	public function Salto(){
 		// para saltar
 		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.jumpSpeed;
@@ -90,25 +90,25 @@ class Jugador extends FlxSprite{
 		}
 	}
 	// getter del golpe
-	public function getGolpear(){
+	public function GetGolpear(){
 		return punios;
 	}
 	// el personaje golpea
-	public function golpear():Void{
+	public function Golpear():Void{
 		if (FlxG.keys.justPressed.J && check == false && meHurt==0){ // aparicion del puño
 			check = true;
-			if (jump == false){ // si no saltas, puedes hacer un combo
-				comboActivation = true;
+			if (jump == false){ // si no saltas, puedes hacer un Combo
+				ComboActivation = true;
 			}
 			time = 0; // reinicia el timer
 		}
 		if (check == true){ // el puñetazo esta presente
-			punios.niapi(this, direccion, jump); // colocacion del puñetazo
+			punios.PunietazoJugador(this, direccion, jump); // colocacion del puñetazo
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
 				velocity.y = 0;
 			}
-			else{ // pero si esta saltando no ignora el movimiento del salto
+			else{ // pero si esta saltando no ignora el movimiento del Salto
 				if (FlxG.keys.pressed.D){ // chequea si te mueves a la derecha
 					velocity.x += Reg.hSpeed;
 				}
@@ -121,30 +121,30 @@ class Jugador extends FlxSprite{
 			punios.posicionar();
 			check = false;
 		}
-		if (check == true && comboActivation == false && jump == false){ // si tocas el piso si atacas saltando, el ataque desaparece
+		if (check == true && ComboActivation == false && jump == false){ // si tocas el piso si atacas saltando, el ataque desaparece
 			punios.posicionar();
 			check = false;
 		}
-		if (comboActivation == true){ // timer para finalizar el combo
+		if (ComboActivation == true){ // timer para finalizar el Combo
 			time++;
 		}
 	}
-	// contador de golpes consecutivos (combo)
-	public function combo():Void{
-		if (FlxG.keys.justPressed.J && jump == false && meHurt==0){ // si no saltas, puedes hacer combos en tierra
+	// contador de golpes consecutivos (Combo)
+	public function Combo():Void{
+		if (FlxG.keys.justPressed.J && jump == false && meHurt==0){ // si no saltas, puedes hacer Combos en tierra
 			thyHits++;
 		}
 		if (time > Reg.effectTimer || jump == true){ // si saltas, no
 			thyHits = 0;
 			time = 0;
-			comboActivation = false;
+			ComboActivation = false;
 		}
-		if (thyHits > 3){ // si haces mas de tres golpes, el combo se reinicia
+		if (thyHits > 3){ // si haces mas de tres golpes, el Combo se reinicia
 			thyHits = 0;
 		}
 	}
 	// dolor despues del golpe
-	public function pain(){
+	public function DolorDelJugador(){
 		if (meHurt==1){
 			time++;
 			if (time > Reg.effectTimer){
@@ -154,60 +154,60 @@ class Jugador extends FlxSprite{
 		}
 	}
 	// agarre
-	public function grab(pobreVictima:Enemigo){
-		if (pobreVictima.getHurt() != 2){ // si la victima no esta lastimada
-			if (overlaps(pobreVictima) && (pobreVictima.getDireccion() != direccion)){ // Si el jugador colisiona con el enemigo en su misma direccion
-				pobreVictima.setHurt(1); // evita que se mueva
+	public function Agarrar(pobreVictima:Enemigo){
+		if (pobreVictima.GetHurt() != 2){ // si la victima no esta lastimada
+			if (overlaps(pobreVictima) && (pobreVictima.GetDireccion() != direccion)){ // Si el jugador colisiona con el enemigo en su misma direccion
+				pobreVictima.SetHurt(1); // evita que se mueva
 				pobreVictima.velocity.x = 0; // lo detiene
 				velocity.x = 0; // y el jugador se detiene sin poder avanzar a la direccion donde esta agarrando al enemigo
-				if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas atacar y avanzar
-					pobreVictima.setHurt(2); // vuela en esa direccion
-					pobreVictima.setTimer(0); // y reinicia el timer
+				if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas Atacar y avanzar
+					pobreVictima.SetHurt(2); // vuela en esa direccion
+					pobreVictima.SetTimer(0); // y reinicia el timer
 				}
 				if(FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true){ // o si la sostenes del otro
-					pobreVictima.setHurt(2); // vuela en esa direccion
-					pobreVictima.setTimer(0); // y reinicia el timer
+					pobreVictima.SetHurt(2); // vuela en esa direccion
+					pobreVictima.SetTimer(0); // y reinicia el timer
 				}
 			}
 		}
 	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)
-	public function getDireccion(){
+	public function GetDireccion(){
 		return direccion;
 	}
-	public function setDireccion(esto:Bool){
+	public function SetDireccion(esto:Bool){
 		direccion = esto;
 	}
-	// setter y getter del combo (golpes consecutivos)
-	public function getCombo(){
+	// setter y getter del Combo (golpes consecutivos)
+	public function GetCombo(){
 		return thyHits;
 	}
-	public function setCombo(comboMaster:Int){
-		thyHits = comboMaster;
+	public function SetCombo(ComboMaster:Int){
+		thyHits = ComboMaster;
 	}
 	// retorna si el personaje esta saltando
-	public function getJump(){
+	public function GetJump(){
 		return jump;
 	}
 	// setter y getter de si el personaje esta lastimado
-	public function setMeHurt(duele:UInt){
+	public function SetMeHurt(duele:UInt){
 		meHurt = duele;
 	}
-	public function getMeHurt(){
+	public function GetMeHurt(){
 		return meHurt;
 	}
 	// setter y getter del timer basico del jugador
-	public function setTime(tiempo:Int){
+	public function SetTime(tiempo:Int){
 		time = tiempo;
 	}
-	public function getTime(){
+	public function GetTime(){
 		return time;
 	}
 	// setter y getter de la vida actual del jugador
-	public function setVida(vida:Int){
+	public function SetVida(vida:Int){
 		vidaActual = vida;
 	}
-	public function getVida(){
+	public function GetVida(){
 		return vidaActual;
 	}
 	override public function update(elapsed:Float):Void{
@@ -237,20 +237,20 @@ class Jugador extends FlxSprite{
 			kill();
 		}
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
-		playerMovement();
-		golpear();
-		combo();
-		pain();
+		MovimientoDelJugador();
+		Golpear();
+		Combo();
+		DolorDelJugador();
 		// testeos de vida
 		/*if (FlxG.keys.justPressed.L){
-			life = getVida();
+			life = GetVida();
 			life -= auch;
-			setVida(life);
+			SetVida(life);
 		}
 		if (FlxG.keys.justPressed.K){
-			life = getVida();
+			life = GetVida();
 			life -= ay;
-			setVida(life);
+			SetVida(life);
 		}*/
 		if (jump == true){
 			trace('midair');

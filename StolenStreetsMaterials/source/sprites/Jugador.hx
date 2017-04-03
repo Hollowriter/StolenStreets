@@ -15,6 +15,7 @@ import sprites.Golpejugador;
  */
 class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
+	private var testTrampolin:Trampolin;
 	private var direccion:Bool; // donde mira el personaje
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
@@ -88,6 +89,9 @@ class Jugador extends FlxSprite{
 		else{
 			jump = true;
 		}
+	}
+	public function SaltoTrampolin(){
+		velocity.y = -750;
 	}
 	// getter del golpe
 	public function GetGolpear(){

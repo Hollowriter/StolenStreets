@@ -20,5 +20,6 @@ class Reg{
 	static public var posXjugador:Float; //guarda la posicion del jugador
 	static public var widthJugador:Float; //guarda el ancho del jugador
 	static public var heightJugador:Float; //guardar el alto del jugador
+	static public var puntaje:Int = 0; //guarda el puntaje
 	public static inline var VidaTotales:Int = 3;
 }

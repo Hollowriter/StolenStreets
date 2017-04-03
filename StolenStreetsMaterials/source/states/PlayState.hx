@@ -24,6 +24,7 @@ class PlayState extends FlxState{
 	private var testFloatingPlatform1:PlataformaFlotante;
 	private var trampolin:Trampolin;
 	private var funca:Bool = false;
+	private var puntaje:FlxText;
 	// private var golpe:Golpe;
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
 	private var life:Int;
@@ -39,7 +40,16 @@ class PlayState extends FlxState{
 		testFloatingPlatform = new PlataformaFlotante(300, 200);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 200); 
 		trampolin = new Trampolin(400, 200);
-		// golpe = new Golpe();
+		//puntaje:
+		puntaje = new FlxText(20, 1);
+		puntaje.color = 0xefff0a;
+		puntaje.text = "SCORE?";
+		puntaje.scale.x = 2;
+		puntaje.scale.y = 2;
+		puntaje.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xFF1abcc9);
+		puntaje.scrollFactor.set(0, 0);
+		puntaje.visible = true;
+		add(puntaje);
 		add(Mili);
 		add(Chico);
 		add(Platform);
@@ -57,6 +67,7 @@ class PlayState extends FlxState{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		puntaje.text = ("SCORE: " + Reg.puntaje);
 		FlxG.collide(Mili, Platform);
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);
@@ -71,23 +82,6 @@ class PlayState extends FlxState{
 				Mili.SaltoTrampolin();
 			}
 		}
-	
-		
-		/*Por aca todo esto se puede sacar del playstate*/
-		/*if (FlxG.keys.justPressed.L){
-			life = Mili.GetVida();
-			life-= auch;
-			Mili.SetVida(life);
-		}*/
-		/*if (FlxG.keys.justPressed.K){
-			life = Mili.GetVida();
-			life -= ay;
-			Mili.SetVida(life);
-		}*/  //Prueba la vida;
-		// Mili.MovimientoDelJugador();
-		// Mili.Golpear();
-		// Mili.Combo();
-		// Mili.DolorDelJugador();
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
 		Mili.Agarrar(Chico);
 		Mili.Salto();

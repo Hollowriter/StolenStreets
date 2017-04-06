@@ -19,13 +19,13 @@ class Jugador extends FlxSprite{
 	private var direccion:Bool; // donde mira el personaje
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
+	private var agarrando:Bool; // este es un booleano para chequear el agarre
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
 	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
 	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
 	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
-	/*(Comentar en playstate y descomentar aca)*/
 	private var ay:Int; //descomentar si querer testear vida de jugador;
 	private var auch:Int; // descomentar si querer testear vida de jugador
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
@@ -40,6 +40,7 @@ class Jugador extends FlxSprite{
 		thyHits = 0;
 		ComboActivation = false;
 		jump = false;
+		agarrando = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 		/*(Comentar en playstate y descomentar aca)*/
 		// ay = 25;
@@ -138,7 +139,7 @@ class Jugador extends FlxSprite{
 		if (FlxG.keys.justPressed.J && jump == false && meHurt==0){ // si no saltas, puedes hacer Combos en tierra
 			thyHits++;
 		}
-		if (time > Reg.effectTimer || jump == true){ // si saltas, no
+		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no
 			thyHits = 0;
 			time = 0;
 			ComboActivation = false;
@@ -160,8 +161,9 @@ class Jugador extends FlxSprite{
 	// agarre
 	public function Agarrar(pobreVictima:Enemigo){
 		if (pobreVictima.GetHurt() != 2){ // si la victima no esta lastimada
-			if (overlaps(pobreVictima) && (pobreVictima.GetDireccion() != direccion)){ // Si el jugador colisiona con el enemigo en su misma direccion
+			if (overlaps(pobreVictima) && (pobreVictima.GetDireccion() != direccion) && thyHits <= 3){ // Si el jugador colisiona con el enemigo en su misma direccion
 				pobreVictima.SetHurt(1); // evita que se mueva
+				agarrando = true; // evita que el timer del combo avance
 				pobreVictima.velocity.x = 0; // lo detiene
 				velocity.x = 0; // y el jugador se detiene sin poder avanzar a la direccion donde esta agarrando al enemigo
 				if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas Atacar y avanzar
@@ -172,7 +174,18 @@ class Jugador extends FlxSprite{
 					pobreVictima.SetHurt(2); // vuela en esa direccion
 					pobreVictima.SetTimer(0); // y reinicia el timer
 				}
+				if (thyHits > 2){ // esto por si lo cagas a rodillazos
+					pobreVictima.SetHurt(2);
+					pobreVictima.SetTimer(0);
+				}
 			}
+			else{
+				agarrando = false; // se cancela
+				// trace("checked");
+			}
+		}
+		else{
+			agarrando = false; // y se cancela
 		}
 	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)
@@ -213,6 +226,13 @@ class Jugador extends FlxSprite{
 	}
 	public function GetVida(){
 		return vidaActual;
+	}
+	// setter y getter del booleano de agarrar
+	public function SetAgarrando(grab:Bool){
+		agarrando = grab;
+	}
+	public function GetAgarrando(){
+		return agarrando;
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

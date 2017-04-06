@@ -75,12 +75,12 @@ class Golpejugador extends FlxSprite{
 				if (GolpeDuro == false){ // si es un golpe normal
 					Pum.SetHurt(1); // lo lastima
 					Pum.SetVida(Pum.GetVida() - 5); // le quita vida con el setter y getter
-					trace("ugh"); // para que lo vean por ustedes mismos, se llama una sola vez
+					// trace("ugh"); // para que lo vean por ustedes mismos, se llama una sola vez
 				}
 				else if (GolpeDuro == true){ // pero si es un golpe duro
 					Pum.SetHurt(2); // lo lastima duramente
 					Pum.SetVida(Pum.GetVida() - 5);
-					trace("gah"); // y en este caso tampoco ocurre nada raro
+					// trace("gah"); // y en este caso tampoco ocurre nada raro
 				}
 				Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
 			}

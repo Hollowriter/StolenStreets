@@ -21,7 +21,7 @@ class Enemigo1 extends BaseEnemigo
 	{
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 30, FlxColor.BROWN);
-		acceleration.y = 1500;
+		vidaEnemiga = 10;
 	}
 	override public function move(){
 		super.move();
@@ -42,9 +42,13 @@ class Enemigo1 extends BaseEnemigo
 			etapa++;
 			movimiento = 0;
 		}*/
-		if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador *2))
+		if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador * 2))
+		{
 			x++;
-		if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador *2))
+		}
+		if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador * 2))
+		{
 			x--;
+		}
 	}
 }

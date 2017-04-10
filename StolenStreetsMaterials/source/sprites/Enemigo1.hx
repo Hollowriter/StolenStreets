@@ -23,6 +23,7 @@ class Enemigo1 extends BaseEnemigo
 		makeGraphic(30, 30, FlxColor.BROWN);
 		vidaEnemiga = 10;
 	}
+	
 	override public function move(){
 		super.move();
 		/*if(etapa == 1){
@@ -51,4 +52,14 @@ class Enemigo1 extends BaseEnemigo
 			x--;
 		}
 	}
+	
+	/*override public function getEnemigoVida()
+	{
+		return vidaEnemiga;
+	}
+	
+	override public function checkKilled()
+	{
+		return killed;
+	}*/
 }

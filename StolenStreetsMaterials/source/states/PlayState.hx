@@ -37,10 +37,10 @@ class PlayState extends FlxState{
 		Mili = new Jugador(30, 30);
 		Chico = new Enemigo(70, 30);
 		chico1 = new Enemigo1(90, 30); //nueva clase enemigo
-		Platform = new PlataformaPrincipal(0, 300);
-		testFloatingPlatform = new PlataformaFlotante(300, 200);
-		testFloatingPlatform1 = new PlataformaFlotante(50, 200); 
-		trampolin = new Trampolin(400, 200);
+		Platform = new PlataformaPrincipal(0, 350);
+		testFloatingPlatform = new PlataformaFlotante(300, 250);
+		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
+		trampolin = new Trampolin(400, 250);
 		puntaje = new FlxText(20, 1);
 		puntaje.color = 0xefff0a;
 		puntaje.text = "SCORE?";
@@ -49,9 +49,9 @@ class PlayState extends FlxState{
 		puntaje.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		puntaje.scrollFactor.set(0, 0);
 		puntaje.visible = true;
-		vida = new FlxText(20, 30);
+		vida = new FlxText(30, 30);
 		vida.color = 0x800000;
-		vida.text = "LIFE?";
+		vida.text = "HEALTH?";
 		vida.scale.x = 2;
 		vida.scale.y = 2;
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
@@ -73,7 +73,7 @@ class PlayState extends FlxState{
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		puntaje.text = ("SCORE: " + Reg.puntaje);
-		vida.text = ("LIFE: " + Mili.GetVida());
+		vida.text = ("HEALTH: " + Mili.GetVida());
 		FlxG.collide(Mili, Platform);
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);

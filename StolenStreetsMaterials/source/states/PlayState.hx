@@ -6,6 +6,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
+import sprites.Drops;
 import sprites.Enemigo;
 import sprites.Golpejugador;
 import sprites.Jugador;
@@ -18,6 +19,8 @@ import sprites.Trampolin;
 
 class PlayState extends FlxState{
 	private var Mili:Jugador;
+	private var Plata = new FlxTypedGroup<Drops>(2);
+	private var cantM:Int = 2;
 	private var Chico:Enemigo;
 	private var Platform:PlataformaPrincipal;
 	private var testFloatingPlatform:PlataformaFlotante;
@@ -26,6 +29,7 @@ class PlayState extends FlxState{
 	private var funca:Bool = false;
 	private var puntaje:FlxText;
 	private var vida:FlxText;
+	private var money:FlxText; //Buena cancion de Pink Floyd
 	// private var golpe:Golpe;
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
 	private var life:Int;
@@ -35,11 +39,21 @@ class PlayState extends FlxState{
 	override public function create():Void{
 		super.create();
 		Mili = new Jugador(30, 30);
+		Plata.members[0] = new Drops(300, 100);
+		Plata.members[1] = new Drops(350, 100);
 		Chico = new Enemigo(70, 30);
 		chico1 = new Enemigo1(90, 30); //nueva clase enemigo
 		Platform = new PlataformaPrincipal(0, 350);
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
+		money = new FlxText (150, 1);
+		money.text = "MONEY?";
+		money.color = 0x00FFFF;
+		money.scale.x = 2;
+		money.scale.y = 2;
+		money.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
+		money.scrollFactor.set(0, 0);
+		money.visible = true;
 		trampolin = new Trampolin(400, 250);
 		puntaje = new FlxText(20, 1);
 		puntaje.color = 0xefff0a;
@@ -57,7 +71,10 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
+		add(Plata.members[0]);
+		add(Plata.members[1]);
 		add(puntaje);
+		add(money);
 		add(vida);
 		add(Mili);
 		add(Chico);
@@ -72,6 +89,7 @@ class PlayState extends FlxState{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		money.text = ("MONEY: $" + Reg.guita);
 		puntaje.text = ("SCORE: " + Reg.puntaje);
 		vida.text = ("HEALTH: " + Mili.GetVida());
 		FlxG.collide(Mili, Platform);
@@ -88,6 +106,13 @@ class PlayState extends FlxState{
 				Mili.SaltoTrampolin();
 			}
 		}
+		for (i in 0...cantM){
+			if (FlxG.overlap(Mili, Plata.members[i])){
+				Plata.members[i].Juntado();
+				Plata.members[i].kill();
+			}
+		}
+			
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
 		Mili.Agarrar(Chico);
 		Mili.Salto();
@@ -99,6 +124,7 @@ class PlayState extends FlxState{
 		//En caso que el personaje se quede sin vidas y muera;
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();
+			Reg.guita = 0;
 		}
 	}
 }

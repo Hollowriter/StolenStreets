@@ -16,7 +16,7 @@ import sprites.Golpejugador;
 class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
 	private var testTrampolin:Trampolin;
-	private var direccion:Bool; // donde mira el personaje
+	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
 	private var agarrando:Bool; // este es un booleano para chequear el agarre
@@ -28,6 +28,9 @@ class Jugador extends FlxSprite{
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
 	private var ay:Int; //descomentar si querer testear vida de jugador;
 	private var auch:Int; // descomentar si querer testear vida de jugador
+	private var esquivando:Bool = false; //indica si el jugador esta ejecutando su esquivada
+	private var contadorEsquivar:Int = 0; //Cuenta la cantidad de frames en los que el personaje esta esquivando
+	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500; // gravedad
@@ -56,12 +59,12 @@ class Jugador extends FlxSprite{
 			jump = true;
 		}*/
 		// movimiento del personaje (derecha e izquierda)
-		if (FlxG.keys.pressed.D && check==false && meHurt==0|| FlxG.keys.pressed.RIGHT && check==false && meHurt==0){
+		if (FlxG.keys.pressed.D && check==false && meHurt==0 && esquivando == false|| FlxG.keys.pressed.RIGHT && check==false && meHurt==0 && esquivando == false){
 			velocity.x += Reg.hSpeed;
 			facing = FlxObject.RIGHT;
 			direccion = false;
 		}
-	    if (FlxG.keys.pressed.A && check==false && meHurt==0|| FlxG.keys.pressed.LEFT && check==false && meHurt==0){
+	    if (FlxG.keys.pressed.A && check==false && meHurt==0 && esquivando == false|| FlxG.keys.pressed.LEFT && check==false && meHurt==0 && esquivando == false){
 			velocity.x -= Reg.hSpeed;
 			facing = FlxObject.LEFT;
 			direccion = true;
@@ -74,10 +77,21 @@ class Jugador extends FlxSprite{
 		if (velocity.x <= -Reg.maxhSpeed)
 			velocity.x = -Reg.maxhSpeed;*/
 	}
+	//Movimiento de escape del personaje
+	private function Esquivar(){
+		if ((((FlxG.keys.justPressed.Y) && jump == false) || ((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false){
+			if(direccion)
+				x += 25;
+			else
+				x -= 25;
+			velocity.x = 0;
+			esquivando = true;
+		}
+	}
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
+		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false)
 			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -90,6 +104,9 @@ class Jugador extends FlxSprite{
 		else{
 			jump = true;
 		}
+	}
+	private function Dash(){
+		
 	}
 	public function SaltoTrampolin(){
 		velocity.y = -750;
@@ -265,6 +282,7 @@ class Jugador extends FlxSprite{
 		Golpear();
 		Combo();
 		DolorDelJugador();
+		Esquivar();
 		// testeos de vida
 		/*if (FlxG.keys.justPressed.L){
 			life = GetVida();
@@ -276,8 +294,15 @@ class Jugador extends FlxSprite{
 			life -= ay;
 			SetVida(life);
 		}*/
-		if (jump == true){
+		/*if (jump == true){
 			trace('midair');
+		}*/
+		if (contadorEsquivar >= 30){
+			esquivando = false;
+			contadorEsquivar = 0;
+		}
+		else if (esquivando == true){
+			contadorEsquivar++;
 		}
 	}
 }

@@ -9,19 +9,19 @@ import sprites.Jugador;
 
 /**
  * ...
- * @author RodrigoDiazKlipphan
+ * @author RodrigoDiazKlipphan(inicial)
  */
 class Golpejugador extends FlxSprite{
 	// private var Time:Int; (sin usar)
-	// private var YouundMe:Bool; // chequea si es un golpe del jugador (true) o del enemigo (false)
+	// private var YouundMe:Bool; // chequea si es un golpe del jugador (true) o del enemigo (false) (sin usar)
 	private var GolpeDuro:Bool; // detecta cuando es un golpe que te tira al piso
 	// private var ljug:Int; // cambiada a la clase GolpeEnemigo
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		makeGraphic(11, 11, FlxColor.RED);
-		// Reg.golpesGroup.add.(this);
-		// Time = 0;
-		// YouundMe = false;
+		// Reg.golpesGroup.add.(this); (sin usar)
+		// Time = 0; (sin usar)
+		// YouundMe = false; (sin usar)
 		GolpeDuro = false;
 	}
 	override public function update(elapsed:Float):Void{
@@ -96,7 +96,7 @@ class Golpejugador extends FlxSprite{
 				ljug -= 25;
 				Ouch.SetVida(ljug);
 			}
-		}*/
+		}*/ // esta funcion servia cuando el puño era usado tanto por el jugador como por el enemigo
 	}
 	// getter y setter del gancho o golpe duro
 	public function GetGolpeDuro(){

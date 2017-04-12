@@ -5,12 +5,12 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 
 /**
  * ...
- * @author ...
+ * @author MicaelaPereyra
  */
 class BaseEnemigo extends FlxSprite 
 {
-	//private var killed:Bool;
-	//private var timer:Int; // timer de comportamiento (una AI de mierda)
+	//private var killed:Bool; (Sin utilizar)
+	//private var timer:Int; // timer de comportamiento (una AI de mierda) (Sin utilizar)
 	private var vidaEnemiga:Int; // vida del enemigo
 	private var direccion:Bool; // para donde esta mirando
 	private var isHurt:UInt; // chequea si recibio un golpe
@@ -21,15 +21,15 @@ class BaseEnemigo extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500;
-		//killed = false;
+		//killed = false; (Sin utilizar)
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		move();
 	}
 	public function move(){};
-	//public function getEnemigoVida(){};
-	//public function checkKill(){};
+	//public function getEnemigoVida(){}; (Sin utilizar)
+	//public function checkKill(){}; (Sin utilizar)
 	public function gotHitted(){};
 	public function GetGolpeEnemigo(){};
 	

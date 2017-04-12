@@ -13,7 +13,7 @@ import sprites.GolpeEnemigo;
  * ...
  * @author RodrigoDiazKlipphan
  */
-class Enemigo extends FlxSprite{
+class Enemigo extends FlxSprite{ // Clase Dummy
 	private var timer:Int; // timer de comportamiento (una AI de mierda)
 	private var vidaEnemiga:Int; // vida del enemigo
 	// private var punios:Golpejugador; // ELIMINADO

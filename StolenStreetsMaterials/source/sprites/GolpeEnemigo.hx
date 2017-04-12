@@ -8,7 +8,7 @@ import source.Reg;
 
 /**
  * ...
- * @author RodrigoDiazKlipphan
+ * @author RodrigoDiazKlipphan(inciial)
  */
 class GolpeEnemigo extends FlxSprite{
 	private var golpeFuerte:Bool; // check gancho

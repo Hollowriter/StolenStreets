@@ -18,34 +18,37 @@ import source.Reg;
 import sprites.Trampolin;
 
 class PlayState extends FlxState{
-	private var Mili:Jugador;
-	private var Plata = new FlxTypedGroup<Drops>(2);
-	private var cantM:Int = 2;
-	private var Chico:Enemigo;
-	private var Platform:PlataformaPrincipal;
+	private var Mili:Jugador; // jugador
+	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
+	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
+	private var Chico:Enemigo; // enemigo de prueba (Reemplazar cuando la nueva clase este terminada)
+	private var Platform:PlataformaPrincipal; // plataforma de prueba solida
+	// plataformas flotantes
 	private var testFloatingPlatform:PlataformaFlotante;
 	private var testFloatingPlatform1:PlataformaFlotante;
-	private var trampolin:Trampolin;
-	private var funca:Bool = false;
-	private var puntaje:FlxText;
-	private var vida:FlxText;
-	private var money:FlxText; //Buena cancion de Pink Floyd
-	// private var golpe:Golpe;
-	// private var auch:Int = 10; //descomentar si querer testear vida de jugador;
-	private var life:Int;
-	private var ay:Int = 25; //descomentar si querer testear vida de jugador;
-	private var chico1:Enemigo1; //nueva clase enemigo
-	private var hechos:Int = 1;
+	// plataformas flotantes
+	private var trampolin:Trampolin; // plataforma de salto
+	private var funca:Bool = false; // esto no se que es, por favor explicar
+	private var puntaje:FlxText; // HUD puntaje
+	private var vida:FlxText; // HUD vida
+	private var money:FlxText; //Buena cancion de Pink Floyd // HUD dinero
+	// private var golpe:Golpe; (Clase muerta)
+	// private var auch:Int = 10; //descomentar si querer testear vida de jugador; (sin usar)
+	private var life:Int; // vida
+	// private var ay:Int = 25; //descomentar si querer testear vida de jugador; (sin usar)
+	private var chico1:Enemigo1; //nueva clase enemigo (bajo test)
+	// private var hechos:Int = 1; (sin usar)
 	override public function create():Void{
 		super.create();
 		Mili = new Jugador(30, 30);
 		Plata.members[0] = new Drops(300, 100);
 		Plata.members[1] = new Drops(350, 100);
 		Chico = new Enemigo(70, 30);
-		chico1 = new Enemigo1(90, 30); //nueva clase enemigo
+		chico1 = new Enemigo1(90, 30); //nueva clase enemigo (bajo test)
 		Platform = new PlataformaPrincipal(0, 350);
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
+		// crea el HUD del dinero
 		money = new FlxText (150, 1);
 		money.text = "MONEY?";
 		money.color = 0x00FFFF;
@@ -54,7 +57,9 @@ class PlayState extends FlxState{
 		money.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		money.scrollFactor.set(0, 0);
 		money.visible = true;
+		// crea el HUD del dinero
 		trampolin = new Trampolin(400, 250);
+		// crea el HUD de los puntos
 		puntaje = new FlxText(20, 1);
 		puntaje.color = 0xefff0a;
 		puntaje.text = "SCORE?";
@@ -63,6 +68,8 @@ class PlayState extends FlxState{
 		puntaje.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		puntaje.scrollFactor.set(0, 0);
 		puntaje.visible = true;
+		// crea el HUD de los puntos
+		// crea el HUD de la vida
 		vida = new FlxText(30, 30);
 		vida.color = 0x800000;
 		vida.text = "HEALTH?";
@@ -71,6 +78,7 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
+		// crea el HUD de la vida
 		add(Plata.members[0]);
 		add(Plata.members[1]);
 		add(puntaje);
@@ -89,30 +97,37 @@ class PlayState extends FlxState{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		// HUD
 		money.text = ("MONEY: $" + Reg.guita);
 		puntaje.text = ("SCORE: " + Reg.puntaje);
 		vida.text = ("HEALTH: " + Mili.GetVida());
+		// HUD
 		FlxG.collide(Mili, Platform);
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);
+		// Collider complicado para las plataformas flotantes de colision con el jugador
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform.y)
 			FlxG.collide(Mili, testFloatingPlatform);
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform1.y) //Mas adelante estos if van a ser uno solo.
 			FlxG.collide(Mili, testFloatingPlatform1);
+		// Collider complicado para las plataformas flotantes de colision con el jugador
 		FlxG.collide(Chico, testFloatingPlatform);
 		FlxG.collide(Chico, testFloatingPlatform);
+		// Collider complicado para las plataformas trampolin de colision con el jugador
 		if ((Mili.y + (Mili.height / 2)) < trampolin.y){
 			if (FlxG.collide(Mili, trampolin)){
 				Mili.SaltoTrampolin();
 			}
 		}
+		// Collider complicado para las plataformas trampolin de colision con el jugador
+		// Overlap del jugador con los objetos recolectables
 		for (i in 0...cantM){
 			if (FlxG.overlap(Mili, Plata.members[i])){
 				Plata.members[i].Juntado();
 				Plata.members[i].kill();
 			}
 		}
-			
+		// Overlap del jugador con los objetos recolectables
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
 		Mili.Agarrar(Chico);
 		Mili.Salto();
@@ -121,7 +136,7 @@ class PlayState extends FlxState{
 		Chico.DolorDelEnemigo(Mili);
 		Mili.GetGolpear().ColisionDelGolpe(Chico);
 		Chico.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
-		//En caso que el personaje se quede sin vidas y muera;
+		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();
 			Reg.guita = 0;

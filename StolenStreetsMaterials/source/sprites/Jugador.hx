@@ -11,7 +11,7 @@ import sprites.Golpejugador;
 
 /**
  * ...
- * @author RodrigoDiazKlipphan
+ * @author RodrigoDiazKlipphan(inicial)
  */
 class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
@@ -45,13 +45,13 @@ class Jugador extends FlxSprite{
 		jump = false;
 		agarrando = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
-		/*(Comentar en playstate y descomentar aca)*/
+		/*(Anteriormente eran usados para probar la vida, ahora estan sin utilizar)*/
 		// ay = 25;
 		// auch = 10;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
-		// chequea si el personaje esta en el aire/saltando
+		// chequea si el personaje esta en el aire/saltando (Pasado a la funcion Salto())
 		/*if (isTouching(FlxObject.FLOOR)){
 			jump = false;
 		}
@@ -69,8 +69,9 @@ class Jugador extends FlxSprite{
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
-		// Salto
-		/*if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
+		// Salto (Pasado a la funcion Salto())
+		/*if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && 
+		 * check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
 			velocity.y = Reg.jumpSpeed;
 		if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -108,6 +109,7 @@ class Jugador extends FlxSprite{
 	private function Dash(){
 		
 	}
+	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
 		velocity.y = -750;
 	}
@@ -198,11 +200,12 @@ class Jugador extends FlxSprite{
 			}
 			else{
 				agarrando = false; // se cancela
-				// trace("checked");
+				// trace("checked"); (para revisar si entraba a esta parte del if)
 			}
 		}
 		else{
 			agarrando = false; // y se cancela
+			// trace("checked"); (para revisar si entraba en esta parte del if)
 		}
 	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)
@@ -294,9 +297,11 @@ class Jugador extends FlxSprite{
 			life -= ay;
 			SetVida(life);
 		}*/
+		// testeo para ver si el personaje esta en el aire
 		/*if (jump == true){
 			trace('midair');
 		}*/
+		// delimitacion de la habilidad de escape del personaje
 		if (contadorEsquivar >= 30){
 			esquivando = false;
 			contadorEsquivar = 0;

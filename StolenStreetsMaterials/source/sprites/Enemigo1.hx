@@ -10,12 +10,12 @@ import sprites.Golpejugador;
 
 /**
  * ...
- * @author ...
+ * @author MicaelaPereyra
  */
 class Enemigo1 extends BaseEnemigo 
 {
-	private var etapa:Int = 1;
-	private var movimiento:Int = 0;
+	private var etapa:Int = 1; // parece que esta sin utilizar (no la comento sin autorizacion de quien usa la clase)
+	private var movimiento:Int = 0; // parece que esta sin utilizar (no la comento sin autorizacion de quien usa la clase)
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -23,7 +23,7 @@ class Enemigo1 extends BaseEnemigo
 		makeGraphic(30, 30, FlxColor.BROWN);
 		vidaEnemiga = 10;
 	}
-	
+	// movimiento de este enemigo
 	override public function move(){
 		super.move();
 		/*if(etapa == 1){

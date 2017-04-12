@@ -9,9 +9,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
 /**
  * ...
- * @author ...
+ * @author MorenaMontero
  */
-class Obstaculo extends FlxSprite{
+class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentare mas hasta que tenga su funcionamiento
 	private var Destructible:Bool = false;
 	private var Danio:Int = 0;
 	public function void destruir (){

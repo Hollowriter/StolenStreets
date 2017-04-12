@@ -8,7 +8,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 /**
  * ...
- * @author ...
+ * @author MorenaMontero(inicial)
  */
 class Trampolin extends FlxSprite 
 {

@@ -6,7 +6,10 @@ import flixel.FlxG;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
-
+/**
+ * ...
+ * @author BenjaminLlauro
+ */
 class PlataformaFlotante extends FlxSprite 
 {
 	var movimientoVertical:Bool = true; //Con tan solo cambiar estos bools, se puede decidir si la plataforma se mueve verticalmente o no.

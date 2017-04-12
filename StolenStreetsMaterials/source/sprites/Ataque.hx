@@ -10,7 +10,7 @@ import source.Reg;
  * ...
  * @author RodrigoDiazKlipphan
  */
-// esto se supone que era un golpe
+// esto se supone que era un golpe pero ahora esta sin usar
 class Ataque extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);

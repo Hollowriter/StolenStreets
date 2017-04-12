@@ -5,7 +5,7 @@ import sprites.Golpejugador;
 
 /**
  * ...
- * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan
+ * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan(inicial)
  */
 class Reg{
 	public static inline var hSpeed:Float = 30; // velocidad horizontal estandar
@@ -21,6 +21,6 @@ class Reg{
 	static public var widthJugador:Float; //guarda el ancho del jugador
 	static public var heightJugador:Float; //guardar el alto del jugador
 	static public var puntaje:Int = 0; //guarda el puntaje
-	static public var guita:Float = 0;
-	public static inline var VidaTotales:Int = 3;
+	static public var guita:Float = 0; // guerda el dinero del personaje
+	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
 }

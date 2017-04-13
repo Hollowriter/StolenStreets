@@ -12,7 +12,7 @@ import source.Reg;
  * @author MorenaMontero
  */
 class Drops extends FlxSprite{
-	private var puntos:Int = 0; // cantidad de puntos que da el objeto
+	private var puntos:Int; // cantidad de puntos que da el objeto
 	private var valor:Int = FlxG.random.int(0, 3); // decide que tipo de moneda aparecera
 	// te da los puntos
 	public function Juntado():Void{

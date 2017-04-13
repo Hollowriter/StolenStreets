@@ -247,6 +247,13 @@ class Jugador extends FlxSprite{
 	public function GetVida(){
 		return vidaActual;
 	}
+	// setter y getter de los reintentos
+	public function SetLife(oportunidades:Int){
+		life = oportunidades;
+	}
+	public function GetLife(){
+		return life;
+	}
 	// setter y getter del booleano de agarrar
 	public function SetAgarrando(grab:Bool){
 		agarrando = grab;

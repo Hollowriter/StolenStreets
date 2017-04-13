@@ -16,10 +16,12 @@ import sprites.BaseEnemigo;
 import sprites.Enemigo1;
 import source.Reg;
 import sprites.Trampolin;
+import sprites.DropsVida;
 
 class PlayState extends FlxState{
 	private var Mili:Jugador; // jugador
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
+	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	private var Chico:Enemigo; // enemigo de prueba (Reemplazar cuando la nueva clase este terminada)
 	private var Platform:PlataformaPrincipal; // plataforma de prueba solida
@@ -43,6 +45,8 @@ class PlayState extends FlxState{
 		Mili = new Jugador(30, 30);
 		Plata.members[0] = new Drops(300, 100);
 		Plata.members[1] = new Drops(350, 100);
+		Botiquin.members[0] = new DropsVida(400, 150);
+		Botiquin.members[1] = new DropsVida(450, 150);
 		Chico = new Enemigo(70, 30);
 		chico1 = new Enemigo1(90, 30); //nueva clase enemigo (bajo test)
 		Platform = new PlataformaPrincipal(0, 350);
@@ -81,6 +85,8 @@ class PlayState extends FlxState{
 		// crea el HUD de la vida
 		add(Plata.members[0]);
 		add(Plata.members[1]);
+		add(Botiquin.members[0]);
+		add(Botiquin.members[1]);
 		add(puntaje);
 		add(money);
 		add(vida);
@@ -125,6 +131,12 @@ class PlayState extends FlxState{
 			if (FlxG.overlap(Mili, Plata.members[i])){
 				Plata.members[i].Juntado();
 				Plata.members[i].kill();
+			}
+		}
+		for (b in 0...cantM){
+			if (FlxG.overlap(Mili, Botiquin.members[b])){
+				Botiquin.members[b].Curado(Mili);
+				Botiquin.members[b].kill();
 			}
 		}
 		// Overlap del jugador con los objetos recolectables

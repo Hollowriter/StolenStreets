@@ -68,9 +68,9 @@ class Golpejugador extends FlxSprite{
 		}
 	}*/
 	// colision del golpe
-		public function ColisionconCaja(caja:Obstaculo):Void{
+		public function ColisionconCaja(caja:Obstaculo,personaje:Jugador):Void{
 		if (overlaps(caja))
-		caja.Golpeada();
+		caja.Golpeada(personaje);
 		}
 	public function ColisionDelGolpe(/*Ouch:Jugador,*/ Pum:Enemigo):Void{
 		if (overlaps(Pum) /*&& YouundMe == true*/){ // si el golpe es del jugador y choca con el enemigo

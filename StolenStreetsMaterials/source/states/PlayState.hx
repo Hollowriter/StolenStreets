@@ -36,6 +36,7 @@ class PlayState extends FlxState{
 	private var puntaje:FlxText; // HUD puntaje
 	private var vida:FlxText; // HUD vida
 	private var money:FlxText; //Buena cancion de Pink Floyd // HUD dinero
+	private var lifes:FlxText;
 	// private var golpe:Golpe; (Clase muerta)
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador; (sin usar)
 	private var life:Int; // vida
@@ -57,6 +58,14 @@ class PlayState extends FlxState{
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
 		// crea el HUD del dinero
+		lifes = new FlxText (150, 30);
+		lifes.text = "LIFE?";
+		lifes.color = 0xB2FFB5;
+		lifes.scale.x = 2;
+		lifes.scale.y = 2;
+		lifes.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
+		lifes.scrollFactor.set(0, 0);
+		lifes.visible = true;
 		money = new FlxText (150, 1);
 		money.text = "MONEY?";
 		money.color = 0x00FFFF;
@@ -96,6 +105,7 @@ class PlayState extends FlxState{
 		add(puntaje);
 		add(money);
 		add(vida);
+		add(lifes);
 		add(Mili);
 		add(Chico);
 		add(Platform);
@@ -110,6 +120,7 @@ class PlayState extends FlxState{
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// HUD
+		lifes.text = ("LIFE: " + Mili.GetLife());
 		money.text = ("MONEY: $" + Reg.guita);
 		puntaje.text = ("SCORE: " + Reg.puntaje);
 		vida.text = ("HEALTH: " + Mili.GetVida());
@@ -117,6 +128,7 @@ class PlayState extends FlxState{
 		FlxG.collide(Mili, Platform);
 		FlxG.collide(Cajas.members[0], Platform);
 		FlxG.collide(Cajas.members[1], Platform);
+		FlxG.collide(Cajas.members[1], Cajas.members[0]);
 		/*FlxG.collide(Cajas.members[0], Mili);
 		FlxG.collide(Mili,Cajas.members[1]);*/
 		//FlxG.collide(Chico, Cajas.members[0]);
@@ -160,7 +172,7 @@ class PlayState extends FlxState{
 		Chico.DolorDelEnemigo(Mili);
 		Mili.GetGolpear().ColisionDelGolpe(Chico);
 		for (o in 0...cantM){
-		Mili.GetGolpear().ColisionconCaja(Cajas.members[o]);
+		Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
 		}
 		Chico.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego

@@ -77,18 +77,10 @@ class Jugador extends FlxSprite{
 			facing = FlxObject.LEFT;
 			direccion = true;
 		}
-		// Salto (Pasado a la funcion Salto())
-		/*if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && 
-		 * check == false && meHurt==0 || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0)
-			velocity.y = Reg.jumpSpeed;
-		if (velocity.x >= Reg.hSpeed)
-			velocity.x = Reg.maxhSpeed;
-		if (velocity.x <= -Reg.maxhSpeed)
-			velocity.x = -Reg.maxhSpeed;*/
 	}
 	//Movimiento de escape del personaje
 	private function Esquivar(){
-		if ((((FlxG.keys.justPressed.Y) && jump == false) || ((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false){
+		if ((((FlxG.keys.justPressed.U) && jump == false) || ((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false){
 			if(direccion)
 				x += 25;
 			else
@@ -100,7 +92,8 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false)
+		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false ||
+		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false || FlxG.keys.justPressed.H && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false)
 			velocity.y = Reg.jumpSpeed;
 		/*if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -138,11 +131,11 @@ class Jugador extends FlxSprite{
 				velocity.y = 0;
 			}
 			else{ // pero si esta saltando no ignora el movimiento del Salto
-				if (FlxG.keys.pressed.D){ // chequea si te mueves a la derecha
-					velocity.x += Reg.hSpeed;
+				if (FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT){ // chequea si te mueves a la derecha
+					velocity.x = Reg.hSpeed;
 				}
-				else if (FlxG.keys.pressed.A){ // o a la izquierda
-					velocity.x -= Reg.hSpeed;
+				else if (FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT){ // o a la izquierda
+					velocity.x = -Reg.hSpeed;
 				}
 			}
 		}
@@ -293,7 +286,7 @@ class Jugador extends FlxSprite{
 			kill();
 		}
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
-		if ((FlxG.keys.pressed.T) || FlxG.keys.pressed.O)
+		if (FlxG.keys.pressed.G || FlxG.keys.pressed.L)
 			corriendo = true;
 			MovimientoDelJugador();
 		Golpear();

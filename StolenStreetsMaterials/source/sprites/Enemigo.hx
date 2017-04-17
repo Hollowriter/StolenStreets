@@ -39,7 +39,7 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 		if (isHurt == 0 && saltito == false){ // si no esta lastimado y esta en el piso
 			if (direccion == false){
 				if (timer < 50){ // para coordinar con el ataque
-					velocity.x = Reg.hSpeed; // camina
+					velocity.x = Reg.hSpeedEnemigo; // camina
 				}
 				timer++; // cada segundo
 				if (timer == 60){ // si su timer de comportamiento llega a este numero
@@ -51,7 +51,7 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 			}
 			else if (direccion == true){ // misma historia aca pero hacia la otra direccion
 				if (timer < 50){
-					velocity.x = Reg.hSpeed * ( -1);
+					velocity.x = Reg.hSpeedEnemigo * ( -1);
 				}
 				timer++;
 				if (timer == 60){
@@ -97,10 +97,10 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 				velocity.y = Reg.vSpeed * (-1);
 			}
 			if (agresor.GetDireccion() == true){ // empujado segun la posicion del jugador
-				velocity.x = Reg.hSpeed * ( -5);
+				velocity.x = Reg.EnemigoVelocidadVuelo * ( -5);
 			}
 			else if (agresor.GetDireccion() == false){ // empujando segun la posicion del jugador
-				velocity.x = Reg.hSpeed * 5;
+				velocity.x = Reg.EnemigoVelocidadVuelo * 5;
 			}
 			if (timer > (Reg.effectTimer + Reg.effectTimer) && saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
 				isHurt = 0; // el enemigo se recupera

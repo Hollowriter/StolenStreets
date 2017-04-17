@@ -8,7 +8,9 @@ import sprites.Golpejugador;
  * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan(inicial)
  */
 class Reg{
-	public static inline var hSpeed:Float = 200; // velocidad horizontal estandar
+	public static inline var hSpeed:Float = 200; // velocidad horizontal estandar del jugador
+	public static inline var hSpeedEnemigo:Float = 100; // velocidad horizontal estandar del enemigo
+	public static inline var EnemigoVelocidadVuelo:Float = 30; //velocidad a la que vuela el enemigo
 	public static inline var maxhSpeed:Float = 200; // velocidad horizontal maxima
 	public static inline var vSpeed:Float = -220; // velocidad vertical estandar
 	public static inline var friction:Float = 15; // friccion estandar

@@ -12,19 +12,28 @@ import source.Reg;
  * @author MorenaMontero
  */
 class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentare mas hasta que tenga su funcionamiento
-	private var Destructible:Bool = false;
-	private var Danio:Int = 0;
-	public function void destruir (){
-		if (Destructible == true){
-			Danio += 0;
-			if (Danio == 3){
+	private var destructible:Int = FlxG.random.int(0,1);
+	private var danio:Int = 0;
+	public function Golpeada(){
+		if (destructible == 1){
+			danio += 1;
+			if (danio == 3){
 				kill();
 				Reg.puntaje += 10;
 			}
 		}
+		else {
+			x += 10;
+		}
 	}
-	public function new() {
-		
+	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset) {
+		super(X, Y, SimpleGraphic);
+		acceleration.y = 100;
+		if (destructible == 1)
+			makeGraphic(30, 30, FlxColor.RED);
+		else if (destructible == 0)
+			makeGraphic (30, 30, FlxColor.ORANGE);
+
 	}
 	
 }

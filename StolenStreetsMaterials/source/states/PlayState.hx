@@ -17,6 +17,7 @@ import sprites.Enemigo1;
 import source.Reg;
 import sprites.Trampolin;
 import sprites.DropsVida;
+import sprites.Obstaculo;
 
 class PlayState extends FlxState{
 	private var Mili:Jugador; // jugador
@@ -29,6 +30,7 @@ class PlayState extends FlxState{
 	private var testFloatingPlatform:PlataformaFlotante;
 	private var testFloatingPlatform1:PlataformaFlotante;
 	// plataformas flotantes
+	private var Cajas = new FlxTypedGroup<Obstaculo>(2);
 	private var trampolin:Trampolin; // plataforma de salto
 	private var funca:Bool = false; // esto no se que es, por favor explicar
 	private var puntaje:FlxText; // HUD puntaje
@@ -43,6 +45,8 @@ class PlayState extends FlxState{
 	override public function create():Void{
 		super.create();
 		Mili = new Jugador(30, 30);
+		Cajas.members[0] = new Obstaculo(200, 200);
+		Cajas.members[1] = new Obstaculo(300, 200);
 		Plata.members[0] = new Drops(300, 100);
 		Plata.members[1] = new Drops(350, 100);
 		Botiquin.members[0] = new DropsVida(400, 150);
@@ -87,6 +91,8 @@ class PlayState extends FlxState{
 		add(Plata.members[1]);
 		add(Botiquin.members[0]);
 		add(Botiquin.members[1]);
+		add(Cajas.members[0]);
+		add(Cajas.members[1]);
 		add(puntaje);
 		add(money);
 		add(vida);
@@ -109,6 +115,12 @@ class PlayState extends FlxState{
 		vida.text = ("HEALTH: " + Mili.GetVida());
 		// HUD
 		FlxG.collide(Mili, Platform);
+		FlxG.collide(Cajas.members[0], Platform);
+		FlxG.collide(Cajas.members[1], Platform);
+		/*FlxG.collide(Cajas.members[0], Mili);
+		FlxG.collide(Mili,Cajas.members[1]);*/
+		//FlxG.collide(Chico, Cajas.members[0]);
+		//FlxG.collide(Cajas.members[1], chico1);
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);
 		// Collider complicado para las plataformas flotantes de colision con el jugador
@@ -147,11 +159,15 @@ class PlayState extends FlxState{
 		// Chico.Atacar(); // esto se puede sacar del playstate
 		Chico.DolorDelEnemigo(Mili);
 		Mili.GetGolpear().ColisionDelGolpe(Chico);
+		for (o in 0...cantM){
+		Mili.GetGolpear().ColisionconCaja(Cajas.members[o]);
+		}
 		Chico.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();
 			Reg.guita = 0;
+			Reg.puntaje = 0;
 		}
 	}
 }

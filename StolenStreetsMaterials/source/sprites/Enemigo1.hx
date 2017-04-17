@@ -14,8 +14,8 @@ import sprites.Golpejugador;
  */
 class Enemigo1 extends BaseEnemigo 
 {
-	private var etapa:Int = 1; // parece que esta sin utilizar (no la comento sin autorizacion de quien usa la clase)
-	private var movimiento:Int = 0; // parece que esta sin utilizar (no la comento sin autorizacion de quien usa la clase)
+	/*private var etapa:Int = 1;
+	private var movimiento:Int = 0;*/
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -43,14 +43,16 @@ class Enemigo1 extends BaseEnemigo
 			etapa++;
 			movimiento = 0;
 		}*/
+		
 		if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador * 2))
 		{
-			x++;
+			x += 2;
 		}
 		if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador * 2))
 		{
-			x--;
+			x -=2;
 		}
+		
 	}
 	
 	/*override public function getEnemigoVida()

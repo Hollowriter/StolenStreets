@@ -177,7 +177,7 @@ class Jugador extends FlxSprite{
 	}
 	// agarre
 	public function Agarrar(pobreVictima:Enemigo){
-		if (pobreVictima.GetHurt() != 2){ // si la victima no esta lastimada
+		/*if (pobreVictima.GetHurt() != 2){ // si la victima no esta lastimada
 			if (overlaps(pobreVictima) && (pobreVictima.GetDireccion() != direccion) && thyHits <= 3){ // Si el jugador colisiona con el enemigo en su misma direccion
 				pobreVictima.SetHurt(1); // evita que se mueva
 				agarrando = true; // evita que el timer del combo avance
@@ -199,13 +199,34 @@ class Jugador extends FlxSprite{
 			else{
 				agarrando = false; // se cancela
 				// trace("checked"); (para revisar si entraba a esta parte del if)
+			}*/ // antiguo agarre
+		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
+			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
+			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
+			if (overlaps(pobreVictima) && /*esta->*/(pobreVictima.GetDireccion() != direccion)/*<-esta*/ && thyHits <= 3){ // Si estas muy cerca del enemigo
+				if (FlxG.keys.justPressed.Z){ // y apretas Z
+					pobreVictima.SetHurt(1); // tomas al enemigo
+					agarrando = true; // agarrandolo
+					pobreVictima.velocity.x = 0; // deteniendolo
+					velocity.x = 0; // y el personaje se queda firme
+				}
+				if (agarrando == true){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
+					if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas Atacar y avanzar
+						pobreVictima.SetHurt(2); // vuela en esa direccion
+						pobreVictima.SetTimer(0); // y reinicia el timer
+					}
+					if (FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true){ // o si la sostenes del otro
+						pobreVictima.SetHurt(2); // vuela en esa direccion
+						pobreVictima.SetTimer(0); // y reinicia el timer
+					}
+					if (thyHits > 2){ // esto por si terminas el combo de los rodillazos
+						pobreVictima.SetHurt(2); // vuela a la derecha o a la izquierda, dependiendo de donde lo agarres
+						pobreVictima.SetTimer(0); // y reinicia el timer
+					}
+				}
 			}
-		}
-		else{
-			agarrando = false; // y se cancela
-			// trace("checked"); (para revisar si entraba en esta parte del if)
-		}
-	}
+		} // aca termina el nuevo agarre
+	} // y termina la funcion
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)
 	public function GetDireccion(){
 		return direccion;

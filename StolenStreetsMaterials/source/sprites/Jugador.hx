@@ -60,22 +60,26 @@ class Jugador extends FlxSprite{
 		else{
 			jump = true;
 		}*/
-		// movimiento del personaje (derecha e izquierda)
-		if (FlxG.keys.pressed.D && check == false && meHurt == 0 && esquivando == false || FlxG.keys.pressed.RIGHT && check == false && meHurt == 0 && esquivando == false){
-			if(corriendo == false)
-				velocity.x = Reg.hSpeed;
-			else
-				velocity.x = velocidadCorrer;
+		// movimiento del personaje (derecha e izquierda) (Reformule un poquito para emprolijar)
+		if (agarrando == false && check == false && meHurt == 0 && esquivando == false){
+			if (FlxG.keys.pressed.D /*&& check == false && meHurt == 0 && esquivando == false*/ || 
+			FlxG.keys.pressed.RIGHT /*&& check == false && meHurt == 0 && esquivando == false*/){
+				if(corriendo == false)
+					velocity.x = Reg.hSpeed;
+				else
+					velocity.x = velocidadCorrer;
 			facing = FlxObject.RIGHT;
 			direccion = false;
 		}
-	    if (FlxG.keys.pressed.A && check==false && meHurt==0 && esquivando == false|| FlxG.keys.pressed.LEFT && check==false && meHurt==0 && esquivando == false){
-			if(corriendo == false)
-				velocity.x = -Reg.hSpeed;
-			else
-				velocity.x = -velocidadCorrer;
-			facing = FlxObject.LEFT;
-			direccion = true;
+	    if (FlxG.keys.pressed.A /* && check==false && meHurt==0 && esquivando == false*/ || 
+		FlxG.keys.pressed.LEFT /*&& check==false && meHurt==0 && esquivando == false*/){
+				if(corriendo == false)
+					velocity.x = -Reg.hSpeed;
+				else
+					velocity.x = -velocidadCorrer;
+				facing = FlxObject.LEFT;
+				direccion = true;
+			}
 		}
 	}
 	//Movimiento de escape del personaje
@@ -92,8 +96,10 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false || FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false ||
-		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false || FlxG.keys.justPressed.H && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false)
+		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false || 
+		FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false||
+		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false|| 
+		FlxG.keys.justPressed.H && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false)
 			velocity.y = Reg.jumpSpeed;
 		/*if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -126,6 +132,9 @@ class Jugador extends FlxSprite{
 		}
 		if (check == true){ // el puñetazo esta presente
 			punios.PunietazoJugador(this, direccion, jump); // colocacion del puñetazo
+			if (agarrando == true){ // esto para evitar que le pege eternamente
+				check = false;
+			}
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
 				velocity.y = 0;
@@ -156,7 +165,7 @@ class Jugador extends FlxSprite{
 		if (FlxG.keys.justPressed.J && jump == false && meHurt==0){ // si no saltas, puedes hacer Combos en tierra
 			thyHits++;
 		}
-		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no
+		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
 			thyHits = 0;
 			time = 0;
 			ComboActivation = false;
@@ -203,26 +212,29 @@ class Jugador extends FlxSprite{
 		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
-			if (overlaps(pobreVictima) && /*esta->*/(pobreVictima.GetDireccion() != direccion)/*<-esta*/ && thyHits <= 3){ // Si estas muy cerca del enemigo
-				if (FlxG.keys.justPressed.Z){ // y apretas Z
-					pobreVictima.SetHurt(1); // tomas al enemigo
+			if (overlaps(pobreVictima) && /*esta->*//*(pobreVictima.GetDireccion() != direccion)*//*<-esta*/ thyHits <= 3){ // Si estas muy cerca del enemigo
+				if (FlxG.keys.justPressed.Z){ // y apretas Z (Para probar, despues cambiamos la letra)
+					// pobreVictima.SetHurt(1); // tomas al enemigo
 					agarrando = true; // agarrandolo
 					pobreVictima.velocity.x = 0; // deteniendolo
 					velocity.x = 0; // y el personaje se queda firme
 				}
 				if (agarrando == true){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
 					if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas Atacar y avanzar
+						agarrando = false; // para salir volando esto tiene que quedar en false
 						pobreVictima.SetHurt(2); // vuela en esa direccion
 						pobreVictima.SetTimer(0); // y reinicia el timer
 					}
 					if (FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true){ // o si la sostenes del otro
+						agarrando = false; // para salir volando esto tiene que setearse a false
 						pobreVictima.SetHurt(2); // vuela en esa direccion
 						pobreVictima.SetTimer(0); // y reinicia el timer
 					}
 					if (thyHits > 2){ // esto por si terminas el combo de los rodillazos
+						agarrando = false; // para salir volando esto tiene que quedar en false
 						pobreVictima.SetHurt(2); // vuela a la derecha o a la izquierda, dependiendo de donde lo agarres
 						pobreVictima.SetTimer(0); // y reinicia el timer
-					}
+					} // El tiempo que dura el agarre esta determinado por el timer del enemigo (Mirar el dummy)
 				}
 			}
 		} // aca termina el nuevo agarre

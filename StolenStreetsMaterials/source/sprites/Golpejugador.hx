@@ -31,6 +31,7 @@ class Golpejugador extends FlxSprite{
 	public function posicionar():Void{
 		x = Reg.posicionDeLosPunios;
 		y = Reg.posicionDeLosPunios;
+		// trace('posicionado');
 	}
 	// puñetazo del jugador
 	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool):Void{ // Pendiente de testear
@@ -72,7 +73,7 @@ class Golpejugador extends FlxSprite{
 		if (overlaps(caja))
 		caja.Golpeada(personaje);
 		}
-	public function ColisionDelGolpe(/*Ouch:Jugador,*/ Pum:Enemigo):Void{
+	public function ColisionDelGolpe(/*Ouch:Jugador,*/ Pum:Enemigo):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum) /*&& YouundMe == true*/){ // si el golpe es del jugador y choca con el enemigo
 			posicionar(); // lo hace desaparecer
 			if (Pum.GetHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad

@@ -36,7 +36,7 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 	}
 	// patron de comportamiento general del enemigo
 	public function MovimientoDelEnemigo(objective:Jugador){
-		if (isHurt == 0 && saltito == false){ // si no esta lastimado y esta en el piso
+		if (isHurt == 0 && saltito == false && objective.GetAgarrando() == false){ // si no esta lastimado, esta en el piso y no esta siendo agarrado
 			if (direccion == false){
 				if (timer < 50){ // para coordinar con el ataque
 					velocity.x = Reg.hSpeedEnemigo; // camina
@@ -78,13 +78,21 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 	}
 	// comportamiento de dolor del enemigo ante un golpe
 	public function DolorDelEnemigo(agresor:Jugador){
-		if (isHurt == 1){ // si esta lastimado normalmente
+		if (isHurt == 1 || agresor.GetAgarrando() == true){ // si esta lastimado normalmente
 			timer++; // tiempo de recuperacion
 			puniosEnemigo.PosicionarGE(); // elimina el ataque del enemigo
-			if (timer > Reg.effectTimer){ // si es mayor el timer que este numero
+			if (agresor.GetAgarrando() == true){ // Si el jugador lo esta agarrando, el isHurt no hace falta para matenerlo quieto
+				isHurt = 0;// Ademas, si el isHurt se queda en 1 mientras lo agarra, no podes golpearlo
+			}
+			if (timer > Reg.effectTimer && agresor.GetAgarrando() == false){ // si es mayor el timer que este numero y no es un agarre
 				isHurt = 0; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 			}
+			else if (timer > Reg.effectTimer + 100 && agresor.GetAgarrando() == true){ // esto es lo que hace que el enemigo se escape del agarre
+				isHurt = 0; // esto esta por las dudas
+				timer = 0; // setea el timer a cero
+				agresor.SetAgarrando(false); // y se libera del agarre
+			} // dura mas tiempo y setea el agarre a false cuando se acaba
 		}
 		else if (isHurt == 2){ // si esta lastimado por un golpe duro
 			timer++; // tiempo de recuperacion

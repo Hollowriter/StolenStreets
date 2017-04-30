@@ -18,11 +18,13 @@ import source.Reg;
 import sprites.Trampolin;
 import sprites.DropsVida;
 import sprites.Obstaculo;
+import sprites.DropFalling;
 
 class PlayState extends FlxState{
 	private var Mili:Jugador; // jugador
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
+	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	private var Chico:Enemigo; // enemigo de prueba (Reemplazar cuando la nueva clase este terminada)
 	private var Platform:PlataformaPrincipal; // plataforma de prueba solida
@@ -50,6 +52,8 @@ class PlayState extends FlxState{
 		Cajas.members[1] = new Obstaculo(300, 200);
 		Plata.members[0] = new Drops(300, 100);
 		Plata.members[1] = new Drops(350, 100);
+		// PlataCaida.members[0] = new DropFalling(400, 100);
+		// PlataCaida.members[1] = new DropFalling(450, 100); // ambas son de prueba
 		Botiquin.members[0] = new DropsVida(400, 150);
 		Botiquin.members[1] = new DropsVida(450, 150);
 		Chico = new Enemigo(70, 30);
@@ -98,10 +102,20 @@ class PlayState extends FlxState{
 		// crea el HUD de la vida
 		add(Plata.members[0]);
 		add(Plata.members[1]);
+		// add(PlataCaida.members[0]);
+		// add(PlataCaida.members[1]);
 		add(Botiquin.members[0]);
 		add(Botiquin.members[1]);
 		add(Cajas.members[0]);
 		add(Cajas.members[1]);
+		if (Cajas.members[0].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
+			add(Cajas.members[0].GetDrop());
+			trace('true');
+		}
+		if (Cajas.members[1].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
+			add(Cajas.members[1].GetDrop());
+			trace('true2');
+		}
 		add(puntaje);
 		add(money);
 		add(vida);
@@ -129,12 +143,22 @@ class PlayState extends FlxState{
 		FlxG.collide(Cajas.members[0], Platform);
 		FlxG.collide(Cajas.members[1], Platform);
 		FlxG.collide(Cajas.members[1], Cajas.members[0]);
+		// FlxG.collide(PlataCaida.members[0], Platform);
+		// FlxG.collide(PlataCaida.members[1], Platform);
 		/*FlxG.collide(Cajas.members[0], Mili);
 		FlxG.collide(Mili,Cajas.members[1]);*/
 		//FlxG.collide(Chico, Cajas.members[0]);
-		//FlxG.collide(Cajas.members[1], chico1);
+		//FlxG.collide(Cajas.members[1], chico1); // Colisiones de las cajas con Mili, ¿Seran las de los efectos raros?
 		FlxG.collide(Chico, Platform);
 		FlxG.collide(chico1, Platform);
+		/*testeando los dropeos de las cajas destruibles*/
+		if (Cajas.members[0].GetDrop() != null){
+			FlxG.collide(Cajas.members[0].GetDrop(), Platform);
+		}
+		if (Cajas.members[1].GetDrop() != null){
+			FlxG.collide(Cajas.members[1].GetDrop(), Platform);
+		}
+		/*testeando los dropeos de las cajas destruibles*/
 		// Collider complicado para las plataformas flotantes de colision con el jugador
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform.y)
 			FlxG.collide(Mili, testFloatingPlatform);
@@ -163,6 +187,16 @@ class PlayState extends FlxState{
 				Botiquin.members[b].kill();
 			}
 		}
+		/*dropeo de las cajas*/
+		for (t in 0...cantM){
+			if (Cajas.members[t].GetDrop() != null){
+				if (FlxG.overlap(Mili, Cajas.members[t].GetDrop())){
+					Cajas.members[t].GetDrop().Juntado();
+					Cajas.members[t].GetDrop().kill();
+				}
+			}
+		}
+		/*dropeo de las cajas*/
 		// Overlap del jugador con los objetos recolectables
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
 		Mili.Agarrar(Chico);
@@ -172,7 +206,7 @@ class PlayState extends FlxState{
 		Chico.DolorDelEnemigo(Mili);
 		Mili.GetGolpear().ColisionDelGolpe(Chico);
 		for (o in 0...cantM){
-		Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
+			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
 		}
 		Chico.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego

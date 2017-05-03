@@ -15,6 +15,7 @@ import sprites.Golpejugador;
  */
 class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
+	private var controlesWASD:Bool = false;
 	private var testTrampolin:Trampolin;
 	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
@@ -62,8 +63,8 @@ class Jugador extends FlxSprite{
 		}*/
 		// movimiento del personaje (derecha e izquierda) (Reformule un poquito para emprolijar)
 		if (agarrando == false && check == false && meHurt == 0 && esquivando == false){
-			if (FlxG.keys.pressed.D /*&& check == false && meHurt == 0 && esquivando == false*/ || 
-			FlxG.keys.pressed.RIGHT /*&& check == false && meHurt == 0 && esquivando == false*/){
+			if (FlxG.keys.pressed.D && controlesWASD == true /*&& check == false && meHurt == 0 && esquivando == false*/ || 
+			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
 				if(corriendo == false)
 					velocity.x = Reg.hSpeed;
 				else
@@ -71,8 +72,8 @@ class Jugador extends FlxSprite{
 			facing = FlxObject.RIGHT;
 			direccion = false;
 		}
-	    if (FlxG.keys.pressed.A /* && check==false && meHurt==0 && esquivando == false*/ || 
-		FlxG.keys.pressed.LEFT /*&& check==false && meHurt==0 && esquivando == false*/){
+	    if (FlxG.keys.pressed.A && controlesWASD == true /* && check==false && meHurt==0 && esquivando == false*/ || 
+		FlxG.keys.pressed.LEFT && controlesWASD == false /*&& check==false && meHurt==0 && esquivando == false*/){
 				if(corriendo == false)
 					velocity.x = -Reg.hSpeed;
 				else
@@ -84,7 +85,7 @@ class Jugador extends FlxSprite{
 	}
 	//Movimiento de escape del personaje
 	private function Esquivar(){
-		if ((((FlxG.keys.justPressed.U) && jump == false) || ((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false){
+		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || (FlxG.keys.justPressed.U) && jump == false  && controlesWASD == false)){
 			if(direccion)
 				x += 25;
 			else
@@ -96,10 +97,10 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false || 
-		FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false||
-		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false|| 
-		FlxG.keys.justPressed.H && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false)
+		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
+		FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
+		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
+		FlxG.keys.justPressed.H && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false)
 			velocity.y = Reg.jumpSpeed;
 		/*if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -140,10 +141,10 @@ class Jugador extends FlxSprite{
 				velocity.y = 0;
 			}
 			else{ // pero si esta saltando no ignora el movimiento del Salto
-				if (FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT){ // chequea si te mueves a la derecha
+				if ((FlxG.keys.pressed.D && controlesWASD == true) || (FlxG.keys.pressed.RIGHT && controlesWASD == false)){ // chequea si te mueves a la derecha
 					velocity.x = Reg.hSpeed;
 				}
-				else if (FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT){ // o a la izquierda
+				else if (FlxG.keys.pressed.A && controlesWASD == true || FlxG.keys.pressed.LEFT && controlesWASD == false){ // o a la izquierda
 					velocity.x = -Reg.hSpeed;
 				}
 			}

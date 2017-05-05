@@ -16,12 +16,16 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 	private var destructible:Int = FlxG.random.int(0, 1);
 	private var dropeable:DropFalling; // esto es para asignarle un drop
 	private var danio:Int = 0;
-	private var golpeado:Bool = false;
+	//private var golpeado:Bool = false;
 	// private var direccionDelGolpe:Bool = false; // indica la direccion del golpe para determinar velocidad positiva o negativa (ignorenlo)
 	private var contador:Int = 0; // ahora lo uso para saber cuanto tiempo se mueve la caja indestructible
 	public function Golpeada(personaje:Jugador){
+	 var golpeado:Bool = false;
 		if (destructible == 1 && golpeado == false){
-			danio += 1;
+			golpeado = true;
+			danio += 1; //por cada golpe lastima la caja 6 veces. 3 golpes para matarla.
+			trace ("crash");
+			//contador = Reg.effectTimer * 3;
 			//golpeado = true;
 			if (danio == 3){
 				if (dropeable != null){ // si existe un drop, aparece cuando la caja se destruye

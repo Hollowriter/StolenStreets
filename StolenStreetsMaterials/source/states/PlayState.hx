@@ -39,7 +39,6 @@ class PlayState extends FlxState{
 	private var vida:FlxText; // HUD vida
 	private var money:FlxText; //Buena cancion de Pink Floyd // HUD dinero
 	private var lifes:FlxText;
-	// private var golpe:Golpe; (Clase muerta)
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador; (sin usar)
 	private var life:Int; // vida
 	// private var ay:Int = 25; //descomentar si querer testear vida de jugador; (sin usar)

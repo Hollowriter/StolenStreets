@@ -15,7 +15,9 @@ import sprites.Golpejugador;
  */
 class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
-	private var controlesWASD:Bool = false;
+	
+
+	
 	private var testTrampolin:Trampolin;
 	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
@@ -33,6 +35,8 @@ class Jugador extends FlxSprite{
 	private var contadorEsquivar:Int = 0; //Cuenta la cantidad de frames en los que el personaje esta esquivando
 	private var corriendo:Bool = false;
 	private var velocidadCorrer:Int = 350;
+	
+	private var controlesWASD:Bool = false;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
@@ -85,7 +89,7 @@ class Jugador extends FlxSprite{
 	}
 	//Movimiento de escape del personaje
 	private function Esquivar(){
-		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || (FlxG.keys.justPressed.U) && jump == false  && controlesWASD == false)){
+		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || (FlxG.keys.justPressed.W) && jump == false  && controlesWASD == false)){
 			if(direccion)
 				x += 25;
 			else
@@ -100,7 +104,7 @@ class Jugador extends FlxSprite{
 		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
 		FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
 		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
-		FlxG.keys.justPressed.H && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false)
+		FlxG.keys.justPressed.S && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false)
 			velocity.y = Reg.jumpSpeed;
 		/*if (velocity.x >= Reg.maxhSpeed)
 			velocity.x = Reg.maxhSpeed;
@@ -124,7 +128,7 @@ class Jugador extends FlxSprite{
 	}
 	// el personaje golpea
 	public function Golpear():Void{
-		if (FlxG.keys.justPressed.J && check == false && meHurt==0){ // aparicion del puño
+		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
 			if (jump == false){ // si no saltas, puedes hacer un Combo
 				ComboActivation = true;
@@ -214,19 +218,19 @@ class Jugador extends FlxSprite{
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
 			if (overlaps(pobreVictima) && /*esta->*//*(pobreVictima.GetDireccion() != direccion)*//*<-esta*/ thyHits <= 3){ // Si estas muy cerca del enemigo
-				if (FlxG.keys.justPressed.Z){ // y apretas Z (Para probar, despues cambiamos la letra)
+				if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 					// pobreVictima.SetHurt(1); // tomas al enemigo
 					agarrando = true; // agarrandolo
 					pobreVictima.velocity.x = 0; // deteniendolo
 					velocity.x = 0; // y el personaje se queda firme
 				}
 				if (agarrando == true){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
-					if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas Atacar y avanzar
+					if ((FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false && controlesWASD == true) || (FlxG.keys.pressed.RIGHT && FlxG.keys.justPressed.D && direccion == false && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
 						agarrando = false; // para salir volando esto tiene que quedar en false
 						pobreVictima.SetHurt(2); // vuela en esa direccion
 						pobreVictima.SetTimer(0); // y reinicia el timer
 					}
-					if (FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true){ // o si la sostenes del otro
+					if ((FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true) || (FlxG.keys.pressed.RIGHT && FlxG.keys.justPressed.D && direccion == true && controlesWASD == false)){ // o si la sostenes del otro
 						agarrando = false; // para salir volando esto tiene que setearse a false
 						pobreVictima.SetHurt(2); // vuela en esa direccion
 						pobreVictima.SetTimer(0); // y reinicia el timer
@@ -320,7 +324,7 @@ class Jugador extends FlxSprite{
 			kill();
 		}
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
-		if (FlxG.keys.pressed.G || FlxG.keys.pressed.L)
+		if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false)
 			corriendo = true;
 			MovimientoDelJugador();
 		Golpear();

@@ -16,17 +16,15 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 	private var destructible:Int = FlxG.random.int(0, 1);
 	private var dropeable:DropFalling; // esto es para asignarle un drop
 	private var danio:Int = 0;
-	//private var golpeado:Bool = false;
+	private var golpeado:Bool = false;
 	// private var direccionDelGolpe:Bool = false; // indica la direccion del golpe para determinar velocidad positiva o negativa (ignorenlo)
 	private var contador:Int = 0; // ahora lo uso para saber cuanto tiempo se mueve la caja indestructible
 	public function Golpeada(personaje:Jugador){
 	 var golpeado:Bool = false;
 		if (destructible == 1 && golpeado == false){
-			golpeado = true;
 			danio += 1; //por cada golpe lastima la caja 6 veces. 3 golpes para matarla.
+			contador = Reg.effectTimer - 5;
 			trace ("crash");
-			//contador = Reg.effectTimer * 3;
-			//golpeado = true;
 			if (danio == 3){
 				if (dropeable != null){ // si existe un drop, aparece cuando la caja se destruye
 					dropeable.x = x; // en la misma posicion
@@ -37,12 +35,12 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 				Reg.puntaje += 10;
 			}
 		}
-		else if (destructible == 0 && personaje.x < x){
+		if (personaje.x < x){
 			velocity.x += 30; // cambia su velocidad
 			contador = Reg.effectTimer * 2; // empieza el contador de duracion de movimiento
 			// direccionDelGolpe = false; // la direccion en la que le pegaste (ignorenlo)
 		}
-		else if (destructible == 0 && personaje.x > x)
+		else if (personaje.x > x)
 		    velocity.x -= 30; // cambia su velocidad
 			contador = Reg.effectTimer * 2; // empieza el contador de duracion de movimiento
 			// direccionDelGolpe = true; // la direccion en la que pegaste (ignorenlo)
@@ -72,6 +70,20 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 			}
 		}
 	}
+	public function SetGolpeado(punched:Bool){
+		golpeado = punched;
+	}
+	public function GetGolpeado(){
+		return golpeado;
+	}
+	public function Inmunidad(){
+		if (golpeado == true && destructible == 1){
+			contador--;
+			if (contador <= 0){
+				golpeado = false;
+			}
+		}
+	}
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500;
@@ -92,5 +104,6 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 	override public function update(elapsed:Float){ // este es el update
 		super.update(elapsed);
 		Movement(); // con la funcion de movimiento
+		Inmunidad();
 	}
 }

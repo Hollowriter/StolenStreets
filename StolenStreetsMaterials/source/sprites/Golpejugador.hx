@@ -69,10 +69,11 @@ class Golpejugador extends FlxSprite{
 		}
 	}*/
 	// colision del golpe
-		public function ColisionconCaja(caja:Obstaculo,personaje:Jugador):Void{
-			if (overlaps(caja)){
+		public function ColisionconCaja(caja:Obstaculo, personaje:Jugador):Void{
+			if (overlaps(caja) && caja.GetGolpeado() == false){
 				posicionar();
 				caja.Golpeada(personaje);
+				caja.SetGolpeado(true);
 			}
 		}
 	public function ColisionDelGolpe(/*Ouch:Jugador,*/ Pum:Enemigo):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre

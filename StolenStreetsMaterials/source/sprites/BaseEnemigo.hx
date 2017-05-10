@@ -33,6 +33,5 @@ class BaseEnemigo extends FlxSprite
 	//public function getEnemigoVida(){}; (Sin utilizar)
 	//public function checkKill(){}; (Sin utilizar)
 	public function gotHitted(){};
-	public function GetGolpeEnemigo(){};
 	
 }

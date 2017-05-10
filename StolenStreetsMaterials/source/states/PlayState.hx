@@ -128,6 +128,7 @@ class PlayState extends FlxState{
 		add(chico1);
 		add(Mili.GetGolpear());
 		add(Chico.GetGolpeEnemigo());
+		add(chico1.GetGolpeEnemigo());
 		add(trampolin);
 	}
 	override public function update(elapsed:Float):Void{
@@ -204,6 +205,9 @@ class PlayState extends FlxState{
 		// Chico.Atacar(); // esto se puede sacar del playstate
 		Chico.DolorDelEnemigo(Mili);
 		Mili.GetGolpear().ColisionDelGolpe(Chico);
+		
+		chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
+		
 		for (o in 0...cantM){
 			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
 		}

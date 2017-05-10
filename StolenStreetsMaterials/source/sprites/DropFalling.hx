@@ -19,7 +19,7 @@ class DropFalling extends Drops{ // hereda del drop de dinero
 	public function GetBroken(){
 		return broken;
 	}
-	public function Gravity(){
+	public function Gravity() {
 		if (broken == true){ // si se rompio la caja, el objeto cae
 			acceleration.y = 1500;
 		}

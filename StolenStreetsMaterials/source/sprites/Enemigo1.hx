@@ -16,12 +16,14 @@ class Enemigo1 extends BaseEnemigo
 {
 	/*private var etapa:Int = 1;
 	private var movimiento:Int = 0;*/
+	private var still:Bool;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 30, FlxColor.BROWN);
 		vidaEnemiga = 10;
+		still = false;
 	}
 	// movimiento de este enemigo
 	override public function move(){
@@ -44,14 +46,25 @@ class Enemigo1 extends BaseEnemigo
 			movimiento = 0;
 		}*/
 		
-		if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador * 2))
+		if (!still)
 		{
-			x += 2;
+			if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador * 2))
+			{
+				x += 2;
+			}
+			if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador * 2))
+			{
+				x -=2;
+			}
 		}
-		if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador * 2))
+		
+		if (x < Reg.posXjugador - Reg.widthJugador && x > (Reg.posXjugador - Reg.widthJugador * 2))
 		{
-			x -=2;
+			still = true;
+			trace("work");
 		}
+		else
+			still = false;
 		
 	}
 	

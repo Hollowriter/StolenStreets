@@ -26,11 +26,12 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 			contador = Reg.effectTimer - 5;
 			trace ("crash");
 			if (danio == 3){
-				if (dropeable != null){ // si existe un drop, aparece cuando la caja se destruye
-					dropeable.x = x; // en la misma posicion
-					dropeable.y = y; // que la caja
+				//if (dropeable != null){ // si existe un drop, aparece cuando la caja se destruye
+					//dropeable.x = x; // en la misma posicion
+					//dropeable.y = y; // que la caja
+					dropeable = new DropFalling(x+14, y+29); // crea el objeto drop en una posicion remota solo si el objeto es destruible
 					dropeable.SetBroken(true); // y activa su gravedad
-				}
+			//	}
 				kill();
 				Reg.puntaje += 10;
 			}
@@ -89,7 +90,7 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 		acceleration.y = 1500;
 		if (destructible == 1){
 			makeGraphic(30, 30, FlxColor.RED);
-			dropeable = new DropFalling(1000, 1000); // crea el objeto drop en una posicion remota solo si el objeto es destruible
+			
 		}
 		else if (destructible == 0){
 			makeGraphic (30, 30, FlxColor.ORANGE);

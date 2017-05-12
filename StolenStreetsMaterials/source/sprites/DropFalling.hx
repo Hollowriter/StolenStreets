@@ -21,7 +21,7 @@ class DropFalling extends Drops{ // hereda del drop de dinero
 	}
 	public function Gravity() {
 		if (broken == true){ // si se rompio la caja, el objeto cae
-			acceleration.y = 1500;
+			acceleration.y = 10;
 		}
 	}
 	override public function update(elapsed:Float):Void{

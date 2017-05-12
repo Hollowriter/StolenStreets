@@ -167,7 +167,7 @@ class Jugador extends FlxSprite{
 	}
 	// contador de golpes consecutivos (Combo)
 	public function Combo():Void{
-		if (FlxG.keys.justPressed.J && jump == false && meHurt==0){ // si no saltas, puedes hacer Combos en tierra
+		if ((FlxG.keys.justPressed.J && jump == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
 			thyHits++;
 		}
 		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte

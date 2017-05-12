@@ -30,7 +30,7 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 					//dropeable.x = x; // en la misma posicion
 					//dropeable.y = y; // que la caja
 					dropeable = new DropFalling(x+14, y+29); 
-					dropeable.SetCreado(false);// crea el objeto drop en una posicion remota solo si el objeto es destruible
+					// dropeable.SetCreado(false);// crea el objeto drop en una posicion remota solo si el objeto es destruible
 					dropeable.SetBroken(true);
 					// y activa su gravedad
 			//	}
@@ -92,7 +92,7 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 		acceleration.y = 1500;
 		if (destructible == 1){
 			makeGraphic(30, 30, FlxColor.RED);
-			dropeable.SetCreado(true);
+			//dropeable.SetCreado(true);
 			
 		}
 		else if (destructible == 0){

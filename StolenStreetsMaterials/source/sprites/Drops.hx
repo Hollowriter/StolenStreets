@@ -40,8 +40,8 @@ class Drops extends FlxSprite{
 				puntos = 1;	
 		}
 	}
-	public function SetCreado(_creado:Bool){
+	/*public function SetCreado(_creado:Bool){
 		creado = _creado;
-	}
+	}*/
 	
 }

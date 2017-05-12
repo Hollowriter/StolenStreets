@@ -36,7 +36,7 @@ class Jugador extends FlxSprite{
 	private var corriendo:Bool = false;
 	private var velocidadCorrer:Int = 350;
 	
-	private var controlesWASD:Bool = false;
+	private var controlesWASD:Bool = true;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
@@ -135,7 +135,7 @@ class Jugador extends FlxSprite{
 			}
 			time = 0; // reinicia el timer
 		}
-		if (check == true){ // el puñetazo esta presente
+		if (check == true && agarrando == false){ // el puñetazo esta presente
 			punios.PunietazoJugador(this, direccion, jump); // colocacion del puñetazo
 			if (agarrando == true){ // esto para evitar que le pege eternamente
 				check = false;
@@ -191,33 +191,10 @@ class Jugador extends FlxSprite{
 	}
 	// agarre
 	public function Agarrar(pobreVictima:Enemigo){
-		/*if (pobreVictima.GetHurt() != 2){ // si la victima no esta lastimada
-			if (overlaps(pobreVictima) && (pobreVictima.GetDireccion() != direccion) && thyHits <= 3){ // Si el jugador colisiona con el enemigo en su misma direccion
-				pobreVictima.SetHurt(1); // evita que se mueva
-				agarrando = true; // evita que el timer del combo avance
-				pobreVictima.velocity.x = 0; // lo detiene
-				velocity.x = 0; // y el jugador se detiene sin poder avanzar a la direccion donde esta agarrando al enemigo
-				if (FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false){ // si la sostenes de un lado y apretas Atacar y avanzar
-					pobreVictima.SetHurt(2); // vuela en esa direccion
-					pobreVictima.SetTimer(0); // y reinicia el timer
-				}
-				if(FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true){ // o si la sostenes del otro
-					pobreVictima.SetHurt(2); // vuela en esa direccion
-					pobreVictima.SetTimer(0); // y reinicia el timer
-				}
-				if (thyHits > 2){ // esto por si lo cagas a rodillazos
-					pobreVictima.SetHurt(2);
-					pobreVictima.SetTimer(0);
-				}
-			}
-			else{
-				agarrando = false; // se cancela
-				// trace("checked"); (para revisar si entraba a esta parte del if)
-			}*/ // antiguo agarre
 		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
-			if (overlaps(pobreVictima) && /*esta->*//*(pobreVictima.GetDireccion() != direccion)*//*<-esta*/ thyHits <= 3){ // Si estas muy cerca del enemigo
+			if (overlaps(pobreVictima) && thyHits <= 3){ // Si estas muy cerca del enemigo
 				if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 					// pobreVictima.SetHurt(1); // tomas al enemigo
 					agarrando = true; // agarrandolo
@@ -225,21 +202,11 @@ class Jugador extends FlxSprite{
 					velocity.x = 0; // y el personaje se queda firme
 				}
 				if (agarrando == true){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
-					if ((FlxG.keys.pressed.D && FlxG.keys.justPressed.J && direccion == false && controlesWASD == true) || (FlxG.keys.pressed.RIGHT && FlxG.keys.justPressed.D && direccion == false && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
+					if ((FlxG.keys.justPressed.J && controlesWASD == true) || (FlxG.keys.justPressed.D && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
 						agarrando = false; // para salir volando esto tiene que quedar en false
 						pobreVictima.SetHurt(2); // vuela en esa direccion
 						pobreVictima.SetTimer(0); // y reinicia el timer
 					}
-					if ((FlxG.keys.pressed.A && FlxG.keys.justPressed.J && direccion == true) || (FlxG.keys.pressed.RIGHT && FlxG.keys.justPressed.D && direccion == true && controlesWASD == false)){ // o si la sostenes del otro
-						agarrando = false; // para salir volando esto tiene que setearse a false
-						pobreVictima.SetHurt(2); // vuela en esa direccion
-						pobreVictima.SetTimer(0); // y reinicia el timer
-					}
-					if (thyHits > 2){ // esto por si terminas el combo de los rodillazos
-						agarrando = false; // para salir volando esto tiene que quedar en false
-						pobreVictima.SetHurt(2); // vuela a la derecha o a la izquierda, dependiendo de donde lo agarres
-						pobreVictima.SetTimer(0); // y reinicia el timer
-					} // El tiempo que dura el agarre esta determinado por el timer del enemigo (Mirar el dummy)
 				}
 			}
 		} // aca termina el nuevo agarre

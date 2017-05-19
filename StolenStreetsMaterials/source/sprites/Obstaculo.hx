@@ -20,7 +20,7 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 	// private var direccionDelGolpe:Bool = false; // indica la direccion del golpe para determinar velocidad positiva o negativa (ignorenlo)
 	private var contador:Int = 0; // ahora lo uso para saber cuanto tiempo se mueve la caja indestructible
 	public function Golpeada(personaje:Jugador){
-	 var golpeado:Bool = false;
+		golpeado = false;
 		if (destructible == 1 && golpeado == false){
 			danio += 1; //por cada golpe lastima la caja 6 veces. 3 golpes para matarla.
 			contador = Reg.effectTimer - 5;
@@ -39,20 +39,20 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 			}
 		}
 		if (personaje.x < x){
-			velocity.x += 30; // cambia su velocidad
+			velocity.x += 150; // cambia su velocidad
 			contador = Reg.effectTimer * 2; // empieza el contador de duracion de movimiento
 			// direccionDelGolpe = false; // la direccion en la que le pegaste (ignorenlo)
 		}
-		else if (personaje.x > x)
-		    velocity.x -= 30; // cambia su velocidad
+		else if (personaje.x > x){
+		    velocity.x -= 150; // cambia su velocidad
 			contador = Reg.effectTimer * 2; // empieza el contador de duracion de movimiento
 			// direccionDelGolpe = true; // la direccion en la que pegaste (ignorenlo)
+		}
 	}
 	public function GetDrop(){ // esto retorna el objeto si tiene alguno
 		return dropeable;
 	}
 	public function Movement(){ // esta funcion es para el movimiento
-		if (destructible == 0){ // si es indestructible
 			if (contador > 0){ // y el contador fue activado
 				if (velocity.x > 0){ // se fija en que direccion fue segun la velocidad
 					if (velocity.x != 0){ // se para en 0 asi no va en la direccion contraria
@@ -71,7 +71,6 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 			else{
 				velocity.x = 0; // cuando llega a 0, la caja queda totalmente quieta
 			}
-		}
 	}
 	public function SetGolpeado(punched:Bool){
 		golpeado = punched;
@@ -80,7 +79,7 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 		return golpeado;
 	}
 	public function Inmunidad(){
-		if (golpeado == true && destructible == 1){
+		if (golpeado == true){
 			contador--;
 			if (contador <= 0){
 				golpeado = false;

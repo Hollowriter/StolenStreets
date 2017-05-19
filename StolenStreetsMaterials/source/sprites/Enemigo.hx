@@ -1,5 +1,5 @@
 package sprites;
-
+import flixel.animation.FlxAnimation;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
@@ -21,10 +21,13 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 	private var isHurt:UInt; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
 	private var puniosEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
+	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
+		loadGraphic(AssetPaths.Enemy__png, true, 40, 40);
+		animation.add("Natural", [11, 12], 2, true);
+		animation.play("Natural");			
 		acceleration.y = 1500; // gravedad
-		makeGraphic(30, 30, FlxColor.GREEN);
+		//makeGraphic(30, 30, FlxColor.GREEN);
 		drag.x = 1000;
 		// punios = new Golpejugador(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios); // ELMINADO
 		direccion = false;

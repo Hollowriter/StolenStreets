@@ -35,8 +35,11 @@ class Jugador extends FlxSprite{
 	private var contadorEsquivar:Int = 0; //Cuenta la cantidad de frames en los que el personaje esta esquivando
 	private var corriendo:Bool = false;
 	private var velocidadCorrer:Int = 350;
+	private var contadorPiniaCorriendo:Int = 0;
+	private var piniaCorriendoTiempoMax:Int = 30;
+	private var piniaCorriendo:Bool = false;
 	
-	private var controlesWASD:Bool = true;
+	private var controlesWASD:Bool = false;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
@@ -130,9 +133,22 @@ class Jugador extends FlxSprite{
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
-			if (jump == false){ // si no saltas, puedes hacer un Combo
-				ComboActivation = true;
-			}
+			if (corriendo == true){	
+				if(direccion == true){
+						velocity.x = Reg.hSpeed;
+						//punios.SetGolpeDuro(true);
+						//punios.PunietazoJugador(this, direccion, jump);
+						piniaCorriendo = true;
+						}
+					else if (direccion == false){
+						velocity.x = -Reg.hSpeed;
+						//punios.SetGolpeDuro(true);
+						//punios.PunietazoJugador(this, direccion, jump);
+						piniaCorriendo = true;
+						}
+				}
+				else if(jump == false)
+					ComboActivation = true;
 			time = 0; // reinicia el timer
 		}
 		if (check == true && agarrando == false){ // el puñetazo esta presente
@@ -291,28 +307,24 @@ class Jugador extends FlxSprite{
 			kill();
 		}
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
-		if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false)
-			corriendo = true;
-			MovimientoDelJugador();
-		Golpear();
+		if (piniaCorriendo == false){
+		MovimientoDelJugador();
+		
 		Combo();
 		DolorDelJugador();
 		Esquivar();
-		// testeos de vida
-		/*if (FlxG.keys.justPressed.L){
-			life = GetVida();
-			life -= auch;
-			SetVida(life);
 		}
-		if (FlxG.keys.justPressed.K){
-			life = GetVida();
-			life -= ay;
-			SetVida(life);
-		}*/
-		// testeo para ver si el personaje esta en el aire
-		/*if (jump == true){
-			trace('midair');
-		}*/
+		Golpear();
+		if (piniaCorriendo == true){
+			punios.SetGolpeDuro(true);
+			punios.PunietazoJugador(this, direccion, jump);
+			contadorPiniaCorriendo++;
+		}
+		if (contadorPiniaCorriendo >= piniaCorriendoTiempoMax){
+			piniaCorriendo = false;
+			contadorPiniaCorriendo = 0;
+			punios.posicionar();
+			}
 		// delimitacion de la habilidad de escape del personaje
 		if (contadorEsquivar >= 30){
 			esquivando = false;
@@ -321,7 +333,9 @@ class Jugador extends FlxSprite{
 		else if (esquivando == true){
 			contadorEsquivar++;
 		}
-		if((FlxG.keys.pressed.T) == false)
-			corriendo = false;
+			if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false)
+				corriendo = true;
+			else
+				corriendo = false;
 	}
 }

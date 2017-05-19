@@ -19,6 +19,7 @@ class Enemigo1 extends BaseEnemigo
 	private var still:Bool;
 	private var direc:Bool;
 	private var golpe:GolpeEnemigo;
+	private var timer:Int;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -27,6 +28,7 @@ class Enemigo1 extends BaseEnemigo
 		vidaEnemiga = 10;
 		still = false;
 		golpe = new GolpeEnemigo(1000, 1000);
+		timer = 0;
 	}
 	// movimiento de este enemigo
 	override public function move(){
@@ -51,6 +53,7 @@ class Enemigo1 extends BaseEnemigo
 		
 		if (!still)
 		{
+			timer = 0;
 			if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador * 2))
 			{
 				x += 2;
@@ -68,16 +71,25 @@ class Enemigo1 extends BaseEnemigo
 		if ((x < Reg.posXjugador - Reg.widthJugador && x > (Reg.posXjugador - Reg.widthJugador * 2))
 			|| (x > Reg.posXjugador + Reg.widthJugador && x < (Reg.posXjugador + Reg.widthJugador * 2)))
 		{
-			still = true;
-			golpe.PunietazoEnemigo(this, direc);
-			trace("work");
+			if (timer <= Reg.effectTimer){
+				still = true;
+				golpe.PunietazoEnemigo(this, direc);
+			}
+			else{
+				if (timer > Reg.effectTimer * 5){
+					timer = 0;
+				}
+				golpe.PosicionarGE();
+			}
+			timer++;
+			// trace("work");
 		}
 		else
 			still = false;
 		
-		trace(golpe.getPosition());
+		/*trace(golpe.getPosition());
 		trace(this.x);
-		trace(this.y);
+		trace(this.y);*/
 	}
 	
 	public function GetGolpeEnemigo():GolpeEnemigo

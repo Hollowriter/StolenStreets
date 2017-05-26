@@ -10,7 +10,7 @@ import sprites.GolpeEnemigo;
 
 /**
  * ...
- * @author MicaelaPereyra
+ * @author MicaelaPereyra(Inicial)
  */
 class Enemigo1 extends BaseEnemigo 
 {
@@ -76,7 +76,7 @@ class Enemigo1 extends BaseEnemigo
 				golpe.PunietazoEnemigo(this, direc);
 			}
 			else{
-				if (timer > Reg.effectTimer * 5){
+				if (timer > Reg.maxEffectTimer){
 					timer = 0;
 				}
 				golpe.PosicionarGE();

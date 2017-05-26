@@ -15,9 +15,11 @@ class Reg{
 	public static inline var vSpeed:Float = -220; // velocidad vertical estandar
 	public static inline var friction:Float = 15; // friccion estandar
 	public static inline var effectTimer:Float = 20; // maximo de un timer de comportamiento estandar (aunque por ahora estoy haciendo cualquier cosa)
+	public static inline var maxEffectTimer:Float = effectTimer * 5; // un timer de comportamiento por encima del estandar (por si algo dura sin efecto)
 	public static inline var jumpSpeed:Float = -600; // velocidad estandar de un Salto
 	public static inline var VidaMili:Int = 100; //Vida base de Mili
 	public static inline var posicionDeLosPunios:Int = 1000; // a donde se van las hitboxes cuando no aparecen
+	public static inline var velocidadPlataformasFlotantes:Float = 50; // velocidad de las plataformas que flotan
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador
 	static public var widthJugador:Float; //guarda el ancho del jugador

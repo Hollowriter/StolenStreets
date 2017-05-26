@@ -6,9 +6,10 @@ import flixel.FlxG;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
+import source.Reg;
 /**
  * ...
- * @author BenjaminLlauro
+ * @author BenjaminLlauro(Inicial)
  */
 class PlataformaFlotante extends FlxSprite 
 {
@@ -55,9 +56,9 @@ class PlataformaFlotante extends FlxSprite
 				arriba = true;
 			//Movimiento vertical
 			if (arriba == true && movimientoVertical == true)
-				y--;
+				velocity.y = Reg.velocidadPlataformasFlotantes * (-1); // cambie esa cosa ++ por velocity
 			else if (arriba == false && movimientoVertical == true)
-				y++;
+				velocity.y = Reg.velocidadPlataformasFlotantes; // cambie esa cosa ++ por velocity
 		}
 		//MOVIMIENTO HORIZONTAL
 		if (movimientoHorizontal == true)
@@ -69,9 +70,9 @@ class PlataformaFlotante extends FlxSprite
 				izquierda = true;
 			//Movimiento horizontal
 			if (izquierda == true && movimientoHorizontal == true)
-				x--;
+				velocity.x = Reg.velocidadPlataformasFlotantes * (-1); // cambie esa cosa ++ por velocity
 			else if (izquierda == false && movimientoHorizontal == true)
-				x++;	
+				velocity.x = Reg.velocidadPlataformasFlotantes; // cambie esa cosa ++ por velocity
 		}
 	}
 	override public function update(elapsed:Float):Void

@@ -14,8 +14,6 @@ import sprites.GolpeEnemigo;
  */
 class Enemigo1 extends BaseEnemigo 
 {
-	/*private var etapa:Int = 1;
-	private var movimiento:Int = 0;*/
 	private var still:Bool;
 	private var direc:Bool;
 	private var golpe:GolpeEnemigo;
@@ -96,14 +94,4 @@ class Enemigo1 extends BaseEnemigo
 	{
 		return golpe;
 	}
-	
-	/*override public function getEnemigoVida()
-	{
-		return vidaEnemiga;
-	}
-	
-	override public function checkKilled()
-	{
-		return killed;
-	}*/
 }

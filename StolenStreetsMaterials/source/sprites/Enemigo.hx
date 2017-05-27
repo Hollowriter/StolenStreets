@@ -16,7 +16,6 @@ import sprites.GolpeEnemigo;
 class Enemigo extends FlxSprite{ // Clase Dummy
 	private var timer:Int; // timer de comportamiento (una AI de mierda)
 	private var vidaEnemiga:Int; // vida del enemigo
-	// private var punios:Golpejugador; // ELIMINADO
 	private var direccion:Bool; // para donde esta mirando
 	private var isHurt:UInt; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
@@ -27,9 +26,7 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 		animation.add("Natural", [11, 12], 2, true);
 		animation.play("Natural");			
 		acceleration.y = 1500; // gravedad
-		//makeGraphic(30, 30, FlxColor.GREEN);
 		drag.x = 1000;
-		// punios = new Golpejugador(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios); // ELMINADO
 		direccion = false;
 		timer = 0;
 		isHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte

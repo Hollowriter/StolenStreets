@@ -10,8 +10,6 @@ import sprites.GolpeEnemigo;
  */
 class BaseEnemigo extends FlxSprite 
 {
-	//private var killed:Bool; (Sin utilizar)
-	//private var timer:Int; // timer de comportamiento (una AI de mierda) (Sin utilizar)
 	private var vidaEnemiga:Int; // vida del enemigo
 	private var direccion:Bool; // para donde esta mirando
 	private var isHurt:UInt; // chequea si recibio un golpe
@@ -23,15 +21,12 @@ class BaseEnemigo extends FlxSprite
 		super(X, Y, SimpleGraphic);
 		acceleration.y = 1500;
 		punioEnemigo = new GolpeEnemigo(1000, 1000);
-		//killed = false; (Sin utilizar)
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		move();
 	}
 	public function move(){};
-	//public function getEnemigoVida(){}; (Sin utilizar)
-	//public function checkKill(){}; (Sin utilizar)
 	public function gotHitted(){};
 	
 }

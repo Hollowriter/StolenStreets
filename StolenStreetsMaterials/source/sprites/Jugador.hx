@@ -15,9 +15,6 @@ import sprites.Golpejugador;
  */
 class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
-	
-
-	
 	private var testTrampolin:Trampolin;
 	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
@@ -61,14 +58,6 @@ class Jugador extends FlxSprite{
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
-		// chequea si el personaje esta en el aire/saltando (Pasado a la funcion Salto())
-		/*if (isTouching(FlxObject.FLOOR)){
-			jump = false;
-		}
-		else{
-			jump = true;
-		}*/
-		// movimiento del personaje (derecha e izquierda) (Reformule un poquito para emprolijar)
 		if (agarrando == false && check == false && meHurt == 0 && esquivando == false){
 			if (FlxG.keys.pressed.D && controlesWASD == true /*&& check == false && meHurt == 0 && esquivando == false*/ || 
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
@@ -109,10 +98,6 @@ class Jugador extends FlxSprite{
 		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
 		FlxG.keys.justPressed.S && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false)
 			velocity.y = Reg.jumpSpeed;
-		/*if (velocity.x >= Reg.maxhSpeed)
-			velocity.x = Reg.maxhSpeed;
-		if (velocity.x <= -Reg.maxhSpeed)
-			velocity.x = -Reg.maxhSpeed; */
 		// chequea si el personaje esta en el aire/saltando
 		if (isTouching(FlxObject.FLOOR)){
 			jump = false;
@@ -136,14 +121,10 @@ class Jugador extends FlxSprite{
 			if (corriendo == true){	
 				if(direccion == true){
 						velocity.x = Reg.hSpeed;
-						//punios.SetGolpeDuro(true);
-						//punios.PunietazoJugador(this, direccion, jump);
 						piniaCorriendo = true;
 						}
 					else if (direccion == false){
 						velocity.x = -Reg.hSpeed;
-						//punios.SetGolpeDuro(true);
-						//punios.PunietazoJugador(this, direccion, jump);
 						piniaCorriendo = true;
 						}
 				}
@@ -183,7 +164,7 @@ class Jugador extends FlxSprite{
 	}
 	// contador de golpes consecutivos (Combo)
 	public function Combo():Void{
-		if ((FlxG.keys.justPressed.J && jump == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
+		if ((FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || (FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
 			thyHits++;
 		}
 		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
@@ -324,7 +305,7 @@ class Jugador extends FlxSprite{
 			piniaCorriendo = false;
 			contadorPiniaCorriendo = 0;
 			punios.posicionar();
-			}
+		}
 		// delimitacion de la habilidad de escape del personaje
 		if (contadorEsquivar >= 30){
 			esquivando = false;

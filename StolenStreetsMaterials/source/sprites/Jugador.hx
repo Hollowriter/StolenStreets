@@ -1,5 +1,5 @@
 package sprites;
-
+import flixel.animation.FlxAnimation;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
@@ -40,6 +40,9 @@ class Jugador extends FlxSprite{
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
+		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73,82);
+		/*animation.add("Natural", [0, 5], 2, true);
+		animation.play("Natural");			*/
 		acceleration.y = 1500; // gravedad
 		makeGraphic(30, 30, FlxColor.PINK);
 		drag.x = 1000; // delimito la velocidad

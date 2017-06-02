@@ -22,8 +22,8 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 	private var puniosEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
-		loadGraphic(AssetPaths.Enemy__png, true, 40, 40);
-		animation.add("Natural", [11, 12], 2, true);
+		loadGraphic(AssetPaths.EnemyPlaceholder__png, true, 39,43);
+		animation.add("Natural", [0, 1], 2, true);
 		animation.play("Natural");			
 		acceleration.y = 1500; // gravedad
 		drag.x = 1000;

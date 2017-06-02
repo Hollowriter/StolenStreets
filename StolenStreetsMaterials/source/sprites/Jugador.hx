@@ -133,7 +133,7 @@ class Jugador extends FlxSprite{
 			time = 0; // reinicia el timer
 		}
 		if (check == true && agarrando == false){ // el puñetazo esta presente
-			punios.PunietazoJugador(this, direccion, jump); // colocacion del puñetazo
+			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puñetazo
 			if (agarrando == true){ // esto para evitar que le pege eternamente
 				check = false;
 			}
@@ -298,7 +298,7 @@ class Jugador extends FlxSprite{
 		Golpear();
 		if (piniaCorriendo == true){
 			punios.SetGolpeDuro(true);
-			punios.PunietazoJugador(this, direccion, jump);
+			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
 			contadorPiniaCorriendo++;
 		}
 		if (contadorPiniaCorriendo >= piniaCorriendoTiempoMax){
@@ -314,7 +314,7 @@ class Jugador extends FlxSprite{
 		else if (esquivando == true){
 			contadorEsquivar++;
 		}
-			if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false)
+			if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false || FlxG.keys.pressed.SHIFT && controlesWASD == true || FlxG.keys.pressed.SHIFT && controlesWASD == false)
 				corriendo = true;
 			else
 				corriendo = false;

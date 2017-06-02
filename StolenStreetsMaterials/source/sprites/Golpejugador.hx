@@ -27,7 +27,7 @@ class Golpejugador extends FlxSprite{
 		y = Reg.posicionDeLosPunios;
 	}
 	// puñetazo del jugador
-	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool):Void{ // Pendiente de testear
+	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool, corriendo:Bool):Void{ // Pendiente de testear
 		trace("ESTOY EN PUNIETAZOJUGADOR");
 		if (personaje != null){ // si el personaje existe
 			y = personaje.y; // se encuentra a la misma altura del personaje
@@ -43,9 +43,10 @@ class Golpejugador extends FlxSprite{
 			if (personaje.GetCombo() > 2 || saltando == true){ // golpe duro comprobado
 				GolpeDuro = true;
 			}
-			else{
+			else if (corriendo == true)
+				GolpeDuro = true;
+			else
 				GolpeDuro = false; //esto hay que cambiarlo
-			}
 		}
 	}
 	// colision del golpe

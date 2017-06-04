@@ -46,6 +46,8 @@ class Jugador extends FlxSprite{
 		animation.add("Saltar", [1, 2, 3, 4], 5, false);
 		animation.add("CaidaLibre", [4], 2, true);
 		animation.add("Golpe", [14, 15, 16], 7, false);
+		animation.add("SegundoGolpe", [16, 17, 18], 7, false);
+		animation.add("Correr", [9, 10, 11, 12, 13], 6, true);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = 1500; // gravedad
@@ -77,6 +79,7 @@ class Jugador extends FlxSprite{
 				}
 				else{
 					velocity.x = velocidadCorrer;
+					animation.play("Correr");
 				}
 			facing = FlxObject.RIGHT;
 			direccion = false;
@@ -92,6 +95,7 @@ class Jugador extends FlxSprite{
 				}
 				else{
 					velocity.x = -velocidadCorrer;
+					animation.play("Correr");
 				}
 				facing = FlxObject.LEFT;
 				direccion = true;
@@ -147,7 +151,15 @@ class Jugador extends FlxSprite{
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
-			animation.play("Golpe");
+			if (thyHits < 2){
+				animation.play("Golpe");
+			}
+			else if (thyHits == 2){
+				animation.play("SegundoGolpe");
+			}
+			else{
+				animation.play("Golpe");
+			}
 			if (corriendo == true){	
 				if(direccion == true){
 						velocity.x = Reg.hSpeed;

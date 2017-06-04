@@ -28,17 +28,19 @@ class Golpejugador extends FlxSprite{
 	}
 	// puñetazo del jugador
 	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool, corriendo:Bool):Void{ // Pendiente de testear
-		trace("ESTOY EN PUNIETAZOJUGADOR");
+		// trace("ESTOY EN PUNIETAZOJUGADOR");
 		if (personaje != null){ // si el personaje existe
 			y = personaje.y; // se encuentra a la misma altura del personaje
 			if (mirando == false){
-				x = personaje.x + 25; // pero mas adelante de el
+				x = personaje.x + 70; // pero mas adelante de el
+				y = personaje.y + 50;
 			}
 			else if (mirando == true){
-				x = personaje.x - 5; // pero mas adelante de el
+				x = personaje.x; // pero mas adelante de el
+				y = personaje.y + 50;
 			}
 			if (saltando == true){ // esto es un Salto y patada
-				y = personaje.y + 10; // por lo que se encuentra mas abajo
+				y = personaje.y + 80; // por lo que se encuentra mas abajo
 			}
 			if (personaje.GetCombo() > 2 || saltando == true){ // golpe duro comprobado
 				GolpeDuro = true;

@@ -41,10 +41,15 @@ class Jugador extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73,82);
-		/*animation.add("Natural", [0, 5], 2, true);
-		animation.play("Natural");			*/
+		animation.add("Natural", [0, 8], 2, true);
+		animation.add("Caminar", [0, 5, 6, 7], 4, true);
+		animation.add("Saltar", [1, 2, 3, 4], 5, false);
+		animation.add("CaidaLibre", [4], 2, true);
+		animation.add("Golpe", [14, 15, 16], 7, false);
+		animation.play("Natural");
+		// animation.play("Caminar");
 		acceleration.y = 1500; // gravedad
-		makeGraphic(30, 30, FlxColor.PINK);
+		// makeGraphic(30, 30, FlxColor.PINK);
 		drag.x = 1000; // delimito la velocidad
 		punios = new Golpejugador(1000, 1000);
 		direccion = false;
@@ -64,21 +69,37 @@ class Jugador extends FlxSprite{
 		if (agarrando == false && check == false && meHurt == 0 && esquivando == false){
 			if (FlxG.keys.pressed.D && controlesWASD == true /*&& check == false && meHurt == 0 && esquivando == false*/ || 
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
-				if(corriendo == false)
+				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
-				else
+					if (jump == false){
+						animation.play("Caminar");
+					}
+				}
+				else{
 					velocity.x = velocidadCorrer;
+				}
 			facing = FlxObject.RIGHT;
 			direccion = false;
+			setFacingFlip(FlxObject.RIGHT, direccion, false);
 		}
 	    if (FlxG.keys.pressed.A && controlesWASD == true /* && check==false && meHurt==0 && esquivando == false*/ || 
 		FlxG.keys.pressed.LEFT && controlesWASD == false /*&& check==false && meHurt==0 && esquivando == false*/){
-				if(corriendo == false)
+				if(corriendo == false){
 					velocity.x = -Reg.hSpeed;
-				else
+					if (jump == false){
+						animation.play("Caminar");
+					}
+				}
+				else{
 					velocity.x = -velocidadCorrer;
+				}
 				facing = FlxObject.LEFT;
 				direccion = true;
+				setFacingFlip(FlxObject.LEFT, direccion, false);
+			}
+			if ((FlxG.keys.justReleased.D || FlxG.keys.justReleased.A) && controlesWASD == true ||
+			(FlxG.keys.justReleased.RIGHT || FlxG.keys.justReleased.LEFT) && controlesWASD == false){
+				animation.play("Natural");
 			}
 		}
 	}
@@ -99,14 +120,19 @@ class Jugador extends FlxSprite{
 		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
 		FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
 		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
-		FlxG.keys.justPressed.S && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false)
+		FlxG.keys.justPressed.S && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false){
 			velocity.y = Reg.jumpSpeed;
+			animation.play("Saltar");
+		}
 		// chequea si el personaje esta en el aire/saltando
 		if (isTouching(FlxObject.FLOOR)){
 			jump = false;
 		}
 		else{
 			jump = true;
+			if(animation.finished){
+				animation.play("CaidaLibre");
+			}
 		}
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
@@ -121,6 +147,7 @@ class Jugador extends FlxSprite{
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
+			animation.play("Golpe");
 			if (corriendo == true){	
 				if(direccion == true){
 						velocity.x = Reg.hSpeed;
@@ -163,6 +190,9 @@ class Jugador extends FlxSprite{
 		}
 		if (ComboActivation == true){ // timer para finalizar el Combo
 			time++;
+		}
+		if (animation.finished){
+			animation.play("Natural");
 		}
 	}
 	// contador de golpes consecutivos (Combo)

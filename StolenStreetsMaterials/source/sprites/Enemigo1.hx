@@ -18,6 +18,7 @@ class Enemigo1 extends BaseEnemigo
 	private var direc:Bool;
 	private var golpe:GolpeEnemigo;
 	private var timer:Int;
+	private var golpeFuerte:Int;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -27,6 +28,7 @@ class Enemigo1 extends BaseEnemigo
 		still = false;
 		golpe = new GolpeEnemigo(1000, 1000);
 		timer = 0;
+		golpeFuerte = 0;
 	}
 	// movimiento de este enemigo
 	override public function move(){
@@ -52,13 +54,13 @@ class Enemigo1 extends BaseEnemigo
 		if (!still)
 		{
 			timer = 0;
-			if (x < Reg.posXjugador && x < (Reg.posXjugador - Reg.widthJugador * 2))
+			if (x < enemyRightMin && x < (enemyRightMax))
 			{
 				x += 2;
 				direc = false;
 				golpe.PosicionarGE();
 			}
-			if (x > Reg.posXjugador && x > (Reg.posXjugador + Reg.widthJugador * 2))
+			if (x > enemyLeftMin && x > (enemyLeftMax))
 			{
 				x -= 2;
 				direc = true;
@@ -66,12 +68,21 @@ class Enemigo1 extends BaseEnemigo
 			}
 		}
 		
-		if ((x < Reg.posXjugador - Reg.widthJugador && x > (Reg.posXjugador - Reg.widthJugador * 2))
-			|| (x > Reg.posXjugador + Reg.widthJugador && x < (Reg.posXjugador + Reg.widthJugador * 2)))
+		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2))
+			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)))
 		{
 			if (timer <= Reg.effectTimer){
+				golpeFuerte++;
 				still = true;
-				golpe.PunietazoEnemigo(this, direc);
+				if (golpeFuerte > Reg.golpeFuerteMax)
+				{
+					trace("en golpe fuerte");
+					golpe.SetGolpeFuerte(true);
+					golpe.PunietazoEnemigo(this, direc);
+					//golpe.SetGolpeFuerte(false); comentado por problemas de hitbox, pero funca (averiguar en que momento retomar golpes normales de enemigo)
+					golpeFuerte = 0;
+				}
+				else golpe.PunietazoEnemigo(this, direc);
 			}
 			else{
 				if (timer > Reg.maxEffectTimer){
@@ -80,6 +91,7 @@ class Enemigo1 extends BaseEnemigo
 				golpe.PosicionarGE();
 			}
 			timer++;
+			//golpeFuerte++;
 			// trace("work");
 		}
 		else

@@ -20,11 +20,16 @@ class Reg{
 	public static inline var VidaMili:Int = 100; //Vida base de Mili
 	public static inline var posicionDeLosPunios:Int = 1000; // a donde se van las hitboxes cuando no aparecen
 	public static inline var velocidadPlataformasFlotantes:Float = 50; // velocidad de las plataformas que flotan
+	public static inline var golpeFuerteMax:Int = 100;
+	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador
 	static public var widthJugador:Float; //guarda el ancho del jugador
 	static public var heightJugador:Float; //guardar el alto del jugador
+	
+	
 	static public var puntaje:Int = 0; //guarda el puntaje
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
+	
 }

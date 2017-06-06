@@ -3,6 +3,7 @@ package sprites;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import sprites.GolpeEnemigo;
+import source.Reg;
 
 /**
  * ...
@@ -15,6 +16,12 @@ class BaseEnemigo extends FlxSprite
 	private var isHurt:UInt; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
 	private var punioEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
+	
+	private var enemyRightMin:Float;
+	public var enemyRightMax:Float;
+	public var enemyLeftMin:Float;
+	public var enemyLeftMax:Float;
+	
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -24,6 +31,12 @@ class BaseEnemigo extends FlxSprite
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		
+		enemyRightMin = Reg.posXjugador;
+		enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
+		enemyLeftMin = Reg.posXjugador;
+		enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
+		
 		move();
 	}
 	public function move(){};

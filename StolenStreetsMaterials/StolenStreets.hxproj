@@ -29,7 +29,11 @@
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
+<<<<<<< HEAD
     <option additional="--remap flash:openfl&#xA;--macro flixel.system.macros.FlxDefines.run()" />
+=======
+    <option additional="--remap flash:openfl&#xA;--macro flixel.system.macros.FlxDefines.run()&#xA;-debug " />
+>>>>>>> 2a94d2905a1b4bea0eaad1a697012595e024a2e4
   </build>
   <!-- haxelib libraries -->
   <haxelib>

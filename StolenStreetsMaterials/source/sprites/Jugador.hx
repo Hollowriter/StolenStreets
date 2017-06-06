@@ -41,13 +41,14 @@ class Jugador extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73,82);
-		animation.add("Natural", [0, 8], 2, true);
-		animation.add("Caminar", [0, 5, 6, 7], 4, true);
-		animation.add("Saltar", [1, 2, 3, 4], 5, false);
-		animation.add("CaidaLibre", [4], 2, true);
-		animation.add("Golpe", [14, 15, 16], 7, false);
-		animation.add("SegundoGolpe", [16, 17, 18], 7, false);
-		animation.add("Correr", [9, 10, 11, 12, 13], 6, true);
+		animation.add("Natural", [0, 10], 2, true);
+		animation.add("Caminar", [0, 5, 6, 7,8,9], 6, true);
+		animation.add("Saltar", [1, 2,2, 3], 5, false);
+		animation.add("Aterrizaje", [4], 6, false);
+		animation.add("CaidaLibre", [3], 2, true);
+		animation.add("Golpe", [17, 18, 19], 7, false);
+		animation.add("SegundoGolpe", [20, 21, 22], 7, false);
+		animation.add("Correr", [11, 12, 13, 14, 15,16], 6, true);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = 1500; // gravedad
@@ -73,13 +74,15 @@ class Jugador extends FlxSprite{
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
 				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
-					if (jump == false){
+					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) /*&& jump == false*/){
 						animation.play("Caminar");
 					}
 				}
 				else{
 					velocity.x = velocidadCorrer;
+					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
 					animation.play("Correr");
+					}
 				}
 			facing = FlxObject.RIGHT;
 			direccion = false;
@@ -89,20 +92,22 @@ class Jugador extends FlxSprite{
 		FlxG.keys.pressed.LEFT && controlesWASD == false /*&& check==false && meHurt==0 && esquivando == false*/){
 				if(corriendo == false){
 					velocity.x = -Reg.hSpeed;
-					if (jump == false){
+					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
 						animation.play("Caminar");
 					}
 				}
 				else{
 					velocity.x = -velocidadCorrer;
+					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
 					animation.play("Correr");
+					}
 				}
 				facing = FlxObject.LEFT;
 				direccion = true;
 				setFacingFlip(FlxObject.LEFT, direccion, false);
 			}
-			if ((FlxG.keys.justReleased.D || FlxG.keys.justReleased.A) && controlesWASD == true ||
-			(FlxG.keys.justReleased.RIGHT || FlxG.keys.justReleased.LEFT) && controlesWASD == false){
+			if (((FlxG.keys.justReleased.D || FlxG.keys.justReleased.A) && controlesWASD == true ||
+			(FlxG.keys.justReleased.RIGHT || FlxG.keys.justReleased.LEFT) && controlesWASD == false)&& jump == false){
 				animation.play("Natural");
 			}
 		}
@@ -130,6 +135,8 @@ class Jugador extends FlxSprite{
 		}
 		// chequea si el personaje esta en el aire/saltando
 		if (isTouching(FlxObject.FLOOR)){
+			if (jump == true)
+				animation.play("Aterrizaje");
 			jump = false;
 		}
 		else{
@@ -141,7 +148,9 @@ class Jugador extends FlxSprite{
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
-		velocity.y = -750;
+		velocity.y = -750; 
+		animation.stop();
+		animation.play("CaidaLibre");
 	}
 	// getter del golpe
 	public function GetGolpear(){

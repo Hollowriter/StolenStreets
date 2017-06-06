@@ -41,13 +41,14 @@ class Jugador extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73,82);
-		animation.add("Natural", [0, 8], 2, true);
-		animation.add("Caminar", [0, 5, 6, 7], 4, true);
-		animation.add("Saltar", [1, 2, 3, 4], 5, false);
-		animation.add("CaidaLibre", [4], 2, true);
-		animation.add("Golpe", [14, 15, 16], 7, false);
-		animation.add("SegundoGolpe", [16, 17, 18], 7, false);
-		animation.add("Correr", [9, 10, 11, 12, 13], 6, true);
+		animation.add("Natural", [0, 9], 2, true);
+		animation.add("Caminar", [0, 5, 6, 7,8,9], 6, true);
+		animation.add("Saltar", [1, 2, 3], 5, false);
+		animation.add("Aterrizaje", [4, 0], 2, false);
+		animation.add("CaidaLibre", [3], 2, true);
+		animation.add("Golpe", [17, 18, 19], 7, false);
+		animation.add("SegundoGolpe", [20, 21, 22], 7, false);
+		animation.add("Correr", [11, 12, 13, 14, 15,16], 6, true);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = 1500; // gravedad

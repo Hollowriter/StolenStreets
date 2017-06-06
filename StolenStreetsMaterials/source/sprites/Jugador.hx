@@ -44,7 +44,7 @@ class Jugador extends FlxSprite{
 		animation.add("Natural", [0, 9], 2, true);
 		animation.add("Caminar", [0, 5, 6, 7,8,9], 6, true);
 		animation.add("Saltar", [1, 2, 3], 5, false);
-		animation.add("Aterrizaje", [4, 0], 2, false);
+		animation.add("Aterrizaje", [4], 6, false);
 		animation.add("CaidaLibre", [3], 2, true);
 		animation.add("Golpe", [17, 18, 19], 7, false);
 		animation.add("SegundoGolpe", [20, 21, 22], 7, false);
@@ -131,6 +131,8 @@ class Jugador extends FlxSprite{
 		}
 		// chequea si el personaje esta en el aire/saltando
 		if (isTouching(FlxObject.FLOOR)){
+			if (jump == true)
+				animation.play("Aterrizaje");
 			jump = false;
 		}
 		else{
@@ -142,7 +144,9 @@ class Jugador extends FlxSprite{
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
-		velocity.y = -750;
+		velocity.y = -750; 
+		animation.stop();
+		animation.play("CaidaLibre");
 	}
 	// getter del golpe
 	public function GetGolpear(){

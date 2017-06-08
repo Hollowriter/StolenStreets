@@ -12,7 +12,7 @@ import sprites.Enemigo;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
-import sprites.PlataformaPrincipal;
+//import sprites.PlataformaPrincipal;
 import sprites.BaseEnemigo;
 import sprites.Enemigo1;
 import source.Reg;
@@ -20,6 +20,11 @@ import sprites.Trampolin;
 import sprites.DropsVida;
 import sprites.Obstaculo;
 import sprites.DropFalling;
+import flixel.addons.editors.ogmo.FlxOgmoLoader;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.addons.editors.tiled.TiledObjectLayer;
+import flixel.tile.FlxTilemap;
+import flixel.FlxObject;
 
 class PlayState extends FlxState{
 	private var Mili:Jugador; // jugador
@@ -28,7 +33,6 @@ class PlayState extends FlxState{
 	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	private var Chico:Enemigo; // enemigo de prueba (Reemplazar cuando la nueva clase este terminada)
-	private var Platform:PlataformaPrincipal; // plataforma de prueba solida
 	// plataformas flotantes
 	private var testFloatingPlatform:PlataformaFlotante;
 	private var testFloatingPlatform1:PlataformaFlotante;
@@ -45,9 +49,14 @@ class PlayState extends FlxState{
 	// private var ay:Int = 25; //descomentar si querer testear vida de jugador; (sin usar)
 	private var chico1:Enemigo1; //nueva clase enemigo (bajo test)
 	// private var hechos:Int = 1; (sin usar)
+	//EL nivel
+	var ogmoLoader:FlxOgmoLoader;
+	var tileMap:FlxTilemap;
+	var tmpMap:TiledObjectLayer;
 	override public function create():Void{
 		super.create();
 		Mili = new Jugador(30, 30);
+		camera.follow(Mili);
 		Cajas.members[0] = new Obstaculo(200, 200);
 		Cajas.members[1] = new Obstaculo(300, 200);
 		Plata.members[0] = new Drops(300, 100);
@@ -58,7 +67,6 @@ class PlayState extends FlxState{
 		Botiquin.members[1] = new DropsVida(450, 150);
 		Chico = new Enemigo(70, 30);
 		chico1 = new Enemigo1(90, 30); //nueva clase enemigo (bajo test)
-		Platform = new PlataformaPrincipal(0, 350);
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
 		// crea el HUD del dinero
@@ -99,6 +107,19 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
+		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel1__oel);
+		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 16, 16, "tilesets");
+		//tileMap.follow();
+		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
+		for (i in 0...11){
+			if (i != 20){
+				tileMap.setTileProperties(i, FlxObject.NONE);
+			}
+			else{
+				tileMap.setTileProperties(i, FlxObject.ANY);
+			}
+		}
+		add(tileMap);
 		// crea el HUD de la vida
 		add(Plata.members[0]);
 		add(Plata.members[1]);
@@ -122,7 +143,6 @@ class PlayState extends FlxState{
 		add(lifes);
 		add(Mili);
 		add(Chico);
-		add(Platform);
 		add(testFloatingPlatform);
 		add(testFloatingPlatform1);
 		testFloatingPlatform1.frenarHorizontal();
@@ -140,9 +160,6 @@ class PlayState extends FlxState{
 		puntaje.text = ("SCORE: " + Reg.puntaje);
 		vida.text = ("HEALTH: " + Mili.GetVida());
 		// HUD
-		FlxG.collide(Mili, Platform);
-		FlxG.collide(Cajas.members[0], Platform);
-		FlxG.collide(Cajas.members[1], Platform);
 		FlxG.collide(Cajas.members[1], Cajas.members[0]);
 		// FlxG.collide(PlataCaida.members[0], Platform);
 		// FlxG.collide(PlataCaida.members[1], Platform);
@@ -150,15 +167,7 @@ class PlayState extends FlxState{
 		FlxG.collide(Mili,Cajas.members[1]);*/
 		//FlxG.collide(Chico, Cajas.members[0]);
 		//FlxG.collide(Cajas.members[1], chico1); // Colisiones de las cajas con Mili, ¿Seran las de los efectos raros?
-		FlxG.collide(Chico, Platform);
-		FlxG.collide(chico1, Platform);
 		/*testeando los dropeos de las cajas destruibles*/
-		if (Cajas.members[0].GetDrop() != null){
-			FlxG.collide(Cajas.members[0].GetDrop(), Platform);
-		}
-		if (Cajas.members[1].GetDrop() != null){
-			FlxG.collide(Cajas.members[1].GetDrop(), Platform);
-		}
 		/*testeando los dropeos de las cajas destruibles*/
 		// Collider complicado para las plataformas flotantes de colision con el jugador
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform.y)
@@ -219,5 +228,6 @@ class PlayState extends FlxState{
 			Reg.guita = 0;
 			Reg.puntaje = 0;
 		}
+		FlxG.collide(Mili, tileMap);
 	}
 }

@@ -1,5 +1,3 @@
-package sprites;
-
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;

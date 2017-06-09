@@ -326,10 +326,10 @@ class Jugador extends FlxSprite{
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
 			x = FlxG.camera.scroll.x + FlxG.camera.width - width;
-		if (y <= 5)
+		/*if (y <= 5)
 			y = 5;
 		if (y + height >= FlxG.height)
-			y = FlxG.height - height;
+			y = FlxG.height - height;*/ // esto producia el bug
 		//¿Cuanta vida tiene?
 		if (vidaActual <= 0 && life != 0)
 		{

@@ -12,7 +12,7 @@ import sprites.Enemigo;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
-//import sprites.PlataformaPrincipal;
+import sprites.PlataformaPrueba;
 import sprites.BaseEnemigo;
 import sprites.Enemigo1;
 import source.Reg;
@@ -36,6 +36,7 @@ class PlayState extends FlxState{
 	// plataformas flotantes
 	private var testFloatingPlatform:PlataformaFlotante;
 	private var testFloatingPlatform1:PlataformaFlotante;
+	private var plataforma:PlataformaPrueba;
 	// plataformas flotantes
 	private var Cajas = new FlxTypedGroup<Obstaculo>(2);
 	private var trampolin:Trampolin; // plataforma de salto
@@ -56,6 +57,7 @@ class PlayState extends FlxState{
 	override public function create():Void{
 		super.create();
 		Mili = new Jugador(30, 30);
+		plataforma = new PlataformaPrueba(30, 300);
 		camera.follow(Mili);
 		Cajas.members[0] = new Obstaculo(200, 200);
 		Cajas.members[1] = new Obstaculo(300, 200);
@@ -151,6 +153,7 @@ class PlayState extends FlxState{
 		add(Chico.GetGolpeEnemigo());
 		add(chico1.GetGolpeEnemigo());
 		add(trampolin);
+		add(plataforma);
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
@@ -161,6 +164,11 @@ class PlayState extends FlxState{
 		vida.text = ("HEALTH: " + Mili.GetVida());
 		// HUD
 		FlxG.collide(Cajas.members[1], Cajas.members[0]);
+		FlxG.collide(Mili, plataforma);
+		FlxG.collide(Cajas.members[0], plataforma);
+		FlxG.collide(Cajas.members[1], plataforma);
+		FlxG.collide(Chico, plataforma);
+		FlxG.collide(chico1, plataforma);
 		// FlxG.collide(PlataCaida.members[0], Platform);
 		// FlxG.collide(PlataCaida.members[1], Platform);
 		/*FlxG.collide(Cajas.members[0], Mili);

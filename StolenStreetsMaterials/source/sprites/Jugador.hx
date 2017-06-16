@@ -48,7 +48,8 @@ class Jugador extends FlxSprite{
 		animation.add("CaidaLibre", [3], 2, true);
 		animation.add("Golpe", [17, 18, 19], 7, false);
 		animation.add("SegundoGolpe", [20, 21, 22], 7, false);
-		animation.add("Correr", [11, 12, 13, 14, 15,16], 6, true);
+		animation.add("Correr", [11, 12, 13, 14, 15, 16], 6, true);
+		animation.add("Danio", [23,23,23], 1, false);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = 1500; // gravedad
@@ -234,9 +235,11 @@ class Jugador extends FlxSprite{
 	public function DolorDelJugador(){
 		if (meHurt==1){
 			time++;
+			animation.play("Danio");
 			if (time > Reg.effectTimer){
 				time = 0;
 				meHurt = 0;
+				animation.play("Natural");
 			}
 		}
 	}

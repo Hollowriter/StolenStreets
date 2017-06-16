@@ -18,7 +18,7 @@ class Enemigo1 extends BaseEnemigo
 	private var direc:Bool;
 	private var golpe:GolpeEnemigo;
 	private var timer:Int;
-	private var golpeFuerte:Int;
+	private var golpesVarios:Int;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -28,7 +28,7 @@ class Enemigo1 extends BaseEnemigo
 		still = false;
 		golpe = new GolpeEnemigo(1000, 1000);
 		timer = 0;
-		golpeFuerte = 0;
+		golpesVarios = 0;
 	}
 	// movimiento de este enemigo
 	override public function move(){
@@ -72,15 +72,26 @@ class Enemigo1 extends BaseEnemigo
 			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)))
 		{
 			if (timer <= Reg.effectTimer){
-				golpeFuerte++;
+				golpesVarios++;
 				still = true;
-				if (golpeFuerte > Reg.golpeFuerteMax)
+				if (golpesVarios > Reg.golpeFuerteMax)
 				{
-					trace("en golpe fuerte");
+					//trace("en golpe fuerte");
 					golpe.SetGolpeFuerte(true);
 					golpe.PunietazoEnemigo(this, direc);
-					//golpe.SetGolpeFuerte(false); comentado por problemas de hitbox, pero funca (averiguar en que momento retomar golpes normales de enemigo)
-					golpeFuerte = 0;
+					//golpe.SetgolpesVarios(false); comentado por problemas de hitbox, pero funca (averiguar en que momento retomar golpes normales de enemigo)
+					//golpesVarios = 0;
+				}
+				else golpe.PunietazoEnemigo(this, direc);
+				
+				if (golpesVarios > Reg.golpeCombo)//aplicar el timer para duracion entre golpe y golpe de combo.
+				{
+					trace("c-c-c-combo breaker!");
+					golpe.PunietazoEnemigo(this, direc);
+					golpe.PosicionarGE();
+					golpe.PunietazoEnemigo(this, direc);
+					golpesVarios = 0;
+					
 				}
 				else golpe.PunietazoEnemigo(this, direc);
 			}
@@ -91,7 +102,7 @@ class Enemigo1 extends BaseEnemigo
 				golpe.PosicionarGE();
 			}
 			timer++;
-			//golpeFuerte++;
+			//golpesVarios++;
 			// trace("work");
 		}
 		else

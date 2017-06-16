@@ -109,8 +109,11 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
+		Reg.Enemigos = new FlxTypedGroup<Enemigo>();
+		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel1__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 16, 16, "tilesets");
+		ogmoLoader.loadEntities(entityCreator, "entidades");
 		//tileMap.follow();
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
 		for (i in 0...11){
@@ -154,6 +157,22 @@ class PlayState extends FlxState{
 		add(chico1.GetGolpeEnemigo());
 		add(trampolin);
 		add(plataforma);
+		
+		add(Reg.Enemigos);
+		add(Reg.PlataformasFlotantes);
+	}
+		private function entityCreator(entityName:String, entityData:Xml):Void{
+		var entityStartX:Float = Std.parseFloat(entityData.get("x"));
+		var entityStartY:Float = Std.parseFloat(entityData.get("y"));
+		
+		//	Me fijo qué tipo de entidad tengo que inicializar...
+		switch(entityName)
+		{
+			case "enemigo":
+				    Reg.Enemigos.add(new Enemigo(entityStartX, entityStartY));
+			case "plataformaflotante":
+					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
+		}
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

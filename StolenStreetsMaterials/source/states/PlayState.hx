@@ -116,8 +116,9 @@ class PlayState extends FlxState{
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		//tileMap.follow();
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
-		for (i in 0...11){
-			if (i != 20){
+		for (i in 0...27){
+			if (i == 0){
+				trace("inside");
 				tileMap.setTileProperties(i, FlxObject.NONE);
 			}
 			else{
@@ -184,6 +185,7 @@ class PlayState extends FlxState{
 		// HUD
 		FlxG.collide(Cajas.members[1], Cajas.members[0]);
 		FlxG.collide(Mili, plataforma);
+		FlxG.collide(Mili, tileMap);
 		FlxG.collide(Cajas.members[0], plataforma);
 		FlxG.collide(Cajas.members[1], plataforma);
 		FlxG.collide(Chico, plataforma);
@@ -255,6 +257,5 @@ class PlayState extends FlxState{
 			Reg.guita = 0;
 			Reg.puntaje = 0;
 		}
-		FlxG.collide(Mili, tileMap);
 	}
 }

@@ -127,15 +127,15 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (FlxG.keys.justPressed.W && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
-		FlxG.keys.justPressed.UP && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
-		FlxG.keys.justPressed.K && isTouching(FlxObject.FLOOR) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
-		FlxG.keys.justPressed.S && isTouching(FlxObject.FLOOR) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false){
+		if (FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
+		FlxG.keys.justPressed.UP && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
+		FlxG.keys.justPressed.K && (isTouching(FlxObject.FLOOR)  || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
+		FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false){
 			velocity.y = Reg.jumpSpeed;
 			animation.play("Saltar");
 		}
 		// chequea si el personaje esta en el aire/saltando
-		if (isTouching(FlxObject.FLOOR)){
+		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
 			if (jump == true)
 				animation.play("Aterrizaje");
 			jump = false;

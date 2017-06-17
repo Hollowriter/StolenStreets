@@ -48,7 +48,7 @@ class PlayState extends FlxState{
 	// private var auch:Int = 10; //descomentar si querer testear vida de jugador; (sin usar)
 	private var life:Int; // vida
 	// private var ay:Int = 25; //descomentar si querer testear vida de jugador; (sin usar)
-	private var chico1:Enemigo1; //nueva clase enemigo (bajo test)
+	private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
 	// private var hechos:Int = 1; (sin usar)
 	//EL nivel
 	var ogmoLoader:FlxOgmoLoader;
@@ -188,8 +188,11 @@ class PlayState extends FlxState{
 		FlxG.collide(Mili, tileMap);
 		FlxG.collide(Cajas.members[0], plataforma);
 		FlxG.collide(Cajas.members[1], plataforma);
-		FlxG.collide(Chico, plataforma);
+		FlxG.collide(Cajas.members[0], tileMap);
+		FlxG.collide(Cajas.members[1], tileMap);
+		FlxG.collide(Chico, plataforma); // a este no le pongo porque ya lo vamos a liquidar
 		FlxG.collide(chico1, plataforma);
+		FlxG.collide(chico1, tileMap);
 		// FlxG.collide(PlataCaida.members[0], Platform);
 		// FlxG.collide(PlataCaida.members[1], Platform);
 		/*FlxG.collide(Cajas.members[0], Mili);
@@ -238,14 +241,15 @@ class PlayState extends FlxState{
 		/*dropeo de las cajas*/
 		// Overlap del jugador con los objetos recolectables
 		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
-		Mili.Agarrar(Chico);
+		Mili.Agarrar(chico1);
 		Mili.Salto();
 		Chico.MovimientoDelEnemigo(Mili);
 		// Chico.Atacar(); // esto se puede sacar del playstate
 		Chico.DolorDelEnemigo(Mili);
-		Mili.GetGolpear().ColisionDelGolpe(Chico);
+		Mili.GetGolpear().ColisionDelGolpe(chico1);
 		
 		chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
+		chico1.DolorDelEnemigo(Mili);
 		
 		for (o in 0...cantM){
 			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);

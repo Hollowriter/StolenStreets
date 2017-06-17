@@ -59,7 +59,7 @@ class Golpejugador extends FlxSprite{
 				caja.SetGolpeado(true);
 			}
 		}
-	public function ColisionDelGolpe(Pum:Enemigo):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
+	public function ColisionDelGolpe(Pum:BaseEnemigo):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum)){ // si el golpe es del jugador y choca con el enemigo
 			posicionar(); // lo hace desaparecer
 			if (Pum.GetHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad

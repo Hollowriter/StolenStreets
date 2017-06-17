@@ -147,7 +147,7 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 	}
 	// determina si esta en el aire
 	public function EnElAire(){
-		if (isTouching(FlxObject.FLOOR)){
+		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
 			saltito = false;
 		}
 		else{

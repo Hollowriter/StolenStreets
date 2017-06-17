@@ -15,24 +15,28 @@ import sprites.GolpeEnemigo;
 class Enemigo1 extends BaseEnemigo 
 {
 	private var still:Bool;
-	private var direc:Bool;
-	private var golpe:GolpeEnemigo;
-	private var timer:Int;
+	//private var direc:Bool;
+	// private var golpe:GolpeEnemigo;
+	//private var timer:Int;
 	private var golpesVarios:Int;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 30, FlxColor.BROWN);
-		vidaEnemiga = 10;
+		vidaEnemiga = 80;
 		still = false;
-		golpe = new GolpeEnemigo(1000, 1000);
+		// golpe = new GolpeEnemigo(1000, 1000);
+		punioEnemigo = new GolpeEnemigo(1000, 1000);
 		timer = 0;
 		golpesVarios = 0;
+		isHurt = 0;
+		saltito = false;
 	}
 	// movimiento de este enemigo
 	override public function move(){
 		super.move();
+		if (isHurt == 0 || saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
 		/*if(etapa == 1){
 			//x -= 1;
 			velocity.x = 0;
@@ -57,14 +61,14 @@ class Enemigo1 extends BaseEnemigo
 			if (x < enemyRightMin && x < (enemyRightMax))
 			{
 				x += 2;
-				direc = false;
-				golpe.PosicionarGE();
+				direccion = false;
+				punioEnemigo.PosicionarGE();
 			}
 			if (x > enemyLeftMin && x > (enemyLeftMax))
 			{
 				x -= 2;
-				direc = true;
-				golpe.PosicionarGE();
+				direccion = true;
+				punioEnemigo.PosicionarGE();
 			}
 		}
 		
@@ -77,29 +81,29 @@ class Enemigo1 extends BaseEnemigo
 				if (golpesVarios > Reg.golpeFuerteMax)
 				{
 					//trace("en golpe fuerte");
-					golpe.SetGolpeFuerte(true);
-					golpe.PunietazoEnemigo(this, direc);
+					punioEnemigo.SetGolpeFuerte(true);
+					punioEnemigo.PunietazoEnemigo(this, direccion);
 					//golpe.SetgolpesVarios(false); comentado por problemas de hitbox, pero funca (averiguar en que momento retomar golpes normales de enemigo)
 					//golpesVarios = 0;
 				}
-				else golpe.PunietazoEnemigo(this, direc);
+				else punioEnemigo.PunietazoEnemigo(this, direccion);
 				
 				if (golpesVarios > Reg.golpeCombo)//aplicar el timer para duracion entre golpe y golpe de combo.
 				{
 					trace("c-c-c-combo breaker!");
-					golpe.PunietazoEnemigo(this, direc);
-					golpe.PosicionarGE();
-					golpe.PunietazoEnemigo(this, direc);
+					punioEnemigo.PunietazoEnemigo(this, direccion);
+					punioEnemigo.PosicionarGE();
+					punioEnemigo.PunietazoEnemigo(this, direccion);
 					golpesVarios = 0;
 					
 				}
-				else golpe.PunietazoEnemigo(this, direc);
+				else punioEnemigo.PunietazoEnemigo(this, direccion);
 			}
 			else{
 				if (timer > Reg.maxEffectTimer){
 					timer = 0;
 				}
-				golpe.PosicionarGE();
+				punioEnemigo.PosicionarGE();
 			}
 			timer++;
 			//golpesVarios++;
@@ -107,14 +111,21 @@ class Enemigo1 extends BaseEnemigo
 		}
 		else
 			still = false;
-		
+		}
 		/*trace(golpe.getPosition());
 		trace(this.x);
 		trace(this.y);*/
 	}
-	
-	public function GetGolpeEnemigo():GolpeEnemigo
+	/*override public function EnElAire(){
+		super.EnElAire();
+	}
+	public override function update(elapsed:Float):Void{
+		super.update(elapsed);
+		EnElAire();
+		move();
+	}*/
+	/*public function GetGolpeEnemigo():GolpeEnemigo
 	{
 		return golpe;
-	}
+	}*/
 }

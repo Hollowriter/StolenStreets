@@ -244,7 +244,7 @@ class Jugador extends FlxSprite{
 		}
 	}
 	// agarre
-	public function Agarrar(pobreVictima:Enemigo){
+	public function Agarrar(pobreVictima:BaseEnemigo){
 		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/

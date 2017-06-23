@@ -213,7 +213,7 @@ class Jugador extends FlxSprite{
 		if (ComboActivation == true){ // timer para finalizar el Combo
 			time++;
 		}
-		if (animation.finished){
+		if (animation.finished && jump == false){
 			animation.play("Natural");
 		}
 	}

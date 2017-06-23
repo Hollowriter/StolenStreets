@@ -16,7 +16,7 @@
     <Width>50000</Width>
     <Height>30000</Height>
   </LevelMaximumSize>
-  <Filename>D:\Desktop\Repo\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
+  <Filename>C:\Users\822\Desktop\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -68,8 +68,8 @@
       <Name>vereda</Name>
       <FilePath>..\images\tilesetnivel1.png</FilePath>
       <TileSize>
-        <Width>16</Width>
-        <Height>16</Height>
+        <Width>20</Width>
+        <Height>20</Height>
       </TileSize>
       <TileSep>0</TileSep>
     </Tileset>
@@ -90,7 +90,7 @@
       <ValueDefinitions />
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>
-    <EntityDefinition Name="enemigos" Limit="500" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
+    <EntityDefinition Name="enemigo" Limit="500" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
         <Width>16</Width>
         <Height>16</Height>

@@ -75,7 +75,7 @@ class Jugador extends FlxSprite{
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
 				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
-					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) /*&& jump == false*/){
+					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
 						animation.play("Caminar");
 					}
 				}
@@ -91,7 +91,7 @@ class Jugador extends FlxSprite{
 		}
 	    if (FlxG.keys.pressed.A && controlesWASD == true /* && check==false && meHurt==0 && esquivando == false*/ || 
 		FlxG.keys.pressed.LEFT && controlesWASD == false /*&& check==false && meHurt==0 && esquivando == false*/){
-				if(corriendo == false){
+				if(corriendo == false && jump == false){
 					velocity.x = -Reg.hSpeed;
 					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
 						animation.play("Caminar");
@@ -100,7 +100,7 @@ class Jugador extends FlxSprite{
 				else{
 					velocity.x = -velocidadCorrer;
 					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
-					animation.play("Correr");
+						animation.play("Correr");
 					}
 				}
 				facing = FlxObject.LEFT;
@@ -213,7 +213,7 @@ class Jugador extends FlxSprite{
 		if (ComboActivation == true){ // timer para finalizar el Combo
 			time++;
 		}
-		if (animation.finished){
+		if (animation.finished && jump == false){
 			animation.play("Natural");
 		}
 	}

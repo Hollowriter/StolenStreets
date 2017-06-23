@@ -109,7 +109,7 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
-		Reg.Enemigos = new FlxTypedGroup<Enemigo>();
+		Reg.Enemigos = new FlxTypedGroup<Enemigo1>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel1__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
@@ -117,7 +117,7 @@ class PlayState extends FlxState{
 		//tileMap.follow();
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
 		for (i in 0...27){
-			if (i == 0){
+			if (i == 0 || i == 15 || i == 16 || i == 30 || i == 31){ //14 15 29 30
 				trace("inside");
 				tileMap.setTileProperties(i, FlxObject.NONE);
 			}
@@ -170,7 +170,7 @@ class PlayState extends FlxState{
 		switch(entityName)
 		{
 			case "enemigo":
-				    Reg.Enemigos.add(new Enemigo(entityStartX, entityStartY));
+				    Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
 			case "plataformaflotante":
 					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
 		}
@@ -238,7 +238,15 @@ class PlayState extends FlxState{
 				}
 			}
 		}
-		//COLISIONES CON EL MAPA
+		//COLISIONES ENTRE ENEMIGOS
+		for (i in 0... Reg.Enemigos.members.length)
+		{
+			for (j in 0... Reg.Enemigos.members.length)
+			{
+				FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
+			}
+		}
+			//COLISIONES CON EL MAPA
 		for(i in 0... Reg.Enemigos.members.length)
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);
 		/*dropeo de las cajas*/
@@ -262,6 +270,7 @@ class PlayState extends FlxState{
 			FlxG.resetState();
 			Reg.guita = 0;
 			Reg.puntaje = 0;
+			trace(Reg.Enemigos.length);
 		}
 	}
 }

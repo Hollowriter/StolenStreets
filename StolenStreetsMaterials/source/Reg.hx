@@ -2,7 +2,7 @@ package source;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 import sprites.Golpejugador;
-import sprites.Enemigo;
+import sprites.Enemigo1;
 import sprites.PlataformaFlotante;
 
 /**
@@ -37,7 +37,7 @@ class Reg{
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
 	
-	static public var Enemigos:FlxTypedGroup<Enemigo>;
+	static public var Enemigos:FlxTypedGroup<Enemigo1>;
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
 	
 }

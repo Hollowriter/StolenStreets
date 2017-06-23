@@ -43,7 +43,7 @@ class BaseEnemigo extends FlxSprite
 		enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
 		EnElAire();
 		Morir();
-		if(x < (Reg.posXjugador - 600) || x > (Reg.posXjugador + 600)) {move();}
+		if(x < (Reg.posXjugador + 600) || x > (Reg.posXjugador - 600)) {move();}
 	}
 	public function move(){};
 	public function gotHitted(){};

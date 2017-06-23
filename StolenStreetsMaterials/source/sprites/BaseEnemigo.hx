@@ -2,6 +2,7 @@ package sprites;
 
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
+import haxe.ds.IntMap;
 import sprites.GolpeEnemigo;
 import flixel.FlxObject;
 import flixel.FlxG;
@@ -21,6 +22,7 @@ class BaseEnemigo extends FlxSprite
 	
 	private var enemyRightMin:Float;
 	private var timer:Int;
+	private var comboTimer:Int;
 	public var enemyRightMax:Float;
 	public var enemyLeftMin:Float;
 	public var enemyLeftMax:Float;

@@ -15,6 +15,7 @@ import sprites.GolpeEnemigo;
 class Enemigo1 extends BaseEnemigo 
 {
 	private var still:Bool;
+	private var combo:Bool;
 	//private var direc:Bool;
 	// private var golpe:GolpeEnemigo;
 	//private var timer:Int;
@@ -26,9 +27,11 @@ class Enemigo1 extends BaseEnemigo
 		makeGraphic(30, 30, FlxColor.BROWN);
 		vidaEnemiga = 80;
 		still = false;
+		combo = false;
 		// golpe = new GolpeEnemigo(1000, 1000);
 		punioEnemigo = new GolpeEnemigo(1000, 1000);
 		timer = 0;
+		comboTimer = 0;
 		golpesVarios = 0;
 		isHurt = 0;
 		saltito = false;
@@ -90,11 +93,22 @@ class Enemigo1 extends BaseEnemigo
 				
 				if (golpesVarios > Reg.golpeCombo)//aplicar el timer para duracion entre golpe y golpe de combo.
 				{
-					trace("c-c-c-combo breaker!");
+					combo = true;
+					//trace("c-c-c-combo breaker!");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
-					punioEnemigo.PosicionarGE();
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-					golpesVarios = 0;
+					if (comboTimer > Reg.comboTimer)
+					{
+						//trace("c-c-c-combo breaker!");
+						if (comboTimer > Reg.comboTimerMax)
+						{
+							punioEnemigo.PosicionarGE();
+							punioEnemigo.PunietazoEnemigo(this, direccion);
+							golpesVarios = 0;
+							combo = false;
+							comboTimer = 0;
+						}
+					}
+					comboTimer++;
 					
 				}
 				else punioEnemigo.PunietazoEnemigo(this, direccion);
@@ -103,9 +117,14 @@ class Enemigo1 extends BaseEnemigo
 				if (timer > Reg.maxEffectTimer){
 					timer = 0;
 				}
-				punioEnemigo.PosicionarGE();
+				if (!combo)
+				{
+					punioEnemigo.PosicionarGE();
+				}
+				punioEnemigo.SetGolpeFuerte(false);
 			}
 			timer++;
+			//comboTimer++;
 			//golpesVarios++;
 			// trace("work");
 		}

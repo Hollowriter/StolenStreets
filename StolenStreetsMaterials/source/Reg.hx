@@ -18,6 +18,7 @@ class Reg{
 	public static inline var friction:Float = 15; // friccion estandar
 	public static inline var effectTimer:Float = 20; // maximo de un timer de comportamiento estandar (aunque por ahora estoy haciendo cualquier cosa)
 	public static inline var comboTimer:Float = 10;
+	public static inline var comboTimerMax:Float = comboTimer * 2;
 	public static inline var maxEffectTimer:Float = effectTimer * 5; // un timer de comportamiento por encima del estandar (por si algo dura sin efecto)
 	public static inline var jumpSpeed:Float = -600; // velocidad estandar de un Salto
 	public static inline var VidaMili:Int = 100; //Vida base de Mili

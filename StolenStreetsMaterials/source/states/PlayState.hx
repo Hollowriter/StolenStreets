@@ -112,7 +112,7 @@ class PlayState extends FlxState{
 		Reg.Enemigos = new FlxTypedGroup<Enemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel1__oel);
-		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 16, 16, "tilesets");
+		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		//tileMap.follow();
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
@@ -238,9 +238,11 @@ class PlayState extends FlxState{
 				}
 			}
 		}
+		//COLISIONES CON EL MAPA
+		for(i in 0... Reg.Enemigos.members.length)
+			FlxG.collide(Reg.Enemigos.members[i], tileMap);
 		/*dropeo de las cajas*/
 		// Overlap del jugador con los objetos recolectables
-		/*Por aca todo esto se puede sacar del playstate*/ /*Benja responde: Por ahora dejemoslo. Al menos por unos dias*/
 		Mili.Agarrar(chico1);
 		Mili.Salto();
 		Chico.MovimientoDelEnemigo(Mili);

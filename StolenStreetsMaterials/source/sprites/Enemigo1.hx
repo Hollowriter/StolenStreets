@@ -74,7 +74,6 @@ class Enemigo1 extends BaseEnemigo
 				punioEnemigo.PosicionarGE();
 			}
 		}
-		
 		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2))
 			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)))
 		{

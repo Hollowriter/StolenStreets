@@ -24,11 +24,16 @@ class Enemigo1 extends BaseEnemigo
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(30, 30, FlxColor.BROWN);
+		loadGraphic(AssetPaths.ThyEnemigo__png, true, 50, 70);
+		animation.add("Normal", [0, 0], 2, true);
+		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
+		animation.add("Caer", [15], 2, true);
+		animation.add("Pegar", [1, 2, 3], 7, false);
+		animation.add("Ouch", [14, 14, 14], 5, false);
+		animation.play("Normal");
 		vidaEnemiga = 80;
 		still = false;
 		combo = false;
-		// golpe = new GolpeEnemigo(1000, 1000);
 		punioEnemigo = new GolpeEnemigo(1000, 1000);
 		timer = 0;
 		comboTimer = 0;
@@ -66,12 +71,16 @@ class Enemigo1 extends BaseEnemigo
 				x += 2;
 				direccion = false;
 				punioEnemigo.PosicionarGE();
+				animation.play("Caminar");
+				flipX = true;
 			}
 			if (x > enemyLeftMin && x > (enemyLeftMax))
 			{
 				x -= 2;
 				direccion = true;
 				punioEnemigo.PosicionarGE();
+				animation.play("Caminar");
+				flipX = false;
 			}
 		}
 		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2))
@@ -79,6 +88,7 @@ class Enemigo1 extends BaseEnemigo
 		{
 			if (timer <= Reg.effectTimer){
 				golpesVarios++;
+				animation.play("Pegar");
 				still = true;
 				if (golpesVarios > Reg.golpeFuerteMax)
 				{
@@ -129,6 +139,12 @@ class Enemigo1 extends BaseEnemigo
 		}
 		else
 			still = false;
+		}
+		else if (isHurt == 1){
+			animation.play("Ouch");
+		}
+		else if (isHurt == 2 && saltito == true){
+			animation.play("Caer");
 		}
 		/*trace(golpe.getPosition());
 		trace(this.x);

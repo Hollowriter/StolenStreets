@@ -129,8 +129,7 @@ class BaseEnemigo extends FlxSprite
 	public function GetDireccion(){
 		return direccion;
 	}
-	public function GetGolpeEnemigo():GolpeEnemigo
-	{
+	public function GetGolpeEnemigo():GolpeEnemigo{
 		return punioEnemigo;
 	}
 }

@@ -161,6 +161,9 @@ class PlayState extends FlxState{
 		
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
+		for (i in 0...(Reg.Enemigos.length)){
+			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
+		}
 	}
 		private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Float = Std.parseFloat(entityData.get("x"));
@@ -249,7 +252,6 @@ class PlayState extends FlxState{
 			//COLISIONES CON EL MAPA
 		for(i in 0... Reg.Enemigos.members.length)
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);
-		/*dropeo de las cajas*/
 		// Overlap del jugador con los objetos recolectables
 		Mili.Agarrar(chico1);
 		Mili.Salto();
@@ -257,10 +259,16 @@ class PlayState extends FlxState{
 		// Chico.Atacar(); // esto se puede sacar del playstate
 		Chico.DolorDelEnemigo(Mili);
 		Mili.GetGolpear().ColisionDelGolpe(chico1);
-		
+		for (i in 0...(Reg.Enemigos.length)){
+			Mili.GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i]);
+			Mili.Agarrar(Reg.Enemigos.members[i]);
+		}
 		chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		chico1.DolorDelEnemigo(Mili);
-		
+		for (i in 0...(Reg.Enemigos.length)){
+			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
+			Reg.Enemigos.members[i].DolorDelEnemigo(Mili);
+		}
 		for (o in 0...cantM){
 			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
 		}

@@ -56,7 +56,7 @@ class PlayState extends FlxState{
 	var tmpMap:TiledObjectLayer;
 	override public function create():Void{
 		super.create();
-		Mili = new Jugador(30, 30);
+		Mili = new Jugador();
 		plataforma = new PlataformaPrueba(30, 300);
 		camera.follow(Mili);
 		Cajas.members[0] = new Obstaculo(200, 200);

@@ -21,7 +21,7 @@ class Jugador extends FlxSprite{
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
 	private var agarrando:Bool; // este es un booleano para chequear el agarre
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
-	private var thyHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
+	private var theHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
 	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
 	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
@@ -35,12 +35,17 @@ class Jugador extends FlxSprite{
 	private var contadorPiniaCorriendo:Int = 0;
 	private var piniaCorriendoTiempoMax:Int = 30;
 	private var piniaCorriendo:Bool = false;
-	
+	private var anchuraObjeto = 30;
+	private var alturaObjeto = 30;
+	private var hitboxPosX = 20;
+	private var hitboxPosY = 0;
 	private var controlesWASD:Bool = false;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
-		super(X, Y, SimpleGraphic);
-		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73,82);
+	public function new(?SimpleGraphic:FlxGraphicAsset){
+		super(anchuraObjeto, alturaObjeto, SimpleGraphic);
+		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73, 82);
+		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
+		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		animation.add("Natural", [0, 10], 2, true);
 		animation.add("Caminar", [0, 5, 6, 7,8,9], 6, true);
 		animation.add("Saltar", [1, 2,2, 3], 5, false);
@@ -59,7 +64,7 @@ class Jugador extends FlxSprite{
 		direccion = false;
 		check = false;
 		time = 0;
-		thyHits = 0;
+		theHits = 0;
 		ComboActivation = false;
 		jump = false;
 		agarrando = false;
@@ -161,10 +166,10 @@ class Jugador extends FlxSprite{
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
-			if (thyHits < 2){
+			if (theHits < 2){
 				animation.play("Golpe");
 			}
-			else if (thyHits == 2){
+			else if (theHits == 2){
 				animation.play("SegundoGolpe");
 			}
 			else{
@@ -220,15 +225,15 @@ class Jugador extends FlxSprite{
 	// contador de golpes consecutivos (Combo)
 	public function Combo():Void{
 		if ((FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || (FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
-			thyHits++;
+			theHits++;
 		}
 		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
-			thyHits = 0;
+			theHits = 0;
 			time = 0;
 			ComboActivation = false;
 		}
-		if (thyHits > 3){ // si haces mas de tres golpes, el Combo se reinicia
-			thyHits = 0;
+		if (theHits > 3){ // si haces mas de tres golpes, el Combo se reinicia
+			theHits = 0;
 		}
 	}
 	// dolor despues del golpe
@@ -248,7 +253,7 @@ class Jugador extends FlxSprite{
 		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
-			if (overlaps(pobreVictima) && thyHits <= 3){ // Si estas muy cerca del enemigo
+			if (overlaps(pobreVictima) && theHits <= 3){ // Si estas muy cerca del enemigo
 				if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 					// pobreVictima.SetHurt(1); // tomas al enemigo
 					agarrando = true; // agarrandolo
@@ -274,10 +279,10 @@ class Jugador extends FlxSprite{
 	}
 	// setter y getter del Combo (golpes consecutivos)
 	public function GetCombo(){
-		return thyHits;
+		return theHits;
 	}
 	public function SetCombo(ComboMaster:Int){
-		thyHits = ComboMaster;
+		theHits = ComboMaster;
 	}
 	// retorna si el personaje esta saltando
 	public function GetJump(){

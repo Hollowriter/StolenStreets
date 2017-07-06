@@ -26,6 +26,11 @@ class Reg{
 	public static inline var velocidadPlataformasFlotantes:Float = 50; // velocidad de las plataformas que flotan
 	public static inline var golpeFuerteMax:Int = 100;
 	public static inline var golpeCombo:Int = 200;
+	public static inline var punietazoEnemigoDerecha:Int = 40;
+	public static inline var punietazoEnemigoIzquierda:Int = -10;
+	public static inline var punietazoEnemigoPosVertical:Int = 30;
+	public static inline var danioPunioNormal:Int = -25;
+	public static inline var danioPunioFuerte:Int = -50;
 	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador

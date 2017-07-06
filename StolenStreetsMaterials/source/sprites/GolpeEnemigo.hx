@@ -37,8 +37,8 @@ class GolpeEnemigo extends FlxSprite{
 				Ouch.SetMeHurt(1); // lo lastima
 				Ouch.velocity.x = 0; // y lo detiene un rato
 				ljug = Ouch.GetVida(); // la variable almacena la vida del jugador
-				if (!golpeFuerte) ljug -= 25; // la resta
-				else ljug -= 50; // la resta
+				if (!golpeFuerte) ljug += Reg.danioPunioNormal; // la resta
+				else ljug += Reg.danioPunioFuerte; // la resta
 				Ouch.SetVida(ljug); // y la setea
 			}
 		}
@@ -47,12 +47,12 @@ class GolpeEnemigo extends FlxSprite{
 	public function PunietazoEnemigo(?atacante:Enemigo1 = null, observando:Bool):Void{
 		if (atacante != null){ // si el enemigo existe
 			// YouundMe = false; // chequea que el golpe no es del jugador (No utilizado)
-			y = atacante.y; // esta a la misma altura del enemigo
+			y = atacante.y + Reg.punietazoEnemigoPosVertical; // esta a la misma altura del enemigo
 			if (observando == false){
-				x = atacante.x + 50; // pero mas adelante de el
+				x = atacante.x + Reg.punietazoEnemigoDerecha; // pero mas adelante de el
 			}
 			else if (observando == true){
-				x = atacante.x - 20; // pero mas adelante de el
+				x = atacante.x + Reg.punietazoEnemigoIzquierda; // pero mas adelante de el
 			}
 		}
 	}

@@ -49,10 +49,10 @@ class GolpeEnemigo extends FlxSprite{
 			// YouundMe = false; // chequea que el golpe no es del jugador (No utilizado)
 			y = atacante.y; // esta a la misma altura del enemigo
 			if (observando == false){
-				x = atacante.x + 25; // pero mas adelante de el
+				x = atacante.x + 50; // pero mas adelante de el
 			}
 			else if (observando == true){
-				x = atacante.x - 5; // pero mas adelante de el
+				x = atacante.x - 20; // pero mas adelante de el
 			}
 		}
 	}

@@ -8,7 +8,6 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import sprites.Drops;
-import sprites.Enemigo;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
@@ -32,7 +31,6 @@ class PlayState extends FlxState{
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
-	private var Chico:Enemigo; // enemigo de prueba (Reemplazar cuando la nueva clase este terminada)
 	// plataformas flotantes
 	private var testFloatingPlatform:PlataformaFlotante;
 	private var testFloatingPlatform1:PlataformaFlotante;
@@ -45,11 +43,8 @@ class PlayState extends FlxState{
 	private var vida:FlxText; // HUD vida
 	private var money:FlxText; //Buena cancion de Pink Floyd // HUD dinero
 	private var lifes:FlxText;
-	// private var auch:Int = 10; //descomentar si querer testear vida de jugador; (sin usar)
 	private var life:Int; // vida
-	// private var ay:Int = 25; //descomentar si querer testear vida de jugador; (sin usar)
-	private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
-	// private var hechos:Int = 1; (sin usar)
+	// private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
 	//EL nivel
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
@@ -67,8 +62,7 @@ class PlayState extends FlxState{
 		// PlataCaida.members[1] = new DropFalling(450, 100); // ambas son de prueba
 		Botiquin.members[0] = new DropsVida(400, 150);
 		Botiquin.members[1] = new DropsVida(450, 150);
-		Chico = new Enemigo(70, 30);
-		chico1 = new Enemigo1(90, 30); //nueva clase enemigo (bajo test)
+		// chico1 = new Enemigo1(90, 30); //nueva clase enemigo (enemigo de testeo)
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
 		// crea el HUD del dinero
@@ -148,14 +142,12 @@ class PlayState extends FlxState{
 		add(vida);
 		add(lifes);
 		add(Mili);
-		add(Chico);
 		add(testFloatingPlatform);
 		add(testFloatingPlatform1);
 		testFloatingPlatform1.frenarHorizontal();
-		add(chico1);
+		// add(chico1);
 		add(Mili.GetGolpear());
-		add(Chico.GetGolpeEnemigo());
-		add(chico1.GetGolpeEnemigo());
+		// add(chico1.GetGolpeEnemigo());
 		add(trampolin);
 		add(plataforma);
 		
@@ -193,9 +185,8 @@ class PlayState extends FlxState{
 		FlxG.collide(Cajas.members[1], plataforma);
 		FlxG.collide(Cajas.members[0], tileMap);
 		FlxG.collide(Cajas.members[1], tileMap);
-		FlxG.collide(Chico, plataforma); // a este no le pongo porque ya lo vamos a liquidar
-		FlxG.collide(chico1, plataforma);
-		FlxG.collide(chico1, tileMap);
+		/*FlxG.collide(chico1, plataforma);
+		FlxG.collide(chico1, tileMap);*/
 		// FlxG.collide(PlataCaida.members[0], Platform);
 		// FlxG.collide(PlataCaida.members[1], Platform);
 		/*FlxG.collide(Cajas.members[0], Mili);
@@ -210,9 +201,6 @@ class PlayState extends FlxState{
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform1.y) //Mas adelante estos if van a ser uno solo.
 			FlxG.collide(Mili, testFloatingPlatform1);
 		// Collider complicado para las plataformas flotantes de colision con el jugador
-		FlxG.collide(Chico, testFloatingPlatform);
-		FlxG.collide(Chico, testFloatingPlatform);
-		// Collider complicado para las plataformas trampolin de colision con el jugador
 		if ((Mili.y + (Mili.height / 2)) < trampolin.y){
 			if (FlxG.collide(Mili, trampolin)){
 				Mili.SaltoTrampolin();
@@ -253,18 +241,16 @@ class PlayState extends FlxState{
 		for(i in 0... Reg.Enemigos.members.length)
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);
 		// Overlap del jugador con los objetos recolectables
-		Mili.Agarrar(chico1);
+		// Mili.Agarrar(chico1);
 		Mili.Salto();
-		Chico.MovimientoDelEnemigo(Mili);
 		// Chico.Atacar(); // esto se puede sacar del playstate
-		Chico.DolorDelEnemigo(Mili);
-		Mili.GetGolpear().ColisionDelGolpe(chico1);
+		// Mili.GetGolpear().ColisionDelGolpe(chico1);
 		for (i in 0...(Reg.Enemigos.length)){
 			Mili.GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i]);
 			Mili.Agarrar(Reg.Enemigos.members[i]);
 		}
-		chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
-		chico1.DolorDelEnemigo(Mili);
+	    /*chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
+		chico1.DolorDelEnemigo(Mili);*/
 		for (i in 0...(Reg.Enemigos.length)){
 			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 			Reg.Enemigos.members[i].DolorDelEnemigo(Mili);
@@ -272,7 +258,6 @@ class PlayState extends FlxState{
 		for (o in 0...cantM){
 			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
 		}
-		Chico.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();

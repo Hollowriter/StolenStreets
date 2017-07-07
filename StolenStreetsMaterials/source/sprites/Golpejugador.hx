@@ -32,15 +32,15 @@ class Golpejugador extends FlxSprite{
 		if (personaje != null){ // si el personaje existe
 			y = personaje.y; // se encuentra a la misma altura del personaje
 			if (mirando == false){
-				x = personaje.x + 70; // pero mas adelante de el
-				y = personaje.y + 50;
+				x = personaje.x + Reg.punietazoJugadorDerecha; // pero mas adelante de el
+				y = personaje.y + Reg.punietazoJugadorPosVertical;
 			}
 			else if (mirando == true){
-				x = personaje.x; // pero mas adelante de el
-				y = personaje.y + 50;
+				x = personaje.x + Reg.punietazoJugadorIzquierda; // pero mas adelante de el
+				y = personaje.y + Reg.punietazoJugadorPosVertical;
 			}
 			if (saltando == true){ // esto es un Salto y patada
-				y = personaje.y + 80; // por lo que se encuentra mas abajo
+				y = personaje.y + Reg.patadaJugadorVertical; // por lo que se encuentra mas abajo
 			}
 			if (personaje.GetCombo() > 2 || saltando == true){ // golpe duro comprobado
 				GolpeDuro = true;
@@ -65,11 +65,11 @@ class Golpejugador extends FlxSprite{
 			if (Pum.GetHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad
 				if (GolpeDuro == false){ // si es un golpe normal
 					Pum.SetHurt(1); // lo lastima
-					Pum.SetVida(Pum.GetVida() - 5); // le quita vida con el setter y getter
+					Pum.SetVida(Pum.GetVida() - Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
 				}
 				else if (GolpeDuro == true){ // pero si es un golpe duro
 					Pum.SetHurt(2); // lo lastima duramente
-					Pum.SetVida(Pum.GetVida() - 5);
+					Pum.SetVida(Pum.GetVida() - Reg.danioPunioJugadorNormal);
 				}
 				Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
 			}

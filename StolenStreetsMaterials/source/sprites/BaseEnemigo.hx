@@ -31,8 +31,8 @@ class BaseEnemigo extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		acceleration.y = 1500;
-		punioEnemigo = new GolpeEnemigo(1000, 1000);
+		acceleration.y = Reg.gravedad;
+		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

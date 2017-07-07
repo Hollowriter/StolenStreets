@@ -29,8 +29,20 @@ class Reg{
 	public static inline var punietazoEnemigoDerecha:Int = 40;
 	public static inline var punietazoEnemigoIzquierda:Int = -10;
 	public static inline var punietazoEnemigoPosVertical:Int = 30;
-	public static inline var danioPunioNormal:Int = -25;
-	public static inline var danioPunioFuerte:Int = -50;
+	public static inline var punietazoJugadorDerecha:Int = 40;
+	public static inline var punietazoJugadorIzquierda:Int = -20;
+	public static inline var punietazoJugadorPosVertical:Int = 50;
+	public static inline var patadaJugadorVertical:Int = 80;
+	public static inline var danioPunioNormal:Int = -5;
+	public static inline var danioPunioFuerte:Int = -10;
+	public static inline var danioPunioJugadorNormal:Int = -5;
+	public static inline var velocidadDelTrampolin:Int = -750;
+	public static inline var retardoEsquivar:Int = 30;
+	public static inline var comboFuerteJugador:Int = 3;
+	public static inline var punioEnPantalla:Int = 5;
+	public static inline var gravedad:Int = 1500;
+	public static inline var jugadorDrag:Int = 1000;
+	public static inline var esquivada:Int = 25;
 	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador

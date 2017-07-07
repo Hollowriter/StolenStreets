@@ -57,10 +57,10 @@ class Jugador extends FlxSprite{
 		animation.add("Danio", [23,23,23], 1, false);
 		animation.play("Natural");
 		// animation.play("Caminar");
-		acceleration.y = 1500; // gravedad
+		acceleration.y = Reg.gravedad; // gravedad
 		// makeGraphic(30, 30, FlxColor.PINK);
-		drag.x = 1000; // delimito la velocidad
-		punios = new Golpejugador(1000, 1000);
+		drag.x = Reg.jugadorDrag; // delimito la velocidad
+		punios = new Golpejugador(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		direccion = false;
 		check = false;
 		time = 0;
@@ -122,9 +122,9 @@ class Jugador extends FlxSprite{
 	private function Esquivar(){
 		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || (FlxG.keys.justPressed.W) && jump == false  && controlesWASD == false)){
 			if(direccion)
-				x += 25;
+				x += Reg.esquivada;
 			else
-				x -= 25;
+				x -= Reg.esquivada;
 			velocity.x = 0;
 			esquivando = true;
 		}
@@ -154,7 +154,7 @@ class Jugador extends FlxSprite{
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
-		velocity.y = -750; 
+		velocity.y = Reg.velocidadDelTrampolin; 
 		animation.stop();
 		animation.play("CaidaLibre");
 	}
@@ -166,10 +166,10 @@ class Jugador extends FlxSprite{
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
-			if (theHits < 2){
+			if (theHits < Reg.comboFuerteJugador - 1){
 				animation.play("Golpe");
 			}
-			else if (theHits == 2){
+			else if (theHits == Reg.comboFuerteJugador - 1){
 				animation.play("SegundoGolpe");
 			}
 			else{
@@ -207,7 +207,7 @@ class Jugador extends FlxSprite{
 				}
 			}
 		}
-		if (time > 5){ // en este tiempo, el puñetazo desaparece
+		if (time > Reg.punioEnPantalla){ // en este tiempo, el puñetazo desaparece
 			punios.posicionar();
 			check = false;
 		}
@@ -232,7 +232,7 @@ class Jugador extends FlxSprite{
 			time = 0;
 			ComboActivation = false;
 		}
-		if (theHits > 3){ // si haces mas de tres golpes, el Combo se reinicia
+		if (theHits > Reg.comboFuerteJugador){ // si haces mas de tres golpes, el Combo se reinicia
 			theHits = 0;
 		}
 	}
@@ -253,7 +253,7 @@ class Jugador extends FlxSprite{
 		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
-			if (overlaps(pobreVictima) && theHits <= 3){ // Si estas muy cerca del enemigo
+			if (overlaps(pobreVictima) && theHits <= Reg.comboFuerteJugador){ // Si estas muy cerca del enemigo
 				if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 					// pobreVictima.SetHurt(1); // tomas al enemigo
 					agarrando = true; // agarrandolo
@@ -369,7 +369,7 @@ class Jugador extends FlxSprite{
 			punios.posicionar();
 		}
 		// delimitacion de la habilidad de escape del personaje
-		if (contadorEsquivar >= 30){
+		if (contadorEsquivar >= Reg.retardoEsquivar){
 			esquivando = false;
 			contadorEsquivar = 0;
 		}

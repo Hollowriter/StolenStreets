@@ -30,11 +30,13 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Caer", [15], 2, true);
 		animation.add("Pegar", [1, 2, 3], 7, false);
 		animation.add("Ouch", [14, 14, 14], 5, false);
+		animation.add("Saltar", [10, 10, 10], 4, false);
+		animation.add("CaidaLibre", [12, 12], 2, true);
 		animation.play("Normal");
-		vidaEnemiga = 80;
+		vidaEnemiga = 20;
 		still = false;
 		combo = false;
-		punioEnemigo = new GolpeEnemigo(1000, 1000);
+		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		timer = 0;
 		comboTimer = 0;
 		golpesVarios = 0;
@@ -45,38 +47,17 @@ class Enemigo1 extends BaseEnemigo
 	override public function move(){
 		super.move();
 		if (isHurt == 0 || saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
-		/*if(etapa == 1){
-			//x -= 1;
-			velocity.x = 0;
-			velocity.x =100;
-			movimiento++;
-		}
-		if(etapa == 2){
-			//x+=2;
-			velocity.x = 0;
-			velocity.x = -100;
-			movimiento++;
-			etapa = 1;
-		}
-		if (movimiento == 10 && etapa == 1){
-			etapa++;
-			movimiento = 0;
-		}*/
-		
-		if (!still)
-		{
+		if (!still){
 			timer = 0;
-			if (x < enemyRightMin && x < (enemyRightMax))
-			{
-				x += 2;
+			if (x < enemyRightMin && x < (enemyRightMax)){
+				velocity.x = 100;
 				direccion = false;
 				punioEnemigo.PosicionarGE();
 				animation.play("Caminar");
 				flipX = true;
 			}
-			if (x > enemyLeftMin && x > (enemyLeftMax))
-			{
-				x -= 2;
+			if (x > enemyLeftMin && x > (enemyLeftMax)){
+				velocity.x = -100;
 				direccion = true;
 				punioEnemigo.PosicionarGE();
 				animation.play("Caminar");
@@ -84,32 +65,27 @@ class Enemigo1 extends BaseEnemigo
 			}
 		}
 		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2))
-			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)))
-		{
+			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2))){
+				velocity.x = 0;
 			if (timer <= Reg.effectTimer){
 				golpesVarios++;
 				animation.play("Pegar");
 				still = true;
-				if (golpesVarios > Reg.golpeFuerteMax)
-				{
-					//trace("en golpe fuerte");
+				if (golpesVarios > Reg.golpeFuerteMax){
 					punioEnemigo.SetGolpeFuerte(true);
 					punioEnemigo.PunietazoEnemigo(this, direccion);
-					//golpe.SetgolpesVarios(false); comentado por problemas de hitbox, pero funca (averiguar en que momento retomar golpes normales de enemigo)
-					//golpesVarios = 0;
 				}
-				else punioEnemigo.PunietazoEnemigo(this, direccion);
+				else{
+					punioEnemigo.PunietazoEnemigo(this, direccion);
+				}
 				
-				if (golpesVarios > Reg.golpeCombo)//aplicar el timer para duracion entre golpe y golpe de combo.
-				{
+				if (golpesVarios > Reg.golpeCombo){
 					combo = true;
 					//trace("c-c-c-combo breaker!");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
-					if (comboTimer > Reg.comboTimer)
-					{
+					if (comboTimer > Reg.comboTimer){
 						//trace("c-c-c-combo breaker!");
-						if (comboTimer > Reg.comboTimerMax)
-						{
+						if (comboTimer > Reg.comboTimerMax){
 							punioEnemigo.PosicionarGE();
 							punioEnemigo.PunietazoEnemigo(this, direccion);
 							golpesVarios = 0;
@@ -120,22 +96,23 @@ class Enemigo1 extends BaseEnemigo
 					comboTimer++;
 					
 				}
-				else punioEnemigo.PunietazoEnemigo(this, direccion);
+				else{ 
+					punioEnemigo.PunietazoEnemigo(this, direccion);
+				}
 			}
 			else{
 				if (timer > Reg.maxEffectTimer){
 					timer = 0;
 				}
-				if (!combo)
-				{
+				if (!combo){
 					punioEnemigo.PosicionarGE();
 				}
 				punioEnemigo.SetGolpeFuerte(false);
 			}
 			timer++;
-			//comboTimer++;
-			//golpesVarios++;
-			// trace("work");
+			if (animation.finished){
+				animation.play("Normal");
+			}
 		}
 		else
 			still = false;
@@ -146,20 +123,14 @@ class Enemigo1 extends BaseEnemigo
 		else if (isHurt == 2 && saltito == true){
 			animation.play("Caer");
 		}
-		/*trace(golpe.getPosition());
-		trace(this.x);
-		trace(this.y);*/
+		/*if (y > Reg.posYjugador + 50){
+			velocity.y = Reg.jumpSpeed;
+			if (saltito == true && isHurt == 0){
+				animation.play("Saltar");
+			}
+			if (saltito == true && animation.finished){
+				animation.play("CaidaLibre");
+			}
+		}*/ // el antisuicidas en proceso (es muy divertido probarlo XD)
 	}
-	/*override public function EnElAire(){
-		super.EnElAire();
-	}
-	public override function update(elapsed:Float):Void{
-		super.update(elapsed);
-		EnElAire();
-		move();
-	}*/
-	/*public function GetGolpeEnemigo():GolpeEnemigo
-	{
-		return golpe;
-	}*/
 }

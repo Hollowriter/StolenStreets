@@ -26,6 +26,7 @@ class BaseEnemigo extends FlxSprite
 	public var enemyRightMax:Float;
 	public var enemyLeftMin:Float;
 	public var enemyLeftMax:Float;
+	public var enemyUpper:Float;
 	
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
@@ -41,6 +42,7 @@ class BaseEnemigo extends FlxSprite
 		enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
 		enemyLeftMin = Reg.posXjugador;
 		enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
+		enemyUpper = Reg.posYjugador;
 		EnElAire();
 		Morir();
 		if(x < (Reg.posXjugador + 600) || x > (Reg.posXjugador - 600)) {move();}

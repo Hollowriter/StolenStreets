@@ -69,9 +69,6 @@ class Jugador extends FlxSprite{
 		jump = false;
 		agarrando = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
-		/*(Anteriormente eran usados para probar la vida, ahora estan sin utilizar)*/
-		// ay = 25;
-		// auch = 10;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
@@ -343,10 +340,10 @@ class Jugador extends FlxSprite{
 		{
 			vidaActual = Reg.VidaMili;
 			life -= 1;
-			trace("Reinicio de vida");
+			// trace("Reinicio de vida");
 		}
 		if (vidaActual <= 0 && life == 0){
-			trace("No hay mas vida");
+			// trace("No hay mas vida");
 			kill();
 		}
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)

@@ -19,6 +19,11 @@ class BaseEnemigo extends FlxSprite
 	private var isHurt:UInt; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
 	private var punioEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
+	private var anchuraObjeto:Int = 30;
+	private var alturaObjeto:Int = 30;
+	
+	/*private var hitboxPosX = 20;
+	private var hitboxPosY = 0;*/
 	
 	private var enemyRightMin:Float;
 	private var timer:Int;
@@ -33,9 +38,10 @@ class BaseEnemigo extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		acceleration.y = Reg.gravedad;
+		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 	}
-	override public function update(elapsed:Float):Void{
+	/*override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		
 		enemyRightMin = Reg.posXjugador;
@@ -46,7 +52,7 @@ class BaseEnemigo extends FlxSprite
 		EnElAire();
 		Morir();
 		if(x < (Reg.posXjugador + 600) || x > (Reg.posXjugador - 600)) {move();}
-	}
+	}*/
 	public function move(){};
 	public function gotHitted(){};
 	public function EnElAire(){
@@ -133,5 +139,16 @@ class BaseEnemigo extends FlxSprite
 	}
 	public function GetGolpeEnemigo():GolpeEnemigo{
 		return punioEnemigo;
+	}
+	override public function update(elapsed:Float):Void{
+		super.update(elapsed);
+		enemyRightMin = Reg.posXjugador;
+		enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
+		enemyLeftMin = Reg.posXjugador;
+		enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
+		enemyUpper = Reg.posYjugador;
+		EnElAire();
+		Morir();
+		if(x < (Reg.posXjugador + 600) || x > (Reg.posXjugador - 600)) {move();}
 	}
 }

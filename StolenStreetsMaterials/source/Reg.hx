@@ -4,6 +4,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import sprites.Golpejugador;
 import sprites.Enemigo1;
 import sprites.PlataformaFlotante;
+import sprites.BaseEnemigo;
 
 /**
  * ...
@@ -43,6 +44,8 @@ class Reg{
 	public static inline var gravedad:Int = 1500;
 	public static inline var jugadorDrag:Int = 1000;
 	public static inline var esquivada:Int = 25;
+	public static inline var vidaEnemiga:Int = 20;
+	public static inline var velocidadEnemiga = 100;
 	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador
@@ -54,7 +57,7 @@ class Reg{
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
 	
-	static public var Enemigos:FlxTypedGroup<Enemigo1>;
+	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
 	
 }

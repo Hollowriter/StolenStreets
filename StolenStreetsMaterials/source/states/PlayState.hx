@@ -103,7 +103,7 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
-		Reg.Enemigos = new FlxTypedGroup<Enemigo1>();
+		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel1__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
@@ -112,10 +112,11 @@ class PlayState extends FlxState{
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
 		for (i in 0...27){
 			if (i == 0 || i == 15 || i == 16 || i == 30 || i == 31){ //14 15 29 30
-				trace("inside");
+				// trace("inside");
 				tileMap.setTileProperties(i, FlxObject.NONE);
 			}
 			else{
+				// trace("inside");
 				tileMap.setTileProperties(i, FlxObject.ANY);
 			}
 		}
@@ -131,11 +132,11 @@ class PlayState extends FlxState{
 		add(Cajas.members[1]);
 		if (Cajas.members[0].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
 			add(Cajas.members[0].GetDrop());
-			trace('true');
+			//trace('true');
 		}
 		if (Cajas.members[1].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
 			add(Cajas.members[1].GetDrop());
-			trace('true2');
+			//trace('true2');
 		}
 		add(puntaje);
 		add(money);
@@ -230,17 +231,23 @@ class PlayState extends FlxState{
 			}
 		}
 		//COLISIONES ENTRE ENEMIGOS
-		for (i in 0... Reg.Enemigos.members.length)
+		for (i in 0...(Reg.Enemigos.members.length))
 		{
-			for (j in 0... Reg.Enemigos.members.length)
+			for (j in 0...(Reg.Enemigos.members.length))
 			{
 				FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
+				if (FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j])){
+					trace("i'm working");
+				}
 			}
 		}
-			//COLISIONES CON EL MAPA
-		for(i in 0... Reg.Enemigos.members.length)
+		//COLISIONES CON EL MAPA
+		for(i in 0...(Reg.Enemigos.members.length)){
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);
-		// Overlap del jugador con los objetos recolectables
+			if (FlxG.collide(Reg.Enemigos.members[i], tileMap)){
+				trace(i);
+			}
+		}
 		// Mili.Agarrar(chico1);
 		Mili.Salto();
 		// Chico.Atacar(); // esto se puede sacar del playstate

@@ -16,11 +16,7 @@ class Enemigo1 extends BaseEnemigo
 {
 	private var still:Bool;
 	private var combo:Bool;
-	//private var direc:Bool;
-	// private var golpe:GolpeEnemigo;
-	//private var timer:Int;
 	private var golpesVarios:Int;
-
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
@@ -33,7 +29,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Saltar", [10, 10, 10], 4, false);
 		animation.add("CaidaLibre", [12, 12], 2, true);
 		animation.play("Normal");
-		vidaEnemiga = 20;
+		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
 		combo = false;
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
@@ -42,22 +38,25 @@ class Enemigo1 extends BaseEnemigo
 		golpesVarios = 0;
 		isHurt = 0;
 		saltito = false;
+		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 	}
 	// movimiento de este enemigo
 	override public function move(){
 		super.move();
+		//trace(saltito + '0');
 		if (isHurt == 0 || saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
+			//trace(saltito + '1');
 		if (!still){
 			timer = 0;
 			if (x < enemyRightMin && x < (enemyRightMax)){
-				velocity.x = 100;
+				velocity.x = Reg.velocidadEnemiga;
 				direccion = false;
 				punioEnemigo.PosicionarGE();
 				animation.play("Caminar");
 				flipX = true;
 			}
 			if (x > enemyLeftMin && x > (enemyLeftMax)){
-				velocity.x = -100;
+				velocity.x = -(Reg.velocidadEnemiga);
 				direccion = true;
 				punioEnemigo.PosicionarGE();
 				animation.play("Caminar");
@@ -117,13 +116,25 @@ class Enemigo1 extends BaseEnemigo
 		else
 			still = false;
 		}
-		else if (isHurt == 1){
+	}
+	override public function DolorDelEnemigo(agresor:Jugador){
+		super.DolorDelEnemigo(agresor);
+		 if (isHurt == 1){
 			animation.play("Ouch");
 		}
 		else if (isHurt == 2 && saltito == true){
 			animation.play("Caer");
 		}
-		/*if (y > Reg.posYjugador + 50){
+	}
+	override public function EnElAire(){
+		super.EnElAire();
+		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
+			saltito = false;
+		}
+		else{
+			saltito = true;
+		} // Estos condones pinchados no detectan el jodido suelo
+		if (y > Reg.posYjugador && saltito == false){
 			velocity.y = Reg.jumpSpeed;
 			if (saltito == true && isHurt == 0){
 				animation.play("Saltar");
@@ -131,6 +142,15 @@ class Enemigo1 extends BaseEnemigo
 			if (saltito == true && animation.finished){
 				animation.play("CaidaLibre");
 			}
-		}*/ // el antisuicidas en proceso (es muy divertido probarlo XD)
+		}
+	}
+	override public function Morir(){
+		super.Morir();
+	}
+	override public function update(elapsed:Float):Void{
+		super.update(elapsed);
+		move();
+		EnElAire();
+		Morir();
 	}
 }

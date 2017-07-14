@@ -27,11 +27,11 @@ class Reg{
 	public static inline var velocidadPlataformasFlotantes:Float = 50; // velocidad de las plataformas que flotan
 	public static inline var golpeFuerteMax:Int = 100;
 	public static inline var golpeCombo:Int = 200;
-	public static inline var punietazoEnemigoDerecha:Int = 40;
-	public static inline var punietazoEnemigoIzquierda:Int = -10;
+	public static inline var punietazoEnemigoDerecha:Int = 25;
+	public static inline var punietazoEnemigoIzquierda:Int = -5;
 	public static inline var punietazoEnemigoPosVertical:Int = 30;
-	public static inline var punietazoJugadorDerecha:Int = 40;
-	public static inline var punietazoJugadorIzquierda:Int = -20;
+	public static inline var punietazoJugadorDerecha:Int = 20;
+	public static inline var punietazoJugadorIzquierda:Int = -15;
 	public static inline var punietazoJugadorPosVertical:Int = 50;
 	public static inline var patadaJugadorVertical:Int = 80;
 	public static inline var danioPunioNormal:Int = -5;

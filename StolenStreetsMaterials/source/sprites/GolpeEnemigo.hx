@@ -15,7 +15,7 @@ class GolpeEnemigo extends FlxSprite{
 	private var ljug:Int; // para afectar al jugador
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
-		makeGraphic(11, 11, FlxColor.BLUE);
+		makeGraphic(30, 11, FlxColor.BLUE);
 		golpeFuerte = false;
 		ljug = 0;
 	}

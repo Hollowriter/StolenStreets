@@ -15,7 +15,7 @@ class Golpejugador extends FlxSprite{
 	private var GolpeDuro:Bool; // detecta cuando es un golpe que te tira al piso
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
-		makeGraphic(11, 11, FlxColor.RED);
+		makeGraphic(30, 11, FlxColor.RED);
 		GolpeDuro = false;
 	}
 	override public function update(elapsed:Float):Void{

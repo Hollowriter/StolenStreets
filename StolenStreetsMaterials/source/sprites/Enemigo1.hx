@@ -24,7 +24,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Normal", [0, 0], 2, true);
 		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
 		animation.add("Caer", [15], 2, true);
-		animation.add("Pegar", [1, 2, 3], 7, false);
+		animation.add("Pegar", [1], 7, false);
 		animation.add("Ouch", [14, 14, 14], 5, false);
 		animation.add("Saltar", [10, 10, 10], 4, false);
 		animation.add("CaidaLibre", [12, 12], 2, true);

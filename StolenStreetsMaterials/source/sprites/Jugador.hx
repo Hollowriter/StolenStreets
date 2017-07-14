@@ -39,7 +39,7 @@ class Jugador extends FlxSprite{
 	private var alturaObjeto = 30;
 	private var hitboxPosX = 20;
 	private var hitboxPosY = 0;
-	private var controlesWASD:Bool = false;
+	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
 	
 	public function new(?SimpleGraphic:FlxGraphicAsset){
 		super(anchuraObjeto, alturaObjeto, SimpleGraphic);
@@ -77,13 +77,15 @@ class Jugador extends FlxSprite{
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
 				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
-					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
+					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
+						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
 						animation.play("Caminar");
 					}
 				}
 				else{
 					velocity.x = velocidadCorrer;
-					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
+					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
+						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
 					animation.play("Correr");
 					}
 				}
@@ -93,15 +95,17 @@ class Jugador extends FlxSprite{
 		}
 	    if (FlxG.keys.pressed.A && controlesWASD == true /* && check==false && meHurt==0 && esquivando == false*/ || 
 		FlxG.keys.pressed.LEFT && controlesWASD == false /*&& check==false && meHurt==0 && esquivando == false*/){
-				if(corriendo == false && jump == false){
+				if(corriendo == false){
 					velocity.x = -Reg.hSpeed;
-					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
+					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
+						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
 						animation.play("Caminar");
 					}
 				}
 				else{
 					velocity.x = -velocidadCorrer;
-					if ((!FlxG.keys.pressed.UP && controlesWASD == false ||!FlxG.keys.pressed.W && controlesWASD == true) && jump == false){
+					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
+						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
 						animation.play("Correr");
 					}
 				}
@@ -129,10 +133,11 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
-		FlxG.keys.justPressed.UP && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
-		FlxG.keys.justPressed.K && (isTouching(FlxObject.FLOOR)  || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
-		FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt==0 && esquivando == false && agarrando == false && controlesWASD == false){
+		if 
+		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
+		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
+		 FlxG.keys.justPressed.L && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
+		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false){
 			velocity.y = Reg.jumpSpeed;
 			animation.play("Saltar");
 		}

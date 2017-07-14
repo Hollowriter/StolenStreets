@@ -65,11 +65,13 @@ class Golpejugador extends FlxSprite{
 			if (Pum.GetHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad
 				if (GolpeDuro == false){ // si es un golpe normal
 					Pum.SetHurt(1); // lo lastima
-					Pum.SetVida(Pum.GetVida() - Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
+					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
+					trace(Pum.GetVida());
 				}
 				else if (GolpeDuro == true){ // pero si es un golpe duro
 					Pum.SetHurt(2); // lo lastima duramente
-					Pum.SetVida(Pum.GetVida() - Reg.danioPunioJugadorNormal);
+					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal);
+					trace(Pum.GetVida());
 				}
 				Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
 			}

@@ -40,6 +40,7 @@ class Jugador extends FlxSprite{
 	private var hitboxPosX = 20;
 	private var hitboxPosY = 0;
 	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
+	private var vencida:Bool;
 	
 	public function new(?SimpleGraphic:FlxGraphicAsset){
 		super(anchuraObjeto, alturaObjeto, SimpleGraphic);
@@ -53,8 +54,12 @@ class Jugador extends FlxSprite{
 		animation.add("CaidaLibre", [3], 2, true);
 		animation.add("Golpe", [17, 18, 19], 7, false);
 		animation.add("SegundoGolpe", [20, 21, 22], 7, false);
+		animation.add("Patada", [24], 2, true);
 		animation.add("Correr", [11, 12, 13, 14, 15, 16], 6, true);
-		animation.add("Danio", [23,23,23], 1, false);
+		animation.add("Danio", [23, 23, 23], 1, false);
+		animation.add("Caida", [25], 1, true);
+		animation.add("CaidaTemporal", [25, 25, 25, 25], 3, false);
+		animation.add("Muerte", [26, 26, 26, 26], 2, false);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = Reg.gravedad; // gravedad
@@ -68,6 +73,7 @@ class Jugador extends FlxSprite{
 		ComboActivation = false;
 		jump = false;
 		agarrando = false;
+		vencida = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
 	// todos los aspectos del movimiento del personaje
@@ -93,8 +99,7 @@ class Jugador extends FlxSprite{
 			direccion = false;
 			setFacingFlip(FlxObject.RIGHT, direccion, false);
 		}
-	    if (FlxG.keys.pressed.A && controlesWASD == true /* && check==false && meHurt==0 && esquivando == false*/ || 
-		FlxG.keys.pressed.LEFT && controlesWASD == false /*&& check==false && meHurt==0 && esquivando == false*/){
+	    if (FlxG.keys.pressed.A && controlesWASD == true || FlxG.keys.pressed.LEFT && controlesWASD == false){
 				if(corriendo == false){
 					velocity.x = -Reg.hSpeed;
 					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
@@ -168,27 +173,33 @@ class Jugador extends FlxSprite{
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
 			check = true;
-			if (theHits < Reg.comboFuerteJugador - 1){
-				animation.play("Golpe");
+			if (jump == false){ // Animaciones de ataque del jugador
+				if (theHits < Reg.comboFuerteJugador - 1){
+					animation.play("Golpe");
+				}
+				else if (theHits == Reg.comboFuerteJugador - 1){
+					animation.play("SegundoGolpe");
+				}
+				else{
+					animation.play("Golpe");
+				}
 			}
-			else if (theHits == Reg.comboFuerteJugador - 1){
-				animation.play("SegundoGolpe");
-			}
-			else{
-				animation.play("Golpe");
+			else if (jump == true){
+				animation.play("Patada");
 			}
 			if (corriendo == true){	
 				if(direccion == true){
-						velocity.x = Reg.hSpeed;
-						piniaCorriendo = true;
-						}
-					else if (direccion == false){
-						velocity.x = -Reg.hSpeed;
-						piniaCorriendo = true;
-						}
+					velocity.x = Reg.hSpeed;
+					piniaCorriendo = true;
 				}
-				else if(jump == false)
-					ComboActivation = true;
+				else if (direccion == false){
+					velocity.x = -Reg.hSpeed;
+					piniaCorriendo = true;
+				}
+			}
+			else if(jump == false){
+				ComboActivation = true;
+			}
 			time = 0; // reinicia el timer
 		}
 		if (check == true && agarrando == false){ // el puñetazo esta presente
@@ -240,10 +251,15 @@ class Jugador extends FlxSprite{
 	}
 	// dolor despues del golpe
 	public function DolorDelJugador(){
-		if (meHurt==1){
+		if (meHurt==1 && vidaActual > 0){
 			time++;
-			animation.play("Danio");
-			if (time > Reg.effectTimer){
+			if (jump == false){
+				animation.play("Danio");
+			}
+			else{
+				animation.play("Caida");
+			}
+			if (time > Reg.effectTimer && jump == false){
 				time = 0;
 				meHurt = 0;
 				animation.play("Natural");
@@ -272,6 +288,50 @@ class Jugador extends FlxSprite{
 			}
 		} // aca termina el nuevo agarre
 	} // y termina la funcion
+	public function Muerte(){
+		if (vidaActual <= 0){
+			if (vencida == false){
+				animation.play("CaidaTemporal");
+				vencida = true;
+			}
+			if (!(animation.getByName("CaidaTemporal").finished)){
+				trace(jump);
+				velocity.y = Reg.vSpeed;
+				if (direccion == false){
+					velocity.x = Reg.jumpSpeed;
+				}
+				else{
+					velocity.x = Reg.jumpSpeed * ( -1);
+				}
+			}
+			else if (animation.getByName("CaidaTemporal").finished && jump == true){
+				if (direccion == false){
+					velocity.x = Reg.jumpSpeed;
+				}
+				else{
+					velocity.x = Reg.jumpSpeed * ( -1);
+				}
+				animation.play("Caida");
+			}
+			if (animation.getByName("Muerte").paused && jump == false && animation.getByName("CaidaTemporal").finished){
+				if (jump == false){
+					animation.play("Muerte");
+				}
+			}
+			if (animation.getByName("Muerte").finished && animation.getByName("CaidaTemporal").finished && jump == false){
+				if (life != 0){
+					vidaActual = Reg.VidaMili;
+					life -= 1;
+				}
+				if (life == 0){
+					kill();
+				}
+			}
+			return true;
+		}
+		vencida = false;
+		return false;
+	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)
 	public function GetDireccion(){
 		return direccion;
@@ -336,51 +396,39 @@ class Jugador extends FlxSprite{
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
 			x = FlxG.camera.scroll.x + FlxG.camera.width - width;
-		/*if (y <= 5)
-			y = 5;
-		if (y + height >= FlxG.height)
-			y = FlxG.height - height;*/ // esto producia el bug
 		//¿Cuanta vida tiene?
-		if (vidaActual <= 0 && life != 0)
-		{
-			vidaActual = Reg.VidaMili;
-			life -= 1;
-			// trace("Reinicio de vida");
-		}
-		if (vidaActual <= 0 && life == 0){
-			// trace("No hay mas vida");
-			kill();
-		}
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
-		if (piniaCorriendo == false){
-		MovimientoDelJugador();
-		
-		Combo();
-		DolorDelJugador();
-		Esquivar();
-		}
-		Golpear();
-		if (piniaCorriendo == true){
-			punios.SetGolpeDuro(true);
-			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
-			contadorPiniaCorriendo++;
-		}
-		if (contadorPiniaCorriendo >= piniaCorriendoTiempoMax){
-			piniaCorriendo = false;
-			contadorPiniaCorriendo = 0;
-			punios.posicionar();
-		}
-		// delimitacion de la habilidad de escape del personaje
-		if (contadorEsquivar >= Reg.retardoEsquivar){
-			esquivando = false;
-			contadorEsquivar = 0;
-		}
-		else if (esquivando == true){
-			contadorEsquivar++;
-		}
+		if (!Muerte()){
+			if (piniaCorriendo == false){
+				MovimientoDelJugador();
+				Combo();
+				DolorDelJugador();
+				Esquivar();
+			}
+			Golpear();
+			if (piniaCorriendo == true){
+				punios.SetGolpeDuro(true);
+				punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
+				contadorPiniaCorriendo++;
+			}
+			if (contadorPiniaCorriendo >= piniaCorriendoTiempoMax){
+				piniaCorriendo = false;
+				contadorPiniaCorriendo = 0;
+				punios.posicionar();
+			}
+			// delimitacion de la habilidad de escape del personaje
+			if (contadorEsquivar >= Reg.retardoEsquivar){
+				esquivando = false;
+				contadorEsquivar = 0;
+			}
+			else if (esquivando == true){
+				contadorEsquivar++;
+			}
 			if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false || FlxG.keys.pressed.SHIFT && controlesWASD == true || FlxG.keys.pressed.SHIFT && controlesWASD == false)
 				corriendo = true;
 			else
 				corriendo = false;
+		}
+		Muerte();
 	}
 }

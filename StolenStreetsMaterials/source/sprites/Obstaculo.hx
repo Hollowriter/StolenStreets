@@ -85,7 +85,6 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 		acceleration.y = 1500;
 		if (destructible == 1){
 			makeGraphic(30, 30, FlxColor.RED);
-			
 		}
 		else if (destructible == 0){
 			makeGraphic (30, 30, FlxColor.ORANGE);

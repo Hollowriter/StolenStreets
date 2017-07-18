@@ -15,10 +15,12 @@ import sprites.PlataformaPrueba;
 import sprites.BaseEnemigo;
 import sprites.Enemigo1;
 import source.Reg;
+import sprites.SueloPeligroso;
 import sprites.Trampolin;
 import sprites.DropsVida;
 import sprites.Obstaculo;
 import sprites.DropFalling;
+import sprites.SueloPeligroso;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -44,6 +46,7 @@ class PlayState extends FlxState{
 	private var money:FlxText; //Buena cancion de Pink Floyd // HUD dinero
 	private var lifes:FlxText;
 	private var life:Int; // vida
+	private var pinches:SueloPeligroso;
 	// private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
 	//EL nivel
 	var ogmoLoader:FlxOgmoLoader;
@@ -65,6 +68,7 @@ class PlayState extends FlxState{
 		// chico1 = new Enemigo1(90, 30); //nueva clase enemigo (enemigo de testeo)
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
+		pinches = new SueloPeligroso(500, 200);
 		// crea el HUD del dinero
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
@@ -156,6 +160,7 @@ class PlayState extends FlxState{
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 		}
+		add(pinches);
 	}
 	/*private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Int = Std.parseInt(entityData.get("x"));
@@ -204,6 +209,9 @@ class PlayState extends FlxState{
 			if (FlxG.collide(Mili, trampolin)){
 				Mili.SaltoTrampolin();
 			}
+		}
+		if (FlxG.collide(Mili, pinches)){
+			Mili.ColisiondeSP();
 		}
 		// Collider complicado para las plataformas trampolin de colision con el jugador
 		// Overlap del jugador con los objetos recolectables

@@ -165,6 +165,10 @@ class Jugador extends FlxSprite{
 		animation.stop();
 		animation.play("CaidaLibre");
 	}
+	// comportamiento que adopta el personaje cuando colisiona con el 
+	public function ColisiondeSP(){
+		vidaActual -= 5;
+	}
 	// getter del golpe
 	public function GetGolpear(){
 		return punios;

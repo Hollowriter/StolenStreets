@@ -18,7 +18,6 @@ class Trampolin extends FlxSprite
 		super(X, Y, SimpleGraphic);
 		makeGraphic(70, 5, FlxColor.YELLOW);
 		immovable = true;
-
 	}
 	
 }

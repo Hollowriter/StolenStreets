@@ -37,7 +37,7 @@ class PlayState extends FlxState{
 	private var plataforma:PlataformaPrueba;
 	// plataformas flotantes
 	private var Cajas = new FlxTypedGroup<Obstaculo>(2);
-	private var trampolin:Trampolin; // plataforma de salto
+	//private var trampolin:Trampolin; // plataforma de salto
 	private var funca:Bool = false; // esto no se que es, por favor explicar
 	private var puntaje:FlxText; // HUD puntaje
 	private var vida:FlxText; // HUD vida
@@ -83,7 +83,7 @@ class PlayState extends FlxState{
 		money.scrollFactor.set(0, 0);
 		money.visible = true;
 		// crea el HUD del dinero
-		trampolin = new Trampolin(400, 250);
+		//trampolin = new Trampolin(400, 250);
 		// crea el HUD de los puntos
 		puntaje = new FlxText(20, 1);
 		puntaje.color = 0xefff0a;
@@ -103,8 +103,10 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
+		//Grupos de objetos para Ogmo
 		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
+		Reg.Trampolines = new FlxTypedGroup<Trampolin>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -149,10 +151,11 @@ class PlayState extends FlxState{
 		// add(chico1);
 		add(Mili.GetGolpear());
 		// add(chico1.GetGolpeEnemigo());
-		add(trampolin);
+		//add(trampolin);
 		add(plataforma);	
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
+		add(Reg.Trampolines);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 		}
@@ -200,11 +203,7 @@ class PlayState extends FlxState{
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform1.y) //Mas adelante estos if van a ser uno solo.
 			FlxG.collide(Mili, testFloatingPlatform1);
 		// Collider complicado para las plataformas flotantes de colision con el jugador
-		if ((Mili.y + (Mili.height / 2)) < trampolin.y){
-			if (FlxG.collide(Mili, trampolin)){
-				Mili.SaltoTrampolin();
-			}
-		}
+		
 		// Collider complicado para las plataformas trampolin de colision con el jugador
 		// Overlap del jugador con los objetos recolectables
 		for (i in 0...cantM){
@@ -227,6 +226,13 @@ class PlayState extends FlxState{
 					Cajas.members[t].GetDrop().kill();
 				}
 			}
+		}
+		//Colision entre Mili y los trampolines
+		for (i in 0...(Reg.Trampolines.members.length))
+		{
+			if ((Mili.y + (Mili.height / 2)) < Reg.Trampolines.members[i].y){
+				if (FlxG.collide(Mili, Reg.Trampolines.members[i]))
+					Mili.SaltoTrampolin();
 		}
 		//COLISIONES ENTRE ENEMIGOS
 		for (i in 0...(Reg.Enemigos.members.length))
@@ -271,6 +277,7 @@ class PlayState extends FlxState{
 			trace(Reg.Enemigos.length);
 		}
 	}
+	}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Int = Std.parseInt(entityData.get("x"));
 		var entityStartY:Int = Std.parseInt(entityData.get("y"));
@@ -281,6 +288,8 @@ class PlayState extends FlxState{
 				    Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
 			case "plataformaflotante":
 					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
+			case "trampolin":
+					Reg.Trampolines.add(new Trampolin(entityStartX, entityStartY));
 		}
 	}
 }

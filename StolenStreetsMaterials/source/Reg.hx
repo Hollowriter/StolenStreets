@@ -5,6 +5,7 @@ import sprites.Golpejugador;
 import sprites.Enemigo1;
 import sprites.PlataformaFlotante;
 import sprites.BaseEnemigo;
+import sprites.Trampolin;
 
 /**
  * ...
@@ -60,5 +61,5 @@ class Reg{
 	
 	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
-	
+	static public var Trampolines:FlxTypedGroup<Trampolin>;
 }

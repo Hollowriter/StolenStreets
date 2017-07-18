@@ -238,6 +238,11 @@ class PlayState extends FlxState{
 				if (FlxG.collide(Mili, Reg.Trampolines.members[i]))
 					Mili.SaltoTrampolin();
 		}
+		//Colision entre Mili y las plataformas flotantes
+		for (i in 0...(Reg.PlataformasFlotantes.members.length))
+		{
+			FlxG.collide(Mili, Reg.PlataformasFlotantes.members[i]);
+		}
 		//COLISIONES ENTRE ENEMIGOS
 		for (i in 0...(Reg.Enemigos.members.length))
 		{

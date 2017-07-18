@@ -248,10 +248,9 @@ class PlayState extends FlxState{
 		{
 			for (j in 0...(Reg.Enemigos.members.length))
 			{
+			if (Reg.Enemigos.members[i].isOnScreen() && Reg.Enemigos.members[j].isOnScreen()){
 				FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
-				if (FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j])){
-					//trace("i'm working");
-				}
+			}
 			}
 		}
 		//COLISIONES CON EL MAPA

@@ -142,6 +142,7 @@ class BaseEnemigo extends FlxSprite
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		if (isOnScreen()){
 		enemyRightMin = Reg.posXjugador;
 		enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
 		enemyLeftMin = Reg.posXjugador;
@@ -149,6 +150,7 @@ class BaseEnemigo extends FlxSprite
 		enemyUpper = Reg.posYjugador;
 		EnElAire();
 		Morir();
-		if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();} // Mica. ¿Porque 600?
+		if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();}
+		}
 	}
 }

@@ -180,6 +180,8 @@ class PlayState extends FlxState{
 		puntaje.text = ("SCORE: " + Reg.puntaje);
 		vida.text = ("HEALTH: " + Mili.GetVida());
 		// HUD
+		FlxG.collide(Cajas.members[0], Mili);
+		FlxG.collide(Mili,Cajas.members[1]);
 		FlxG.collide(Cajas.members[1], Cajas.members[0]);
 		FlxG.collide(Mili, plataforma);
 		FlxG.collide(Mili, tileMap);
@@ -191,8 +193,6 @@ class PlayState extends FlxState{
 		FlxG.collide(chico1, tileMap);*/
 		// FlxG.collide(PlataCaida.members[0], Platform);
 		// FlxG.collide(PlataCaida.members[1], Platform);
-		/*FlxG.collide(Cajas.members[0], Mili);
-		FlxG.collide(Mili,Cajas.members[1]);*/
 		//FlxG.collide(Chico, Cajas.members[0]);
 		//FlxG.collide(Cajas.members[1], chico1); // Colisiones de las cajas con Mili, ¿Seran las de los efectos raros?
 		/*testeando los dropeos de las cajas destruibles*/

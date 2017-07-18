@@ -35,8 +35,8 @@ class Jugador extends FlxSprite{
 	private var contadorPiniaCorriendo:Int = 0;
 	private var piniaCorriendoTiempoMax:Int = 30;
 	private var piniaCorriendo:Bool = false;
-	private var anchuraObjeto = 30;
-	private var alturaObjeto = 30;
+	private var anchuraObjeto:Int = 30;
+	private var alturaObjeto:Int = 30;
 	private var hitboxPosX = 20;
 	private var hitboxPosY = 0;
 	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
@@ -58,7 +58,7 @@ class Jugador extends FlxSprite{
 		animation.add("Correr", [11, 12, 13, 14, 15, 16], 6, true);
 		animation.add("Danio", [23, 23, 23], 1, false);
 		animation.add("Caida", [25], 1, true);
-		animation.add("CaidaTemporal", [25, 25, 25, 25], 3, false);
+		animation.add("CaidaTemporal", [25, 25], 7, false);
 		animation.add("Muerte", [26, 26, 26, 26], 2, false);
 		animation.play("Natural");
 		// animation.play("Caminar");
@@ -387,6 +387,8 @@ class Jugador extends FlxSprite{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		trace("x " + x);
+		trace("y " + y);
 		// camara
 		Reg.posXjugador = x;
 		Reg.posYjugador = y;

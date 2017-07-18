@@ -56,12 +56,12 @@ class BaseEnemigo extends FlxSprite
 	public function move(){};
 	public function gotHitted(){};
 	public function EnElAire(){
-		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
+		/*if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
 			saltito = false;
 		}
 		else{
 			saltito = true;
-		}
+		}*/
 	}
 	public function DolorDelEnemigo(agresor:Jugador){
 		if (isHurt == 1 || agresor.GetAgarrando() == true){ // si esta lastimado normalmente
@@ -149,6 +149,6 @@ class BaseEnemigo extends FlxSprite
 		enemyUpper = Reg.posYjugador;
 		EnElAire();
 		Morir();
-		if(x < (Reg.posXjugador + 600) || x > (Reg.posXjugador - 600)) {move();}
+		if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();} // Mica. ¿Porque 600?
 	}
 }

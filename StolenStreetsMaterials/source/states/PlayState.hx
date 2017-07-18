@@ -105,7 +105,7 @@ class PlayState extends FlxState{
 		vida.visible = true;
 		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
-		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel1__oel);
+		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		//tileMap.follow();
@@ -150,18 +150,16 @@ class PlayState extends FlxState{
 		add(Mili.GetGolpear());
 		// add(chico1.GetGolpeEnemigo());
 		add(trampolin);
-		add(plataforma);
-		
+		add(plataforma);	
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 		}
 	}
-		private function entityCreator(entityName:String, entityData:Xml):Void{
-		var entityStartX:Float = Std.parseFloat(entityData.get("x"));
-		var entityStartY:Float = Std.parseFloat(entityData.get("y"));
-		
+	/*private function entityCreator(entityName:String, entityData:Xml):Void{
+		var entityStartX:Int = Std.parseInt(entityData.get("x"));
+		var entityStartY:Int = Std.parseInt(entityData.get("y"));
 		//	Me fijo qué tipo de entidad tengo que inicializar...
 		switch(entityName)
 		{
@@ -170,7 +168,7 @@ class PlayState extends FlxState{
 			case "plataformaflotante":
 					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
 		}
-	}
+	}*/
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// HUD
@@ -237,15 +235,15 @@ class PlayState extends FlxState{
 			{
 				FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
 				if (FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j])){
-					trace("i'm working");
+					//trace("i'm working");
 				}
 			}
 		}
 		//COLISIONES CON EL MAPA
 		for(i in 0...(Reg.Enemigos.members.length)){
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);
-			if (FlxG.collide(Reg.Enemigos.members[i], tileMap)){
-				trace(i);
+			if (Reg.Enemigos.members[i].isTouching(FlxObject.ANY)){
+				//trace(i);
 			}
 		}
 		// Mili.Agarrar(chico1);
@@ -271,6 +269,18 @@ class PlayState extends FlxState{
 			Reg.guita = 0;
 			Reg.puntaje = 0;
 			trace(Reg.Enemigos.length);
+		}
+	}
+	private function entityCreator(entityName:String, entityData:Xml):Void{
+		var entityStartX:Int = Std.parseInt(entityData.get("x"));
+		var entityStartY:Int = Std.parseInt(entityData.get("y"));
+		//	Me fijo qué tipo de entidad tengo que inicializar...
+		switch(entityName)
+		{
+			case "enemigo":
+				    Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
+			case "plataformaflotante":
+					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
 		}
 	}
 }

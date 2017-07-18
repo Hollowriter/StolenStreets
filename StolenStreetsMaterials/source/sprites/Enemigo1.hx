@@ -38,6 +38,8 @@ class Enemigo1 extends BaseEnemigo
 		golpesVarios = 0;
 		isHurt = 0;
 		saltito = false;
+		//trace("x " + x);
+		//trace("y " + y);
 		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 	}
 	// movimiento de este enemigo
@@ -128,7 +130,7 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function EnElAire(){
 		super.EnElAire();
-		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
+		if (this.isTouching(FlxObject.ANY)){
 			saltito = false;
 		}
 		else{

@@ -16,7 +16,7 @@
     <Width>50000</Width>
     <Height>30000</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\822\Desktop\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
+  <Filename>D:\Desktop\Repo\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -26,24 +26,11 @@
   <ExportCameraPosition>false</ExportCameraPosition>
   <LevelValueDefinitions />
   <LayerDefinitions>
-    <LayerDefinition xsi:type="GridLayerDefinition">
-      <Name>tondo</Name>
-      <Grid>
-        <Width>16</Width>
-        <Height>16</Height>
-      </Grid>
-      <ScrollFactor>
-        <X>1</X>
-        <Y>1</Y>
-      </ScrollFactor>
-      <Color A="255" R="128" G="128" B="192" />
-      <ExportMode>Bitstring</ExportMode>
-    </LayerDefinition>
     <LayerDefinition xsi:type="TileLayerDefinition">
       <Name>tilesets</Name>
       <Grid>
-        <Width>16</Width>
-        <Height>16</Height>
+        <Width>20</Width>
+        <Height>20</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -107,8 +94,8 @@
     </EntityDefinition>
     <EntityDefinition Name="plataformaflotante" Limit="100" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
-        <Width>16</Width>
-        <Height>16</Height>
+        <Width>70</Width>
+        <Height>15</Height>
       </Size>
       <Origin>
         <X>0</X>

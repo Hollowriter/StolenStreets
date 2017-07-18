@@ -67,7 +67,7 @@ class PlayState extends FlxState{
 		// chico1 = new Enemigo1(90, 30); //nueva clase enemigo (enemigo de testeo)
 		testFloatingPlatform = new PlataformaFlotante(300, 250);
 		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
-		pinches = new SueloPeligroso(500, 200);
+		pinches = new SueloPeligroso(500, 290);
 		// crea el HUD del dinero
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
@@ -205,7 +205,7 @@ class PlayState extends FlxState{
 		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform1.y) //Mas adelante estos if van a ser uno solo.
 			FlxG.collide(Mili, testFloatingPlatform1);
 		// Collider complicado para las plataformas flotantes de colision con el jugador
-		if (FlxG.collide(Mili, pinches)){
+		if (FlxG.overlap(Mili, pinches)){
 			Mili.ColisiondeSP();
 		}
 		// Collider complicado para las plataformas trampolin de colision con el jugador

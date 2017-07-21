@@ -21,6 +21,7 @@ import sprites.DropsVida;
 import sprites.Obstaculo;
 import sprites.DropFalling;
 import sprites.SueloPeligroso;
+import sprites.Instanciador;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -46,6 +47,7 @@ class PlayState extends FlxState{
 	private var lifes:FlxText;
 	private var life:Int; // vida
 	private var pinches:SueloPeligroso;
+	private var instanciando:Instanciador;
 	// private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
 	//EL nivel
 	var ogmoLoader:FlxOgmoLoader;
@@ -53,6 +55,7 @@ class PlayState extends FlxState{
 	var tmpMap:TiledObjectLayer;
 	override public function create():Void{
 		super.create();
+		instanciando = new Instanciador();
 		Mili = new Jugador();
 		plataforma = new PlataformaPrueba(30, 300);
 		camera.follow(Mili);
@@ -125,6 +128,7 @@ class PlayState extends FlxState{
 			}
 		}
 		add(tileMap);
+		add(instanciando);
 		// crea el HUD de la vida
 		add(Plata.members[0]);
 		add(Plata.members[1]);
@@ -162,18 +166,6 @@ class PlayState extends FlxState{
 		}
 		add(pinches);
 	}
-	/*private function entityCreator(entityName:String, entityData:Xml):Void{
-		var entityStartX:Int = Std.parseInt(entityData.get("x"));
-		var entityStartY:Int = Std.parseInt(entityData.get("y"));
-		//	Me fijo qué tipo de entidad tengo que inicializar...
-		switch(entityName)
-		{
-			case "enemigo":
-				    Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
-			case "plataformaflotante":
-					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
-		}
-	}*/
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// HUD
@@ -232,25 +224,21 @@ class PlayState extends FlxState{
 			}
 		}
 		//Colision entre Mili y los trampolines
-		for (i in 0...(Reg.Trampolines.members.length))
-		{
+		for (i in 0...(Reg.Trampolines.members.length)){
 			if ((Mili.y + (Mili.height / 2)) < Reg.Trampolines.members[i].y){
 				if (FlxG.collide(Mili, Reg.Trampolines.members[i]))
 					Mili.SaltoTrampolin();
 		}
 		//Colision entre Mili y las plataformas flotantes
-		for (i in 0...(Reg.PlataformasFlotantes.members.length))
-		{
+		for (i in 0...(Reg.PlataformasFlotantes.members.length)){
 			FlxG.collide(Mili, Reg.PlataformasFlotantes.members[i]);
 		}
 		//COLISIONES ENTRE ENEMIGOS
-		for (i in 0...(Reg.Enemigos.members.length))
-		{
-			for (j in 0...(Reg.Enemigos.members.length))
-			{
-			if (Reg.Enemigos.members[i].isOnScreen() && Reg.Enemigos.members[j].isOnScreen()){
-				FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
-			}
+		for (i in 0...(Reg.Enemigos.members.length)){
+			for (j in 0...(Reg.Enemigos.members.length)){
+				if (Reg.Enemigos.members[i].isOnScreen() && Reg.Enemigos.members[j].isOnScreen()){
+					FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
+				}
 			}
 		}
 		//COLISIONES CON EL MAPA
@@ -282,16 +270,34 @@ class PlayState extends FlxState{
 			FlxG.resetState();
 			Reg.guita = 0;
 			Reg.puntaje = 0;
-			trace(Reg.Enemigos.length);
+			// trace(Reg.Enemigos.length);
 		}
+	}
+	instanciando.CrearSueloPeligroso(pinches);
+	for (i in 0...Reg.Enemigos.length){
+		instanciando.CrearEnemigo(Reg.Enemigos.members[i]);
+	}
+	for (j in 0...Reg.Trampolines.length){
+		instanciando.CrearTrampolin(Reg.Trampolines.members[j]);
+	}
+	for (m in 0...Reg.PlataformasFlotantes.length){
+		instanciando.CrearPlataformaFlotante(Reg.PlataformasFlotantes.members[m]);
+	}
+	for (l in 0...Cajas.length){
+		instanciando.CrearObstaculo(Cajas.members[l]);
+	}
+	for (p in 0...Plata.length){
+		instanciando.CrearDrops(Plata.members[p]);
+	}
+	for (b in 0...Botiquin.length){
+		instanciando.CrearDropsVida(Botiquin.members[b]);
 	}
 	}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Int = Std.parseInt(entityData.get("x"));
 		var entityStartY:Int = Std.parseInt(entityData.get("y"));
 		//	Me fijo qué tipo de entidad tengo que inicializar...
-		switch(entityName)
-		{
+		switch(entityName){
 			case "enemigo":
 				    Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
 			case "plataformaflotante":

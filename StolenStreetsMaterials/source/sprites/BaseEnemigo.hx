@@ -104,10 +104,11 @@ class BaseEnemigo extends FlxSprite
 			}
 		}
 	}
-	private function Morir(){
+	public function Morir():Bool{
 		if (vidaEnemiga <= 0){
-			kill();
+			return true;
 		}
+		return false;
 	}
 	public function SetVida(health:Int){
 		vidaEnemiga = health;
@@ -142,14 +143,13 @@ class BaseEnemigo extends FlxSprite
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		if (isOnScreen()){
-		enemyRightMin = Reg.posXjugador;
-		enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
-		enemyLeftMin = Reg.posXjugador;
-		enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
-		enemyUpper = Reg.posYjugador;
-		EnElAire();
-		Morir();
+		if (!Morir()){
+			enemyRightMin = Reg.posXjugador;
+			enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
+			enemyLeftMin = Reg.posXjugador;
+			enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
+			enemyUpper = Reg.posYjugador;
+			EnElAire();
 		if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();}
 		}
 	}

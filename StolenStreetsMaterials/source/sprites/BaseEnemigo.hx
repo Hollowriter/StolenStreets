@@ -16,7 +16,7 @@ class BaseEnemigo extends FlxSprite
 {
 	private var vidaEnemiga:Int; // vida del enemigo
 	private var direccion:Bool; // para donde esta mirando
-	private var isHurt:UInt; // chequea si recibio un golpe
+	private var isHurt:EstadoEnemigo; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
 	private var punioEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
 	private var anchuraObjeto:Int = 30;
@@ -64,23 +64,23 @@ class BaseEnemigo extends FlxSprite
 		}*/
 	}
 	public function DolorDelEnemigo(agresor:Jugador){
-		if (isHurt == 1 || agresor.GetAgarrando() == true){ // si esta lastimado normalmente
+		if (isHurt == source.EstadoEnemigo.Lastimado || agresor.GetAgarrando() == true){ // si esta lastimado normalmente
 			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 			if (agresor.GetAgarrando() == true){ // Si el jugador lo esta agarrando, el isHurt no hace falta para matenerlo quieto
-				isHurt = 0;// Ademas, si el isHurt se queda en 1 mientras lo agarra, no podes golpearlo
+				isHurt = source.EstadoEnemigo.Normal;// Ademas, si el isHurt se queda en 1 mientras lo agarra, no podes golpearlo
 			}
 			if (timer > Reg.effectTimer && agresor.GetAgarrando() == false){ // si es mayor el timer que este numero y no es un agarre
-				isHurt = 0; // el enemigo se recupera
+				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 			}
 			else if (timer > Reg.effectTimer + 100 && agresor.GetAgarrando() == true){ // esto es lo que hace que el enemigo se escape del agarre
-				isHurt = 0; // esto esta por las dudas
+				isHurt = source.EstadoEnemigo.Normal; // esto esta por las dudas
 				timer = 0; // setea el timer a cero
 				agresor.SetAgarrando(false); // y se libera del agarre
 			} // dura mas tiempo y setea el agarre a false cuando se acaba
 		}
-		else if (isHurt == 2){ // si esta lastimado por un golpe duro
+		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
 			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 			/* el enemigo es empujado al aire */
@@ -97,7 +97,7 @@ class BaseEnemigo extends FlxSprite
 				velocity.x = Reg.EnemigoVelocidadVuelo * 5;
 			}
 			if (timer > (Reg.effectTimer + Reg.effectTimer) || saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
-				isHurt = 0; // el enemigo se recupera
+				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 				velocity.y = 0; // esto es para evitar que se vaya al carajo cuando sale volando
 				velocity.x = 0; // esto es para evitar que se vaya al carajo cuando sale volando
@@ -117,11 +117,11 @@ class BaseEnemigo extends FlxSprite
 		return vidaEnemiga;
 	}
 	// setter del dolor del enemigo
-	public function SetHurt(hurted:UInt){
+	public function SetHurt(hurted:EstadoEnemigo){
 		isHurt = hurted;
 	}
 	// retorna si el enemigo esta lastimado
-	public function GetHurt(){
+	public function GetHurt():EstadoEnemigo{
 		return isHurt;
 	}
 	// setter y getter del timer de comportamiento

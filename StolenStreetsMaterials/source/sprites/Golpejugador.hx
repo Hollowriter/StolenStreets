@@ -62,14 +62,14 @@ class Golpejugador extends FlxSprite{
 	public function ColisionDelGolpe(Pum:BaseEnemigo):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum) && !(Pum.Morir())){ // si el golpe es del jugador y choca con el enemigo
 			posicionar(); // lo hace desaparecer
-			if (Pum.GetHurt() == 0){ // chequea que el enemigo no haya recibido un golpe con anterioridad
+			if (Pum.GetHurt() == source.EstadoEnemigo.Normal){ // chequea que el enemigo no haya recibido un golpe con anterioridad
 				if (GolpeDuro == false){ // si es un golpe normal
-					Pum.SetHurt(1); // lo lastima
+					Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
 					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
 					trace(Pum.GetVida());
 				}
 				else if (GolpeDuro == true){ // pero si es un golpe duro
-					Pum.SetHurt(2); // lo lastima duramente
+					Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
 					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal);
 					trace(Pum.GetVida());
 				}

@@ -272,7 +272,7 @@ class Jugador extends FlxSprite{
 	}
 	// agarre
 	public function Agarrar(pobreVictima:BaseEnemigo){
-		if (pobreVictima.GetHurt() != 2){ // Si el enemigo no esta volando
+		if (pobreVictima.GetHurt() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
 			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
 			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
 			if (overlaps(pobreVictima) && theHits <= Reg.comboFuerteJugador){ // Si estas muy cerca del enemigo
@@ -285,7 +285,7 @@ class Jugador extends FlxSprite{
 				if (agarrando == true){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
 					if ((FlxG.keys.justPressed.J && controlesWASD == true) || (FlxG.keys.justPressed.D && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
 						agarrando = false; // para salir volando esto tiene que quedar en false
-						pobreVictima.SetHurt(2); // vuela en esa direccion
+						pobreVictima.SetHurt(source.EstadoEnemigo.Lanzado); // vuela en esa direccion
 						pobreVictima.SetTimer(0); // y reinicia el timer
 					}
 				}

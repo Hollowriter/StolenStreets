@@ -11,6 +11,12 @@ import sprites.Trampolin;
  * ...
  * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan(inicial)
  */
+enum EstadoEnemigo{
+	Normal;
+	Lastimado;
+	Lanzado;
+	Agarrado;
+}
 class Reg{
 	public static inline var hSpeed:Float = 200; // velocidad horizontal estandar del jugador
 	public static inline var hSpeedEnemigo:Float = 100; // velocidad horizontal estandar del enemigo

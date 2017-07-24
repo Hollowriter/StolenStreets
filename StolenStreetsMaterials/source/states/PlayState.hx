@@ -274,24 +274,24 @@ class PlayState extends FlxState{
 		}
 	}
 	instanciando.CrearSueloPeligroso(pinches);
-	for (i in 0...Reg.Enemigos.length){
-		instanciando.CrearEnemigo(Reg.Enemigos.members[i]);
-	}
-	for (j in 0...Reg.Trampolines.length){
-		instanciando.CrearTrampolin(Reg.Trampolines.members[j]);
-	}
-	for (m in 0...Reg.PlataformasFlotantes.length){
-		instanciando.CrearPlataformaFlotante(Reg.PlataformasFlotantes.members[m]);
-	}
-	for (l in 0...Cajas.length){
-		instanciando.CrearObstaculo(Cajas.members[l]);
-	}
-	for (p in 0...Plata.length){
-		instanciando.CrearDrops(Plata.members[p]);
-	}
-	for (b in 0...Botiquin.length){
-		instanciando.CrearDropsVida(Botiquin.members[b]);
-	}
+		for (i in 0...Reg.Enemigos.length){
+			instanciando.CrearEnemigo(Reg.Enemigos.members[i]);
+		}
+		for (j in 0...Reg.Trampolines.length){
+			instanciando.CrearTrampolin(Reg.Trampolines.members[j]);
+		}
+		for (m in 0...Reg.PlataformasFlotantes.length){
+			instanciando.CrearPlataformaFlotante(Reg.PlataformasFlotantes.members[m]);
+		}
+		for (l in 0...Cajas.length){
+			instanciando.CrearObstaculo(Cajas.members[l]);
+		}
+		for (p in 0...Plata.length){
+			instanciando.CrearDrops(Plata.members[p]);
+		}
+		for (b in 0...Botiquin.length){
+			instanciando.CrearDropsVida(Botiquin.members[b]);
+		}
 	}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Int = Std.parseInt(entityData.get("x"));

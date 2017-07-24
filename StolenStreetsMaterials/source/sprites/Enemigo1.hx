@@ -36,7 +36,7 @@ class Enemigo1 extends BaseEnemigo
 		timer = 0;
 		comboTimer = 0;
 		golpesVarios = 0;
-		isHurt = 0;
+		isHurt = source.EstadoEnemigo.Normal;
 		saltito = false;
 		//trace("x " + x);
 		//trace("y " + y);
@@ -46,7 +46,7 @@ class Enemigo1 extends BaseEnemigo
 	override public function move(){
 		super.move();
 		//trace(saltito + '0');
-		if (isHurt == 0 || saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
+		if (isHurt == source.EstadoEnemigo.Normal || saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
 			//trace(saltito + '1');
 		if (!still){
 			timer = 0;
@@ -121,10 +121,10 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function DolorDelEnemigo(agresor:Jugador){
 		super.DolorDelEnemigo(agresor);
-		 if (isHurt == 1){
+		 if (isHurt == source.EstadoEnemigo.Lastimado){
 			animation.play("Ouch");
 		}
-		else if (isHurt == 2 && saltito == true){
+		else if (isHurt == source.EstadoEnemigo.Lanzado && saltito == true){
 			animation.play("Caer");
 		}
 	}
@@ -138,7 +138,7 @@ class Enemigo1 extends BaseEnemigo
 		} // Estos condones pinchados no detectan el jodido suelo
 		if (y > Reg.posYjugador && saltito == false){
 			velocity.y = Reg.jumpSpeed;
-			if (saltito == true && isHurt == 0){
+			if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
 				animation.play("Saltar");
 			}
 			if (saltito == true && animation.finished){

@@ -111,7 +111,7 @@ class Enemigo extends FlxSprite{ // Clase Dummy
 				velocity.x = Reg.EnemigoVelocidadVuelo * 5;
 			}
 			if (timer > (Reg.effectTimer + Reg.effectTimer) && saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
-				isHurt = 0; // el enemigo se recupera
+				isHurt = source.EstadoEnemigo.; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 			}
 		}

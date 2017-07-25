@@ -64,20 +64,20 @@ class BaseEnemigo extends FlxSprite
 		}*/
 	}
 	public function DolorDelEnemigo(agresor:Jugador){
-		if (isHurt == source.EstadoEnemigo.Lastimado || agresor.GetAgarrando() == true){ // si esta lastimado normalmente
+		if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){ // si esta lastimado normalmente
 			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
-			if (agresor.GetAgarrando() == true){ // Si el jugador lo esta agarrando, el isHurt no hace falta para matenerlo quieto
+			/*if (isHurt == source.EstadoEnemigo.Agarrado){ // Si el jugador lo esta agarrando, el isHurt no hace falta para matenerlo quieto
 				isHurt = source.EstadoEnemigo.Normal;// Ademas, si el isHurt se queda en 1 mientras lo agarra, no podes golpearlo
-			}
-			if (timer > Reg.effectTimer && agresor.GetAgarrando() == false){ // si es mayor el timer que este numero y no es un agarre
+			}*/
+			if (timer > Reg.effectTimer && isHurt != source.EstadoEnemigo.Agarrado){ // si es mayor el timer que este numero y no es un agarre
 				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 			}
-			else if (timer > Reg.effectTimer + 100 && agresor.GetAgarrando() == true){ // esto es lo que hace que el enemigo se escape del agarre
+			else if (timer > Reg.effectTimer + 100 && isHurt == source.EstadoEnemigo.Agarrado){ // esto es lo que hace que el enemigo se escape del agarre
 				isHurt = source.EstadoEnemigo.Normal; // esto esta por las dudas
 				timer = 0; // setea el timer a cero
-				agresor.SetAgarrando(false); // y se libera del agarre
+				// agresor.SetAgarrando(false); // y se libera del agarre
 			} // dura mas tiempo y setea el agarre a false cuando se acaba
 		}
 		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro

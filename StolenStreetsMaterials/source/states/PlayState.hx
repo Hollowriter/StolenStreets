@@ -253,8 +253,8 @@ class PlayState extends FlxState{
 		// Chico.Atacar(); // esto se puede sacar del playstate
 		// Mili.GetGolpear().ColisionDelGolpe(chico1);
 		for (i in 0...(Reg.Enemigos.length)){
-			Mili.GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i]);
-			Mili.Agarrar(Reg.Enemigos.members[i]);
+			Mili.GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Mili);
+			/*Mili.Agarrar(Reg.Enemigos.members[i]);*/
 		}
 	    /*chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		chico1.DolorDelEnemigo(Mili);*/

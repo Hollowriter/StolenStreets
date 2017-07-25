@@ -19,7 +19,7 @@ class Jugador extends FlxSprite{
 	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
-	private var agarrando:Bool; // este es un booleano para chequear el agarre
+	// private var agarrando:Bool; // este es un booleano para chequear el agarre
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
 	private var theHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
 	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
@@ -72,13 +72,13 @@ class Jugador extends FlxSprite{
 		theHits = 0;
 		ComboActivation = false;
 		jump = false;
-		agarrando = false;
+		// agarrando = false;
 		vencida = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
-		if (agarrando == false && check == false && meHurt == 0 && esquivando == false){
+		if (check == false && meHurt == 0 && esquivando == false){
 			if (FlxG.keys.pressed.D && controlesWASD == true /*&& check == false && meHurt == 0 && esquivando == false*/ || 
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
 				if(corriendo == false){
@@ -139,10 +139,10 @@ class Jugador extends FlxSprite{
 	public function Salto(){
 		// para saltar
 		if 
-		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true || 
-		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false||
-		 FlxG.keys.justPressed.L && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == true|| 
-		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && agarrando == false && controlesWASD == false){
+		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == true || 
+		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == false||
+		 FlxG.keys.justPressed.L && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == true|| 
+		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == false){
 			velocity.y = Reg.jumpSpeed;
 			animation.play("Saltar");
 		}
@@ -206,11 +206,11 @@ class Jugador extends FlxSprite{
 			}
 			time = 0; // reinicia el timer
 		}
-		if (check == true && agarrando == false){ // el puñetazo esta presente
+		/*if (FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){
+			check = true;
+		}*/
+		if (check == true){ // el puñetazo esta presente
 			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puñetazo
-			if (agarrando == true){ // esto para evitar que le pege eternamente
-				check = false;
-			}
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
 				velocity.y = 0;
@@ -224,7 +224,7 @@ class Jugador extends FlxSprite{
 				}
 			}
 		}
-		if (time > Reg.punioEnPantalla){ // en este tiempo, el puñetazo desaparece
+		if (animation.finished){ // en este tiempo, el puñetazo desaparece
 			punios.posicionar();
 			check = false;
 		}
@@ -244,7 +244,7 @@ class Jugador extends FlxSprite{
 		if ((FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || (FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
 			theHits++;
 		}
-		if (time > Reg.effectTimer && agarrando == false || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
+		if (time > Reg.effectTimer /*&& agarrando == false*/ || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
 			theHits = 0;
 			time = 0;
 			ComboActivation = false;
@@ -271,10 +271,8 @@ class Jugador extends FlxSprite{
 		}
 	}
 	// agarre
-	public function Agarrar(pobreVictima:BaseEnemigo){
+	/*public function Agarrar(pobreVictima:BaseEnemigo){
 		if (pobreVictima.GetHurt() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
-			/*Antes de que sigan leyendo, estoy pensando en cambiar una condicion. 
-			La razon es para que el agarre sea mas util y mas logico, que puedas agarrar al enemigo tanto por delante como por detras.*/
 			if (overlaps(pobreVictima) && theHits <= Reg.comboFuerteJugador){ // Si estas muy cerca del enemigo
 				if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 					// pobreVictima.SetHurt(1); // tomas al enemigo
@@ -291,7 +289,7 @@ class Jugador extends FlxSprite{
 				}
 			}
 		} // aca termina el nuevo agarre
-	} // y termina la funcion
+	}*/ // y termina la funcion
 	public function Muerte(){
 		if (vidaActual <= 0){
 			if (vencida == false){
@@ -382,13 +380,20 @@ class Jugador extends FlxSprite{
 	public function GetLife(){
 		return life;
 	}
+	// setter y getter del check
+	public function SetCheck(comprobador:Bool){
+		check = comprobador;
+	}
+	public function GetCheck(){
+		return check;
+	}
 	// setter y getter del booleano de agarrar
-	public function SetAgarrando(grab:Bool){
+	/*public function SetAgarrando(grab:Bool){
 		agarrando = grab;
 	}
 	public function GetAgarrando(){
 		return agarrando;
-	}
+	}*/
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		trace("x " + x);

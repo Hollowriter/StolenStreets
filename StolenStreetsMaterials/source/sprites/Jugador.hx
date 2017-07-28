@@ -19,7 +19,7 @@ class Jugador extends FlxSprite{
 	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
 	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
-	// private var agarrando:Bool; // este es un booleano para chequear el agarre
+	private var agarrando:Bool; // este es un booleano para chequear el agarre
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
 	private var theHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
 	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
@@ -49,7 +49,7 @@ class Jugador extends FlxSprite{
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		animation.add("Natural", [0, 10], 2, true);
 		animation.add("Caminar", [0, 5, 6, 7,8,9], 6, true);
-		animation.add("Saltar", [1, 2,2, 3], 5, false);
+		animation.add("Saltar", [1, 2, 2, 3], 5, false);
 		animation.add("Aterrizaje", [4], 6, false);
 		animation.add("CaidaLibre", [3], 2, true);
 		animation.add("Golpe", [17, 18, 19], 7, false);
@@ -60,6 +60,8 @@ class Jugador extends FlxSprite{
 		animation.add("Caida", [25], 1, true);
 		animation.add("CaidaTemporal", [25, 25], 7, false);
 		animation.add("Muerte", [26, 26, 26, 26], 2, false);
+		animation.add("Agarre", [20, 20, 20], 5, false);
+		animation.add("Agarrando", [20], 2, true);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = Reg.gravedad; // gravedad
@@ -72,7 +74,7 @@ class Jugador extends FlxSprite{
 		theHits = 0;
 		ComboActivation = false;
 		jump = false;
-		// agarrando = false;
+		agarrando = false;
 		vencida = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
@@ -206,10 +208,13 @@ class Jugador extends FlxSprite{
 			}
 			time = 0; // reinicia el timer
 		}
-		/*if (FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){
-			check = true;
-		}*/
+		else if ((FlxG.keys.justPressed.U && check == false && meHurt == 0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt == 0 && controlesWASD == false)){
+			if (jump == false){ // in progress
+				punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
+			}
+		}
 		if (check == true){ // el puñetazo esta presente
+			trace(check);
 			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puñetazo
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
@@ -388,16 +393,14 @@ class Jugador extends FlxSprite{
 		return check;
 	}
 	// setter y getter del booleano de agarrar
-	/*public function SetAgarrando(grab:Bool){
+	public function SetAgarrando(grab:Bool){
 		agarrando = grab;
 	}
 	public function GetAgarrando(){
 		return agarrando;
-	}*/
+	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		trace("x " + x);
-		trace("y " + y);
 		// camara
 		Reg.posXjugador = x;
 		Reg.posYjugador = y;

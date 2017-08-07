@@ -53,7 +53,7 @@ class Reg{
 	public static inline var esquivada:Int = 25;
 	public static inline var vidaEnemiga:Int = 20;
 	public static inline var velocidadEnemiga:Int = 100;
-	public static inline var elNumeroMagicoDeMica:Int = 600;
+	public static inline var elNumeroMagicoDeMica:Int = 8000;
 	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador

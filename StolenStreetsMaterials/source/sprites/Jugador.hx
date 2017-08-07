@@ -42,6 +42,7 @@ class Jugador extends FlxSprite{
 	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
+	private static inline var unSegundo:Int = 1;
 	
 	public function new(?SimpleGraphic:FlxGraphicAsset){
 		super(anchuraObjeto, alturaObjeto, SimpleGraphic);
@@ -141,6 +142,8 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
+		if (vencida == false)
+		{
 		if 
 		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == true || 
 		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == false||
@@ -161,6 +164,7 @@ class Jugador extends FlxSprite{
 				animation.play("CaidaLibre");
 			}
 		}
+		}
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
@@ -170,7 +174,7 @@ class Jugador extends FlxSprite{
 	}
 	// comportamiento que adopta el personaje cuando colisiona con el pinche
 	public function ColisiondeSP(){
-		if (contadorpinches == 60)
+		if (contadorpinches == unSegundo)
 		{
 		vidaActual -= 1;
 		contadorpinches = 0;
@@ -201,7 +205,7 @@ class Jugador extends FlxSprite{
 				animation.play("Patada");
 			}
 			if (corriendo == true){	
-				if(direccion == true){
+				if (direccion == true){
 					velocity.x = Reg.hSpeed;
 					piniaCorriendo = true;
 				}
@@ -311,26 +315,25 @@ class Jugador extends FlxSprite{
 	}
 	public function Muerte(){
 		if (vidaActual <= 0){
+			trace ("muerta");
 			if (vencida == false){
 				animation.play("CaidaTemporal");
 				vencida = true;
 			}
 			if (!(animation.getByName("CaidaTemporal").finished)){
-				trace(jump);
-				velocity.y = Reg.vSpeed;
 				if (direccion == false){
-					velocity.x = Reg.jumpSpeed;
+					velocity.y = 80;
 				}
 				else{
-					velocity.x = Reg.jumpSpeed * ( -1);
+					velocity.y = 80;
 				}
 			}
 			else if (animation.getByName("CaidaTemporal").finished && jump == true){
 				if (direccion == false){
-					velocity.x = Reg.jumpSpeed;
+					velocity.y = 80;
 				}
 				else{
-					velocity.x = Reg.jumpSpeed * ( -1);
+					velocity.y = 80;
 				}
 				animation.play("Caida");
 			}

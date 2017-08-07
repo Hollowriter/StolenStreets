@@ -1,15 +1,20 @@
 package source;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
+import sprites.Jugador;
 import sprites.Golpejugador;
 import sprites.Enemigo1;
+import sprites.Obstaculo;
 import sprites.PlataformaFlotante;
 import sprites.BaseEnemigo;
 import sprites.Trampolin;
+import sprites.SueloPeligroso;
+import sprites.Drops;
+import sprites.DropsVida;
 
 /**
  * ...
- * @author AfanadosDeOtroProyecto+UnPoquitoDeRodrigoDiazKlipphan(inicial)
+ * @author RodrigoDiazKlipphan(inicial)
  */
 enum EstadoEnemigo{
 	Normal;
@@ -19,10 +24,11 @@ enum EstadoEnemigo{
 }
 class Reg{
 	public static inline var hSpeed:Float = 200; // velocidad horizontal estandar del jugador
+	public static inline var maxhSpeed:Float = 200; // velocidad horizontal maxima del jugador
 	public static inline var hSpeedEnemigo:Float = 100; // velocidad horizontal estandar del enemigo
+	
 	public static inline var EnemigoVelocidadVuelo:Float = 30; //velocidad a la que vuela el enemigo
-	public static inline var maxhSpeed:Float = 200; // velocidad horizontal maxima
-	public static inline var vSpeed:Float = -220; // velocidad vertical estandar
+	public static inline var vSpeed:Float = -220; // velocidad vertical estandar de enemigos y player, (no es gravedad)
 	public static inline var friction:Float = 15; // friccion estandar
 	public static inline var effectTimer:Float = 20; // maximo de un timer de comportamiento estandar (aunque por ahora estoy haciendo cualquier cosa)
 	public static inline var comboTimer:Float = 10;
@@ -68,4 +74,9 @@ class Reg{
 	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
 	static public var Trampolines:FlxTypedGroup<Trampolin>;
+	static public var Players:FlxTypedGroup<Jugador>;
+	static public var Cajitas:FlxTypedGroup<Obstaculo>;
+	static public var Pinches:FlxTypedGroup<SueloPeligroso>;
+	static public var Monedas:FlxTypedGroup<Drops>;
+	static public var Botiquines:FlxTypedGroup<DropsVida>;
 }

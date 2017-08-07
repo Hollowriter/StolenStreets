@@ -29,17 +29,14 @@ import flixel.tile.FlxTilemap;
 import flixel.FlxObject;
 
 class PlayState extends FlxState{
-	private var Mili:Jugador; // jugador
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	// plataformas flotantes
-	private var testFloatingPlatform:PlataformaFlotante;
-	private var testFloatingPlatform1:PlataformaFlotante;
 	private var plataforma:PlataformaPrueba;
 	// plataformas flotantes
-	private var Cajas = new FlxTypedGroup<Obstaculo>(2);
+	private var Cajas:Obstaculo;
 	private var funca:Bool = false; // esto no se que es, por favor explicar
 	private var puntaje:FlxText; // HUD puntaje
 	private var vida:FlxText; // HUD vida
@@ -56,21 +53,20 @@ class PlayState extends FlxState{
 	override public function create():Void{
 		super.create();
 		instanciando = new Instanciador();
-		Mili = new Jugador();
 		plataforma = new PlataformaPrueba(30, 300);
-		camera.follow(Mili);
-		Cajas.members[0] = new Obstaculo(200, 200);
-		Cajas.members[1] = new Obstaculo(300, 200);
-		Plata.members[0] = new Drops(300, 100);
-		Plata.members[1] = new Drops(350, 100);
+		
+		//Cajas.members[0] = new Obstaculo(200, 200);
+		//Cajas.members[1] = new Obstaculo(300, 200);
+		//Plata.members[0] = new Drops(300, 100);
+		//Plata.members[1] = new Drops(350, 100);
 		// PlataCaida.members[0] = new DropFalling(400, 100);
 		// PlataCaida.members[1] = new DropFalling(450, 100); // ambas son de prueba
-		Botiquin.members[0] = new DropsVida(400, 150);
-		Botiquin.members[1] = new DropsVida(450, 150);
+		//Botiquin.members[0] = new DropsVida(400, 150);
+		//Botiquin.members[1] = new DropsVida(450, 150);
 		// chico1 = new Enemigo1(90, 30); //nueva clase enemigo (enemigo de testeo)
-		testFloatingPlatform = new PlataformaFlotante(300, 250);
-		testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
-		pinches = new SueloPeligroso(500, 290);
+		//testFloatingPlatform = new PlataformaFlotante(300, 250);
+		//testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
+		//pinches = new SueloPeligroso(500, 290);
 		// crea el HUD del dinero
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
@@ -109,9 +105,14 @@ class PlayState extends FlxState{
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
 		//Grupos de objetos para Ogmo
+		Reg.Players = new FlxTypedGroup<Jugador>();
 		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
 		Reg.Trampolines = new FlxTypedGroup<Trampolin>();
+		Reg.Cajitas = new FlxTypedGroup<Obstaculo>();
+		Reg.Pinches = new FlxTypedGroup<SueloPeligroso>();
+		Reg.Monedas = new FlxTypedGroup<Drops>();
+		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -130,108 +131,98 @@ class PlayState extends FlxState{
 		add(tileMap);
 		add(instanciando);
 		// crea el HUD de la vida
-		add(Plata.members[0]);
-		add(Plata.members[1]);
-		// add(PlataCaida.members[0]);
-		// add(PlataCaida.members[1]);
-		add(Botiquin.members[0]);
-		add(Botiquin.members[1]);
-		add(Cajas.members[0]);
-		add(Cajas.members[1]);
-		if (Cajas.members[0].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
+		add(Reg.Monedas);
+		add(Reg.Botiquines);
+		add(Reg.Pinches);
+		/*if (Cajas.members[0].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
 			add(Cajas.members[0].GetDrop());
 			//trace('true');
-		}
-		if (Cajas.members[1].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
+		}*/
+		/*if (Cajas.members[1].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
 			add(Cajas.members[1].GetDrop());
 			//trace('true2');
-		}
+		}*/
 		add(puntaje);
 		add(money);
 		add(vida);
 		add(lifes);
-		add(Mili);
-		add(testFloatingPlatform);
-		add(testFloatingPlatform1);
-		testFloatingPlatform1.frenarHorizontal();
+		add(Reg.Players);
+		camera.follow(Reg.Players.members[0]);
 		// add(chico1);
-		add(Mili.GetGolpear());
-		// add(chico1.GetGolpeEnemigo());
+		add(Reg.Players.members[0].GetGolpear());
 		add(plataforma);	
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
+		add(Reg.Cajitas);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 		}
-		add(pinches);
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// HUD
-		lifes.text = ("LIFE: " + Mili.GetLife());
+		lifes.text = ("LIFE: " + Reg.Players.members[0].GetLife());
 		money.text = ("MONEY: $" + Reg.guita);
 		puntaje.text = ("SCORE: " + Reg.puntaje);
-		vida.text = ("HEALTH: " + Mili.GetVida());
+		vida.text = ("HEALTH: " + Reg.Players.members[0].GetVida());
 		// HUD
-		FlxG.collide(Cajas.members[0], Mili);
-		FlxG.collide(Mili,Cajas.members[1]);
-		FlxG.collide(Cajas.members[1], Cajas.members[0]);
-		FlxG.collide(Mili, plataforma);
-		FlxG.collide(Mili, tileMap);
-		FlxG.collide(Cajas.members[0], plataforma);
-		FlxG.collide(Cajas.members[1], plataforma);
-		FlxG.collide(Cajas.members[0], tileMap);
-		FlxG.collide(Cajas.members[1], tileMap);
+		for (i in 0...Reg.Cajitas.length){
+			FlxG.collide(Reg.Cajitas.members[i], Reg.Players.members[0]);
+			FlxG.collide(Reg.Cajitas.members[i], tileMap);
+			for (b in 0...Reg.Cajitas.length){
+				FlxG.collide(Reg.Cajitas.members[i], Reg.Cajitas.members[b]);
+			}
+		}
+		for (a in 0...Reg.Pinches.length){
+			FlxG.collide(Reg.Pinches.members[a], tileMap);
+		}
+		FlxG.collide(Reg.Players.members[0], plataforma);
+		FlxG.collide(Reg.Players.members[0], tileMap);
 		/*FlxG.collide(chico1, plataforma);
-		FlxG.collide(chico1, tileMap);*/
+		FlxG.collide(chico1, tileMap);
 		// FlxG.collide(PlataCaida.members[0], Platform);
 		// FlxG.collide(PlataCaida.members[1], Platform);
 		//FlxG.collide(Chico, Cajas.members[0]);
 		//FlxG.collide(Cajas.members[1], chico1); // Colisiones de las cajas con Mili, ¿Seran las de los efectos raros?
 		/*testeando los dropeos de las cajas destruibles*/
 		/*testeando los dropeos de las cajas destruibles*/
-		// Collider complicado para las plataformas flotantes de colision con el jugador
-		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform.y)
-			FlxG.collide(Mili, testFloatingPlatform);
-		if ((Mili.y + (Mili.height / 2)) < testFloatingPlatform1.y) //Mas adelante estos if van a ser uno solo.
-			FlxG.collide(Mili, testFloatingPlatform1);
-		// Collider complicado para las plataformas flotantes de colision con el jugador
-		if (FlxG.overlap(Mili, pinches)){
-			Mili.ColisiondeSP();
-		}
+		/*if (FlxG.overlap(Reg.Players.members[0], pinches)){
+			Reg.Players.members[0].ColisiondeSP();
+		}*/
 		// Collider complicado para las plataformas trampolin de colision con el jugador
 		// Overlap del jugador con los objetos recolectables
-		for (i in 0...cantM){
-			if (FlxG.overlap(Mili, Plata.members[i])){
-				Plata.members[i].Juntado();
-				Plata.members[i].kill();
+		for (i in 0...Reg.Monedas.length){
+			if (FlxG.overlap(Reg.Players.members[0], Plata.members[i])){
+				Reg.Monedas.members[i].Juntado();
+				Reg.Monedas.members[i].kill();
 			}
 		}
-		for (b in 0...cantM){
-			if (FlxG.overlap(Mili, Botiquin.members[b])){
-				Botiquin.members[b].Curado(Mili);
-				Botiquin.members[b].kill();
+		for (b in 0...Reg.Botiquines.length){
+			if (FlxG.overlap(Reg.Players.members[0], Botiquin.members[b])){
+			Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
+			Reg.Botiquines.members[b].kill();
 			}
 		}
 		/*dropeo de las cajas*/
-		for (t in 0...cantM){
-			if (Cajas.members[t].GetDrop() != null){
-				if (FlxG.overlap(Mili, Cajas.members[t].GetDrop())){
-					Cajas.members[t].GetDrop().Juntado();
-					Cajas.members[t].GetDrop().kill();
+		for (t in 0...Reg.Cajitas.length){
+			if (Reg.Cajitas.members[t].GetDrop() != null){
+				if (FlxG.overlap(Reg.Players.members[0], Reg.Cajitas.members[t].GetDrop())){
+					Reg.Cajitas.members[t].GetDrop().Juntado();
+					Reg.Cajitas.members[t].GetDrop().kill();
 				}
 			}
 		}
 		//Colision entre Mili y los trampolines
 		for (i in 0...(Reg.Trampolines.members.length)){
-			if ((Mili.y + (Mili.height / 2)) < Reg.Trampolines.members[i].y){
-				if (FlxG.collide(Mili, Reg.Trampolines.members[i]))
-					Mili.SaltoTrampolin();
+			if ((Reg.Players.members[0].y + (Reg.Players.members[0].height / 2)) < Reg.Trampolines.members[i].y){
+				if (FlxG.collide(Reg.Players.members[0], Reg.Trampolines.members[i]))
+					Reg.Players.members[0].SaltoTrampolin();
 		}
 		//Colision entre Mili y las plataformas flotantes
 		for (i in 0...(Reg.PlataformasFlotantes.members.length)){
-			FlxG.collide(Mili, Reg.PlataformasFlotantes.members[i]);
+			if((Reg.Players.members[0].y + Reg.Players.members[0].height) <  (Reg.PlataformasFlotantes.members[i]).y +  Reg.PlataformasFlotantes.members[i].height)
+			FlxG.collide(Reg.Players.members[0], Reg.PlataformasFlotantes.members[i]);
 		}
 		//COLISIONES ENTRE ENEMIGOS
 		for (i in 0...(Reg.Enemigos.members.length)){
@@ -249,25 +240,25 @@ class PlayState extends FlxState{
 			}
 		}
 		// Mili.Agarrar(chico1);
-		Mili.Salto();
+		Reg.Players.members[0].Salto();
 		// Chico.Atacar(); // esto se puede sacar del playstate
 		// Mili.GetGolpear().ColisionDelGolpe(chico1);
 		for (i in 0...(Reg.Enemigos.length)){
-			Mili.GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Mili);
+			Reg.Players.members[0].GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Reg.Players.members[0]);
 			/*Mili.Agarrar(Reg.Enemigos.members[i]);*/
 		}
 	    /*chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
 		chico1.DolorDelEnemigo(Mili);*/
 		for (i in 0...(Reg.Enemigos.length)){
-			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
-			Reg.Enemigos.members[i].DolorDelEnemigo(Mili);
+			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
+			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);
 		}
-		for (o in 0...cantM){
-			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
+		for (o in 0...Reg.Cajitas.length){
+			Reg.Players.members[0].GetGolpear().ColisionconCaja(Reg.Cajitas.members[o], Reg.Players.members[0]);
 		}
 		// Agarre de Mili (En proceso)
 		for (m in 0...(Reg.Enemigos.length)){
-			Mili.Agarrar(Reg.Enemigos.members[m]);
+			Reg.Players.members[0].Agarrar(Reg.Enemigos.members[m]);
 		}
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
@@ -277,7 +268,8 @@ class PlayState extends FlxState{
 			// trace(Reg.Enemigos.length);
 		}
 	}
-	instanciando.CrearSueloPeligroso(pinches);
+	//Instanciador
+	//instanciando.CrearSueloPeligroso(pinches);
 		for (i in 0...Reg.Enemigos.length){
 			instanciando.CrearEnemigo(Reg.Enemigos.members[i]);
 		}
@@ -287,14 +279,17 @@ class PlayState extends FlxState{
 		for (m in 0...Reg.PlataformasFlotantes.length){
 			instanciando.CrearPlataformaFlotante(Reg.PlataformasFlotantes.members[m]);
 		}
-		for (l in 0...Cajas.length){
-			instanciando.CrearObstaculo(Cajas.members[l]);
+		for (l in 0...Reg.Cajitas.length){
+			instanciando.CrearObstaculo(Reg.Cajitas.members[l]);
 		}
-		for (p in 0...Plata.length){
-			instanciando.CrearDrops(Plata.members[p]);
+		for (p in 0...Reg.Monedas.length){
+			instanciando.CrearDrops(Reg.Monedas.members[p]);
 		}
-		for (b in 0...Botiquin.length){
-			instanciando.CrearDropsVida(Botiquin.members[b]);
+		for (b in 0...Reg.Botiquines.length){
+			instanciando.CrearDropsVida(Reg.Botiquines.members[b]);
+		}
+		for (q in 0...Reg.Pinches.length){
+			instanciando.CrearSueloPeligroso(Reg.Pinches.members[q]);
 		}
 	}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
@@ -303,11 +298,21 @@ class PlayState extends FlxState{
 		//	Me fijo qué tipo de entidad tengo que inicializar...
 		switch(entityName){
 			case "enemigo":
-				    Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
+				Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
 			case "plataformaflotante":
-					Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
+				Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
 			case "trampolin":
-					Reg.Trampolines.add(new Trampolin(entityStartX, entityStartY));
+				Reg.Trampolines.add(new Trampolin(entityStartX, entityStartY));
+			case "jugador":
+				Reg.Players.add(new Jugador(entityStartX, entityStartY));
+			case "cajas":
+				Reg.Cajitas.add(new Obstaculo(entityStartX, entityStartY));
+			case "pinches":
+				Reg.Pinches.add(new SueloPeligroso(entityStartX, entityStartY));
+			case "monedas":
+				Reg.Monedas.add(new Drops(entityStartX, entityStartY));
+			case "botiquines":
+				Reg.Botiquines.add(new DropsVida(entityStartX, entityStartY));
 		}
 	}
 }

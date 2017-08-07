@@ -41,6 +41,7 @@ class Jugador extends FlxSprite{
 	private var hitboxPosY = 0;
 	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
 	private var vencida:Bool;
+	private var contadorpinches:Int = 0;
 	
 	public function new(?SimpleGraphic:FlxGraphicAsset){
 		super(anchuraObjeto, alturaObjeto, SimpleGraphic);
@@ -167,9 +168,15 @@ class Jugador extends FlxSprite{
 		animation.stop();
 		animation.play("CaidaLibre");
 	}
-	// comportamiento que adopta el personaje cuando colisiona con el 
+	// comportamiento que adopta el personaje cuando colisiona con el pinche
 	public function ColisiondeSP(){
+		if (contadorpinches == 60)
+		{
 		vidaActual -= 1;
+		contadorpinches = 0;
+		}
+		contadorpinches++;
+		
 	}
 	// getter del golpe
 	public function GetGolpear(){

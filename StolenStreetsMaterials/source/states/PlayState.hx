@@ -265,6 +265,10 @@ class PlayState extends FlxState{
 		for (o in 0...cantM){
 			Mili.GetGolpear().ColisionconCaja(Cajas.members[o], Mili);
 		}
+		// Agarre de Mili (En proceso)
+		for (m in 0...(Reg.Enemigos.length)){
+			Mili.Agarrar(Reg.Enemigos.members[m]);
+		}
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();

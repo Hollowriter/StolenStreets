@@ -74,13 +74,13 @@ class Jugador extends FlxSprite{
 		theHits = 0;
 		ComboActivation = false;
 		jump = false;
-		agarrando = false;
+		agarrando = false; // sin uso
 		vencida = false;
 		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
-		if (check == false && meHurt == 0 && esquivando == false){
+		if (check == false && meHurt == 0 && esquivando == false && agarrando == false){
 			if (FlxG.keys.pressed.D && controlesWASD == true /*&& check == false && meHurt == 0 && esquivando == false*/ || 
 			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
 				if(corriendo == false){
@@ -208,11 +208,6 @@ class Jugador extends FlxSprite{
 			}
 			time = 0; // reinicia el timer
 		}
-		else if ((FlxG.keys.justPressed.U && check == false && meHurt == 0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt == 0 && controlesWASD == false)){
-			if (jump == false){ // in progress
-				punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
-			}
-		}
 		if (check == true){ // el puñetazo esta presente
 			trace(check);
 			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puñetazo
@@ -246,7 +241,8 @@ class Jugador extends FlxSprite{
 	}
 	// contador de golpes consecutivos (Combo)
 	public function Combo():Void{
-		if ((FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || (FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
+		if ((FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || 
+		(FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
 			theHits++;
 		}
 		if (time > Reg.effectTimer /*&& agarrando == false*/ || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
@@ -276,25 +272,36 @@ class Jugador extends FlxSprite{
 		}
 	}
 	// agarre
-	/*public function Agarrar(pobreVictima:BaseEnemigo){
+	public function Agarrar(pobreVictima:BaseEnemigo){
 		if (pobreVictima.GetHurt() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
-			if (overlaps(pobreVictima) && theHits <= Reg.comboFuerteJugador){ // Si estas muy cerca del enemigo
-				if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
-					// pobreVictima.SetHurt(1); // tomas al enemigo
-					agarrando = true; // agarrandolo
-					pobreVictima.velocity.x = 0; // deteniendolo
-					velocity.x = 0; // y el personaje se queda firme
-				}
-				if (agarrando == true){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
-					if ((FlxG.keys.justPressed.J && controlesWASD == true) || (FlxG.keys.justPressed.D && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
-						agarrando = false; // para salir volando esto tiene que quedar en false
-						pobreVictima.SetHurt(source.EstadoEnemigo.Lanzado); // vuela en esa direccion
-						pobreVictima.SetTimer(0); // y reinicia el timer
-					}
+			if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
+				if (jump == false){ // in progress
+					animation.play("Agarre");
+					punios.SetAgarrada(true);
+					punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
 				}
 			}
-		} // aca termina el nuevo agarre
-	}*/ // y termina la funcion
+			if (punios.GetAgarrada() == true && pobreVictima.GetHurt() == source.EstadoEnemigo.Agarrado){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
+				if ((FlxG.keys.justPressed.J && controlesWASD == true) || (FlxG.keys.justPressed.D && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
+					punios.SetAgarrada(false);
+					pobreVictima.SetHurt(source.EstadoEnemigo.Lanzado); // vuela en esa direccion
+					pobreVictima.SetTimer(0); // y reinicia el timer
+				}
+			}
+		}
+		if ((animation.finished && punios.GetAgarrada() == true) || 
+		(FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || 
+		(FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){
+			punios.SetAgarrada(false);
+			pobreVictima.SetHurt(source.EstadoEnemigo.Normal);
+			punios.posicionar();
+		}
+		if (punios.GetAgarrada() == true){
+			velocity.x = 0;
+			velocity.y = 0;
+		}
+		agarrando = punios.GetAgarrada();
+	}
 	public function Muerte(){
 		if (vidaActual <= 0){
 			if (vencida == false){

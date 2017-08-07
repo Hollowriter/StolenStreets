@@ -64,12 +64,9 @@ class BaseEnemigo extends FlxSprite
 		}*/
 	}
 	public function DolorDelEnemigo(agresor:Jugador){
-		if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){ // si esta lastimado normalmente
+		if (isHurt == source.EstadoEnemigo.Lastimado){ // si esta lastimado normalmente
 			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
-			/*if (isHurt == source.EstadoEnemigo.Agarrado){ // Si el jugador lo esta agarrando, el isHurt no hace falta para matenerlo quieto
-				isHurt = source.EstadoEnemigo.Normal;// Ademas, si el isHurt se queda en 1 mientras lo agarra, no podes golpearlo
-			}*/
 			if (timer > Reg.effectTimer && isHurt != source.EstadoEnemigo.Agarrado){ // si es mayor el timer que este numero y no es un agarre
 				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento

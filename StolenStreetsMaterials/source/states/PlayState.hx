@@ -180,16 +180,13 @@ class PlayState extends FlxState{
 		FlxG.collide(Reg.Players.members[0], plataforma);
 		FlxG.collide(Reg.Players.members[0], tileMap);
 		/*FlxG.collide(chico1, plataforma);
-		FlxG.collide(chico1, tileMap);
-		// FlxG.collide(PlataCaida.members[0], Platform);
-		// FlxG.collide(PlataCaida.members[1], Platform);
-		//FlxG.collide(Chico, Cajas.members[0]);
-		//FlxG.collide(Cajas.members[1], chico1); // Colisiones de las cajas con Mili, ¿Seran las de los efectos raros?
+		FlxG.collide(chico1, tileMap);*/
 		/*testeando los dropeos de las cajas destruibles*/
-		/*testeando los dropeos de las cajas destruibles*/
-		/*if (FlxG.overlap(Reg.Players.members[0], pinches)){
-			Reg.Players.members[0].ColisiondeSP();
-		}*/
+		for (v in 0...Reg.Pinches.length){
+			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
+				Reg.Players.members[0].ColisiondeSP();
+			}
+		}
 		// Collider complicado para las plataformas trampolin de colision con el jugador
 		// Overlap del jugador con los objetos recolectables
 		for (i in 0...Reg.Monedas.length){

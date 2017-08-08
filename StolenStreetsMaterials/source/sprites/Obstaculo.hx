@@ -17,6 +17,7 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 	private var dropeable:DropFalling; // esto es para asignarle un drop
 	private var danio:Int = 0;
 	private var golpeado:Bool = false;
+	private var roto:Bool = false;
 	// private var direccionDelGolpe:Bool = false; // indica la direccion del golpe para determinar velocidad positiva o negativa (ignorenlo)
 	private var contador:Int = 0; // ahora lo uso para saber cuanto tiempo se mueve la caja indestructible
 	public function Golpeada(personaje:Jugador){
@@ -26,10 +27,11 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 			contador = Reg.effectTimer - 5;
 			trace ("crash");
 			if (danio == 3){
-					dropeable = new DropFalling(x+14, y+29); 
-					dropeable.SetBroken(true);
-				kill();
+				dropeable = new DropFalling(x+14, y+29); 
+				dropeable.SetBroken(true);
+				roto = true;
 				Reg.puntaje += 10;
+				kill();
 			}
 		}
 		if (personaje.x < x){
@@ -71,6 +73,12 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 	}
 	public function GetGolpeado(){
 		return golpeado;
+	}
+	public function SetRoto(romperse:Bool){
+		roto = romperse;
+	}
+	public function GetRoto():Bool{
+		return roto;
 	}
 	public function Inmunidad(){
 		if (golpeado == true){

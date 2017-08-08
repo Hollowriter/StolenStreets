@@ -25,11 +25,16 @@ class Instanciador extends FlxSprite{
 		}
 	}
 	public function CrearObstaculo(obstaculo:Obstaculo){
-		if (!(obstaculo.isOnScreen())){
-			obstaculo.kill();
+		if (!(obstaculo.GetRoto())){
+			if (!(obstaculo.isOnScreen())){
+				obstaculo.kill();
+			}
+			else{
+				obstaculo.revive();
+			}
 		}
 		else{
-			obstaculo.revive();
+			obstaculo.kill();
 		}
 	}
 	public function CrearPlataformaFlotante(plataformaFlotante:PlataformaFlotante){
@@ -41,19 +46,29 @@ class Instanciador extends FlxSprite{
 		}
 	}
 	public function CrearDrops(drops:Drops){
-		if (!(drops.isOnScreen())){
-			drops.kill();
+		if (!(drops.Recoleccion())){
+			if (!(drops.isOnScreen())){
+				drops.kill();
+			}
+			else{
+				drops.revive();
+			}
 		}
 		else{
-			drops.revive();
+			drops.kill();
 		}
 	}
 	public function CrearDropsVida(dropsVida:DropsVida){
-		if (!(dropsVida.isOnScreen())){
-			dropsVida.kill();
+		if (!(dropsVida.Recoleccion())){
+			if (!(dropsVida.isOnScreen())){
+				dropsVida.kill();
+			}
+			else{
+				dropsVida.revive();
+			}
 		}
 		else{
-			dropsVida.revive();
+			dropsVida.kill();
 		}
 	}
 	public function CrearTrampolin(trampolin:Trampolin){
@@ -73,11 +88,16 @@ class Instanciador extends FlxSprite{
 		}
 	}
 	public function CrearDropFalling(dropFalling:DropFalling){
-		if (!(dropFalling.isOnScreen())){
-			dropFalling.kill();
+		if (!(dropFalling.Recoleccion())){
+			if (!(dropFalling.isOnScreen())){
+				dropFalling.kill();
+			}
+			else{
+				dropFalling.revive();
+			}
 		}
 		else{
-			dropFalling.revive();
+			dropFalling.kill();
 		}
 	}
 }

@@ -14,6 +14,7 @@ class DropsVida extends FlxSprite{
 	private var salud:Int; // cantidad de salud que da el objeto
 	private var vidaExtra:Bool; // si el random da una oportunidad extra
 	private var valor:Int = FlxG.random.int(0, 12); // el tipo de valor que tendra
+	private var recolectado:Bool = false;
 	// te da la salud o la oportunidad extra
 	public function Curado(enfermito:Jugador):Void{
 		if (vidaExtra == false){ // si no es una oportunidad extra
@@ -27,6 +28,10 @@ class DropsVida extends FlxSprite{
 		else if (vidaExtra == true){ // si es una oportunidad extra
 			enfermito.SetLife(enfermito.GetLife() + 1); // se la otorga
 		}
+		recolectado = true;
+	}
+	public function Recoleccion(){
+		return recolectado;
 	}
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);

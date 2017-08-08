@@ -15,18 +15,16 @@ class Drops extends FlxSprite{
 	private var puntos:Int; // cantidad de puntos que da el objeto
 	private var valor:Int = FlxG.random.int(0, 3); // decide que tipo de moneda aparecera
 	private var creado:Bool = true;
+	private var recolectado:Bool = false;
 	//private var recolectado:Bool = false;
 	// te da los puntos
 	public function Juntado():Void{
-		//if(recolectado == true){
-			Reg.guita += puntos;
-			kill();
-			trace("Entro a Juntado()");
-		//}
-	}
-	/*public function ColeccionTrue(){
+		Reg.guita += puntos;
 		recolectado = true;
-	}*/
+	}
+	public function Recoleccion(){
+		return recolectado;
+	}
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		// lista de tipos de monedas

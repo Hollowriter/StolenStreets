@@ -199,7 +199,7 @@ class PlayState extends FlxState{
 		}
 		for (b in 0...Reg.Botiquines.length){
 			if (FlxG.overlap(Reg.Players.members[0], Botiquin.members[b])){
-			Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
+				Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
 			}
 		}
 		/*dropeo de las cajas*/

@@ -220,7 +220,6 @@ class Jugador extends FlxSprite{
 			time = 0; // reinicia el timer
 		}
 		if (check == true){ // el puñetazo esta presente
-			trace(check);
 			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puñetazo
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;

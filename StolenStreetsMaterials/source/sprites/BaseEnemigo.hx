@@ -67,16 +67,16 @@ class BaseEnemigo extends FlxSprite
 		if (isHurt == source.EstadoEnemigo.Lastimado){ // si esta lastimado normalmente
 			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
-			if (timer > Reg.effectTimer && isHurt != source.EstadoEnemigo.Agarrado){ // si es mayor el timer que este numero y no es un agarre
+			/*if (timer > Reg.effectTimer && isHurt != source.EstadoEnemigo.Agarrado){ // si es mayor el timer que este numero y no es un agarre
 				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
-			}
-			else if (timer > Reg.effectTimer + 100 && isHurt == source.EstadoEnemigo.Agarrado){ // esto es lo que hace que el enemigo se escape del agarre
+			}*/
+			/*else if (timer > Reg.effectTimer + 100 && isHurt == source.EstadoEnemigo.Agarrado){ // esto es lo que hace que el enemigo se escape del agarre
 				isHurt = source.EstadoEnemigo.Normal; // esto esta por las dudas
 				timer = 0; // setea el timer a cero
 				// agresor.SetAgarrando(false); // y se libera del agarre
-			} // dura mas tiempo y setea el agarre a false cuando se acaba
-		}
+			}*/ // dura mas tiempo y setea el agarre a false cuando se acaba
+		} // esta cosa con timer hacia OP a mili
 		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
 			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo

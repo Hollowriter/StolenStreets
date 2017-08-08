@@ -25,7 +25,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
 		animation.add("Caer", [15], 2, true);
 		animation.add("Pegar", [1], 7, false);
-		animation.add("Ouch", [14, 14, 14], 5, false);
+		animation.add("Ouch", [14, 14, 14], 2, false);
 		animation.add("Saltar", [10, 10, 10], 4, false);
 		animation.add("CaidaLibre", [12, 12], 2, true);
 		animation.play("Normal");
@@ -135,8 +135,8 @@ class Enemigo1 extends BaseEnemigo
 		}
 		else{
 			saltito = true;
-		} // Estos condones pinchados no detectan el jodido suelo
-		if (y > Reg.posYjugador && saltito == false){
+		}
+		if (y > Reg.posYjugador && saltito == false && isHurt == source.EstadoEnemigo.Normal){
 			velocity.y = Reg.jumpSpeed;
 			if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
 				animation.play("Saltar");

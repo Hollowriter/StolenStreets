@@ -94,9 +94,6 @@ class Golpejugador extends FlxSprite{
 				}
 			}
 		}
-		else if (!(overlaps(Pum)) && !(Pum.Morir())){
-			Pum.SetHurt(source.EstadoEnemigo.Normal);
-		}
 	}
 	// getter y setter del gancho o golpe duro
 	public function GetGolpeDuro(){

@@ -193,15 +193,13 @@ class PlayState extends FlxState{
 		// Collider complicado para las plataformas trampolin de colision con el jugador
 		// Overlap del jugador con los objetos recolectables
 		for (i in 0...Reg.Monedas.length){
-			if (FlxG.overlap(Reg.Players.members[0], Plata.members[i])){
+			if (FlxG.overlap(Reg.Players.members[0], Reg.Monedas.members[i])){
 				Reg.Monedas.members[i].Juntado();
-				Reg.Monedas.members[i].kill();
 			}
 		}
 		for (b in 0...Reg.Botiquines.length){
 			if (FlxG.overlap(Reg.Players.members[0], Botiquin.members[b])){
 			Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
-			Reg.Botiquines.members[b].kill();
 			}
 		}
 		/*dropeo de las cajas*/
@@ -209,7 +207,6 @@ class PlayState extends FlxState{
 			if (Reg.Cajitas.members[t].GetDrop() != null){
 				if (FlxG.overlap(Reg.Players.members[0], Reg.Cajitas.members[t].GetDrop())){
 					Reg.Cajitas.members[t].GetDrop().Juntado();
-					Reg.Cajitas.members[t].GetDrop().kill();
 				}
 			}
 		}
@@ -239,16 +236,11 @@ class PlayState extends FlxState{
 				//trace(i);
 			}
 		}
-		// Mili.Agarrar(chico1);
 		Reg.Players.members[0].Salto();
-		// Chico.Atacar(); // esto se puede sacar del playstate
-		// Mili.GetGolpear().ColisionDelGolpe(chico1);
+
 		for (i in 0...(Reg.Enemigos.length)){
 			Reg.Players.members[0].GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Reg.Players.members[0]);
-			/*Mili.Agarrar(Reg.Enemigos.members[i]);*/
 		}
-	    /*chico1.GetGolpeEnemigo().ColisionDelGolpeEnemigo(Mili);
-		chico1.DolorDelEnemigo(Mili);*/
 		for (i in 0...(Reg.Enemigos.length)){
 			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
 			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);

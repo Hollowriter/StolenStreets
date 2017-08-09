@@ -138,6 +138,12 @@ class BaseEnemigo extends FlxSprite
 	public function GetGolpeEnemigo():GolpeEnemigo{
 		return punioEnemigo;
 	}
+	public function SetSaltito(salto:Bool){
+		saltito = salto;
+	}
+	public function GetSaltito():Bool{
+		return saltito;
+	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		if (!Morir()){

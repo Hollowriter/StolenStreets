@@ -226,11 +226,14 @@ class PlayState extends FlxState{
 				}
 			}
 		}
-		//COLISIONES CON EL MAPA
+		//COLISIONES DE LOS ENEMIGOS CON EL MAPA
 		for(i in 0...(Reg.Enemigos.members.length)){
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);
 			if (Reg.Enemigos.members[i].isTouching(FlxObject.ANY)){
-				//trace(i);
+				Reg.Enemigos.members[i].SetSaltito(false);
+			}
+			else{
+				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
 		Reg.Players.members[0].Salto();

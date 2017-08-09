@@ -46,7 +46,7 @@ class Enemigo1 extends BaseEnemigo
 	override public function move(){
 		super.move();
 		//trace(saltito + '0');
-		if (isHurt == source.EstadoEnemigo.Normal || saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
+		if (isHurt == source.EstadoEnemigo.Normal && saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
 			//trace(saltito + '1');
 		if (!still){
 			timer = 0;
@@ -130,12 +130,12 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function EnElAire(){
 		super.EnElAire();
-		if (this.isTouching(FlxObject.ANY)){
+		/*if (isTouching(FlxObject.ANY)){
 			saltito = false;
 		}
 		else{
 			saltito = true;
-		}
+		}*/ // este pedazo de condon pinchado no lo lee aca pero si en playstate, joputa
 		if (y > Reg.posYjugador && saltito == false && isHurt == source.EstadoEnemigo.Normal){
 			velocity.y = Reg.jumpSpeed;
 			if (saltito == true && isHurt == source.EstadoEnemigo.Normal){

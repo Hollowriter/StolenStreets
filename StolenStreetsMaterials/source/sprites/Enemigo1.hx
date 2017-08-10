@@ -122,6 +122,10 @@ class Enemigo1 extends BaseEnemigo
 		else
 			still = false;
 		}
+		else{
+			timer = 0;
+			comboTimer = 0;
+		}
 	}
 	override public function DolorDelEnemigo(agresor:Jugador){
 		super.DolorDelEnemigo(agresor);

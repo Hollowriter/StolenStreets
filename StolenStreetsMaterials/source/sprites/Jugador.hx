@@ -42,6 +42,7 @@ class Jugador extends FlxSprite{
 	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
+	private var testo:Int = 0;
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
@@ -188,7 +189,7 @@ class Jugador extends FlxSprite{
 	}
 	// el personaje golpea
 	public function Golpear():Void{
-		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false){ // aparicion del puño
+		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false)){ // aparicion del puño
 			check = true;
 			if (jump == false){ // Animaciones de ataque del jugador
 				if (theHits < Reg.comboFuerteJugador - 1){
@@ -233,19 +234,17 @@ class Jugador extends FlxSprite{
 					velocity.x = -Reg.hSpeed;
 				}
 			}
-		}
-		if (animation.finished){ // en este tiempo, el puñetazo desaparece
-			punios.posicionar();
-			check = false;
-		}
-		if (check == true && ComboActivation == false && jump == false){ // si tocas el piso si atacas saltando, el ataque desaparece
-			punios.posicionar();
-			check = false;
+			if (check == true && ComboActivation == false && jump == false){ // si tocas el piso si atacas saltando, el ataque desaparece
+				punios.posicionar();
+				check = false;
+			}
 		}
 		if (ComboActivation == true){ // timer para finalizar el Combo
 			time++;
 		}
 		if (animation.finished && jump == false){
+			punios.posicionar();
+			check = false;
 			animation.play("Natural");
 		}
 	}

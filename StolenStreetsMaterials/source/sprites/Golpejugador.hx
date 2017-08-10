@@ -77,6 +77,7 @@ class Golpejugador extends FlxSprite{
 					if (GolpeDuro == false){ // si es un golpe normal
 						Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
 						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
+						Pum.animation.play("Ouch");
 					}
 					else if (GolpeDuro == true || Pum.GetHurt() == source.EstadoEnemigo.Agarrado){ // pero si es un golpe duro
 						Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente

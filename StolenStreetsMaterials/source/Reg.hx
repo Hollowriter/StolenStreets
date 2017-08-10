@@ -57,7 +57,7 @@ class Reg{
 	public static inline var gravedad:Int = 1500;
 	public static inline var jugadorDrag:Int = 1000;
 	public static inline var esquivada:Int = 25;
-	public static inline var vidaEnemiga:Int = 20;
+	public static inline var vidaEnemiga:Int = 100;
 	public static inline var velocidadEnemiga:Int = 100;
 	public static inline var elNumeroMagicoDeMica:Int = 8000;
 	

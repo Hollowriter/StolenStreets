@@ -25,7 +25,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
 		animation.add("Caer", [15], 2, true);
 		animation.add("Pegar", [1], 7, false);
-		animation.add("Ouch", [14, 14, 14], 2, false);
+		animation.add("Ouch", [14], 7, false);
 		animation.add("Saltar", [10, 10, 10], 4, false);
 		animation.add("CaidaLibre", [12, 12], 2, true);
 		animation.play("Normal");
@@ -54,14 +54,18 @@ class Enemigo1 extends BaseEnemigo
 				velocity.x = Reg.velocidadEnemiga;
 				direccion = false;
 				punioEnemigo.PosicionarGE();
-				animation.play("Caminar");
+				if (saltito == false){
+					animation.play("Caminar");
+				}
 				flipX = true;
 			}
 			if (x > enemyLeftMin && x > (enemyLeftMax)){
 				velocity.x = -(Reg.velocidadEnemiga);
 				direccion = true;
 				punioEnemigo.PosicionarGE();
-				animation.play("Caminar");
+				if (saltito == false){
+					animation.play("Caminar");
+				}
 				flipX = false;
 			}
 		}
@@ -121,11 +125,14 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function DolorDelEnemigo(agresor:Jugador){
 		super.DolorDelEnemigo(agresor);
-		 if (isHurt == source.EstadoEnemigo.Lastimado){
+		/*if (isHurt == source.EstadoEnemigo.Lastimado){
 			animation.play("Ouch");
 		}
 		else if (isHurt == source.EstadoEnemigo.Lanzado && saltito == true){
 			animation.play("Caer");
+		}*/
+		if (animation.finished){
+			isHurt = source.EstadoEnemigo.Normal;
 		}
 	}
 	override public function EnElAire(){
@@ -136,14 +143,13 @@ class Enemigo1 extends BaseEnemigo
 		else{
 			saltito = true;
 		}*/ // este pedazo de condon pinchado no lo lee aca pero si en playstate, joputa
-		if (y > Reg.posYjugador && saltito == false && isHurt == source.EstadoEnemigo.Normal){
-			velocity.y = Reg.jumpSpeed;
-			if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
-				animation.play("Saltar");
+		if (y > Reg.posYjugador + 30 && isHurt == source.EstadoEnemigo.Normal){
+			if (saltito == false && velocity.y != Reg.jumpSpeed){
+				velocity.y = Reg.jumpSpeed;
 			}
-			if (saltito == true && animation.finished){
-				animation.play("CaidaLibre");
-			}
+		}
+		if (saltito == true){
+			animation.play("CaidaLibre");
 		}
 	}
 	override public function update(elapsed:Float):Void{

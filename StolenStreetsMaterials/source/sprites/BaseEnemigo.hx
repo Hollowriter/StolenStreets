@@ -21,6 +21,7 @@ class BaseEnemigo extends FlxSprite
 	private var punioEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
 	private var anchuraObjeto:Int = 30;
 	private var alturaObjeto:Int = 30;
+	private var guia:GuiaEnemigo;
 	
 	/*private var hitboxPosX = 20;
 	private var hitboxPosY = 0;*/
@@ -40,6 +41,7 @@ class BaseEnemigo extends FlxSprite
 		acceleration.y = Reg.gravedad;
 		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
+		guia = new GuiaEnemigo(x, y);
 	}
 	/*override public function update(elapsed:Float):Void{
 		super.update(elapsed);
@@ -65,7 +67,6 @@ class BaseEnemigo extends FlxSprite
 	}
 	public function DolorDelEnemigo(agresor:Jugador){
 		if (isHurt == source.EstadoEnemigo.Lastimado){ // si esta lastimado normalmente
-			timer++; // tiempo de recuperacion
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 			/*if (timer > Reg.effectTimer && isHurt != source.EstadoEnemigo.Agarrado){ // si es mayor el timer que este numero y no es un agarre
 				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
@@ -78,7 +79,7 @@ class BaseEnemigo extends FlxSprite
 			}*/ // dura mas tiempo y setea el agarre a false cuando se acaba
 		} // esta cosa con timer hacia OP a mili
 		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
-			timer++; // tiempo de recuperacion
+			timer++;
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 			/* el enemigo es empujado al aire */
 			if (timer <= Reg.effectTimer){ // sale volando
@@ -143,6 +144,9 @@ class BaseEnemigo extends FlxSprite
 	}
 	public function GetSaltito():Bool{
 		return saltito;
+	}
+	public function GetGuia():GuiaEnemigo{
+		return guia;
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

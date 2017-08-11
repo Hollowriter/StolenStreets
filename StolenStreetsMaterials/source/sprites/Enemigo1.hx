@@ -7,6 +7,7 @@ import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
 import sprites.GolpeEnemigo;
+import sprites.GuiaEnemigo;
 
 /**
  * ...
@@ -17,6 +18,7 @@ class Enemigo1 extends BaseEnemigo
 	private var still:Bool;
 	private var combo:Bool;
 	private var golpesVarios:Int;
+	//private var guia:GuiaEnemigo;
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
@@ -33,6 +35,7 @@ class Enemigo1 extends BaseEnemigo
 		still = false;
 		combo = false;
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
+		guia = new GuiaEnemigo(x, y);
 		timer = 0;
 		comboTimer = 0;
 		golpesVarios = 0;
@@ -51,20 +54,32 @@ class Enemigo1 extends BaseEnemigo
 		if (!still){
 			timer = 0;
 			if (x < enemyRightMin && x < (enemyRightMax)){
-				velocity.x = Reg.velocidadEnemiga;
 				direccion = false;
 				punioEnemigo.PosicionarGE();
 				if (saltito == false){
-					animation.play("Caminar");
+					if (guia.GetColision() == true){
+						velocity.x = Reg.velocidadEnemiga;
+						animation.play("Caminar");
+					}
+					else if (guia.GetColision() == false){
+						velocity.x = 0;
+						animation.play("Normal");
+					}
 				}
 				flipX = true;
 			}
 			if (x > enemyLeftMin && x > (enemyLeftMax)){
-				velocity.x = -(Reg.velocidadEnemiga);
 				direccion = true;
 				punioEnemigo.PosicionarGE();
 				if (saltito == false){
-					animation.play("Caminar");
+					if (guia.GetColision() == true){
+						velocity.x = -(Reg.velocidadEnemiga);
+						animation.play("Caminar");
+					}
+					else if (guia.GetColision() == false){
+						velocity.x = 0;
+						animation.play("Normal");
+					}
 				}
 				flipX = false;
 			}
@@ -80,7 +95,7 @@ class Enemigo1 extends BaseEnemigo
 					punioEnemigo.SetGolpeFuerte(true);
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 				}
-				else{
+				else if (isHurt == source.EstadoEnemigo.Normal){
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 				}
 				
@@ -101,7 +116,8 @@ class Enemigo1 extends BaseEnemigo
 					comboTimer++;
 					
 				}
-				else{ 
+				else if (isHurt == source.EstadoEnemigo.Normal){ 
+					trace("aca");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 				}
 			}
@@ -123,18 +139,17 @@ class Enemigo1 extends BaseEnemigo
 			still = false;
 		}
 		else{
-			timer = 0;
-			comboTimer = 0;
+			punioEnemigo.PosicionarGE();
 		}
 	}
 	override public function DolorDelEnemigo(agresor:Jugador){
 		super.DolorDelEnemigo(agresor);
-		/*if (isHurt == source.EstadoEnemigo.Lastimado){
-			animation.play("Ouch");
+		if (isHurt == source.EstadoEnemigo.Lastimado){
+			punioEnemigo.PosicionarGE();
 		}
 		else if (isHurt == source.EstadoEnemigo.Lanzado && saltito == true){
-			animation.play("Caer");
-		}*/
+			punioEnemigo.PosicionarGE();
+		}
 		if (animation.finished){
 			isHurt = source.EstadoEnemigo.Normal;
 		}
@@ -156,11 +171,18 @@ class Enemigo1 extends BaseEnemigo
 			animation.play("CaidaLibre");
 		}
 	}
+	public function Sequito():Void{
+		guia.Seguidor(x, y, flipX);
+	}
+	/*public function GetGuia():GuiaEnemigo{
+		return guia;
+	}*/
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		if (!Morir()){
 			move();
 			EnElAire();
+			Sequito();
 		}
 	}
 }

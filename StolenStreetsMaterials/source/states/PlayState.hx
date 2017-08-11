@@ -54,7 +54,6 @@ class PlayState extends FlxState{
 		super.create();
 		instanciando = new Instanciador();
 		plataforma = new PlataformaPrueba(30, 300);
-		
 		//Cajas.members[0] = new Obstaculo(200, 200);
 		//Cajas.members[1] = new Obstaculo(300, 200);
 		//Plata.members[0] = new Drops(300, 100);
@@ -157,6 +156,7 @@ class PlayState extends FlxState{
 		add(Reg.Cajitas);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
+			// add(Reg.Enemigos.members[i].GetGuia());
 		}
 	}
 	override public function update(elapsed:Float):Void{
@@ -176,6 +176,9 @@ class PlayState extends FlxState{
 		}
 		for (a in 0...Reg.Pinches.length){
 			FlxG.collide(Reg.Pinches.members[a], tileMap);
+		}
+		for (a in 0...Reg.Enemigos.length){
+			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
 		FlxG.collide(Reg.Players.members[0], plataforma);
 		FlxG.collide(Reg.Players.members[0], tileMap);

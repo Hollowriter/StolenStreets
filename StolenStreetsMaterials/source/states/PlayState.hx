@@ -181,7 +181,9 @@ class PlayState extends FlxState{
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
 		FlxG.collide(Reg.Players.members[0], plataforma);
-		FlxG.collide(Reg.Players.members[0], tileMap);
+		//Colision entre Mili y el tilemap
+		if (FlxG.collide(Reg.Players.members[0], tileMap))
+			Reg.Players.members[0].SetPosRespawn();
 		/*FlxG.collide(chico1, plataforma);
 		FlxG.collide(chico1, tileMap);*/
 		/*testeando los dropeos de las cajas destruibles*/

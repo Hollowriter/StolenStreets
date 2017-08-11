@@ -79,4 +79,5 @@ class Reg{
 	static public var Pinches:FlxTypedGroup<SueloPeligroso>;
 	static public var Monedas:FlxTypedGroup<Drops>;
 	static public var Botiquines:FlxTypedGroup<DropsVida>;
+	
 }

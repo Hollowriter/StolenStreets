@@ -21,6 +21,7 @@ import sprites.DropsVida;
 import sprites.Obstaculo;
 import sprites.DropFalling;
 import sprites.SueloPeligroso;
+import sprites.PisoLetal;
 import sprites.Instanciador;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -112,6 +113,7 @@ class PlayState extends FlxState{
 		Reg.Pinches = new FlxTypedGroup<SueloPeligroso>();
 		Reg.Monedas = new FlxTypedGroup<Drops>();
 		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
+		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -154,6 +156,7 @@ class PlayState extends FlxState{
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
 		add(Reg.Cajitas);
+		add(Reg.PisosLetales);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			// add(Reg.Enemigos.members[i].GetGuia());
@@ -241,6 +244,14 @@ class PlayState extends FlxState{
 				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
+		//colision entre Mili y el piso letal
+		for (i in 0...(Reg.PisosLetales.length)){
+			if(FlxG.collide(Reg.Players.members[0], Reg.PisosLetales.members[i])){
+			//if (FlxG.overlap(Reg.Players.members[0], Reg.PisosLetales.members[i])){
+				Reg.Players.members[0].instaKill();
+			}
+			//}
+		}
 		Reg.Players.members[0].Salto();
 
 		for (i in 0...(Reg.Enemigos.length)){
@@ -288,6 +299,9 @@ class PlayState extends FlxState{
 		for (q in 0...Reg.Pinches.length){
 			instanciando.CrearSueloPeligroso(Reg.Pinches.members[q]);
 		}
+		for (k in 0...Reg.PisosLetales.length){
+			instanciando.CrearPisoLetal(Reg.PisosLetales.members[k]);
+		}
 	}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Int = Std.parseInt(entityData.get("x"));
@@ -310,6 +324,8 @@ class PlayState extends FlxState{
 				Reg.Monedas.add(new Drops(entityStartX, entityStartY));
 			case "botiquines":
 				Reg.Botiquines.add(new DropsVida(entityStartX, entityStartY));
+			case "pisoletal":
+				Reg.PisosLetales.add(new PisoLetal(entityStartX, entityStartY));
 		}
 	}
 }

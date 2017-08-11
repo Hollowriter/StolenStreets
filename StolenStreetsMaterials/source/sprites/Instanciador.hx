@@ -45,6 +45,14 @@ class Instanciador extends FlxSprite{
 			plataformaFlotante.revive();
 		}
 	}
+	public function CrearPisoLetal(pisoLetal:PisoLetal){
+		if (!(pisoLetal.isOnScreen())){
+			pisoLetal.kill();
+		}
+		else{
+			pisoLetal.revive();
+		}
+	}
 	public function CrearDrops(drops:Drops){
 		if (!(drops.Recoleccion())){
 			if (!(drops.isOnScreen())){

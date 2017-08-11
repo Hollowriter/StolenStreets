@@ -219,10 +219,10 @@
     <monedas id="69" x="4336" y="2416" />
     <monedas id="70" x="3072" y="2048" />
     <monedas id="71" x="3040" y="2048" />
-    <PisoLetal id="43" x="2496" y="2224" />
-    <PisoLetal id="44" x="2240" y="2224" />
-    <PisoLetal id="72" x="1984" y="2224" />
     <plataformaflotante id="73" x="3152" y="2592" />
     <enemigo id="74" x="2976" y="2416" />
+    <pisoletal id="44" x="2624" y="2192" />
+    <pisoletal id="61" x="2368" y="2192" />
+    <pisoletal id="72" x="2112" y="2192" />
   </entidades>
 </level>

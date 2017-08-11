@@ -316,6 +316,9 @@ class Jugador extends FlxSprite{
 		}
 		agarrando = punios.GetAgarrada();
 	}
+	public function instaKill(){
+		vidaActual = 0;
+	}
 	public function Muerte(){
 		if (vidaActual <= 0){
 			trace ("muerta");

@@ -11,6 +11,7 @@ import sprites.Trampolin;
 import sprites.SueloPeligroso;
 import sprites.Drops;
 import sprites.DropsVida;
+import sprites.PisoLetal;
 
 /**
  * ...
@@ -79,5 +80,6 @@ class Reg{
 	static public var Pinches:FlxTypedGroup<SueloPeligroso>;
 	static public var Monedas:FlxTypedGroup<Drops>;
 	static public var Botiquines:FlxTypedGroup<DropsVida>;
+	static public var PisosLetales:FlxTypedGroup<PisoLetal>;
 	
 }

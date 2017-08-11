@@ -27,7 +27,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
 		animation.add("Caer", [15], 2, true);
 		animation.add("Pegar", [1], 7, false);
-		animation.add("Ouch", [14], 7, false);
+		animation.add("Ouch", [14, 14, 14], 4, false);
 		animation.add("Saltar", [10, 10, 10], 4, false);
 		animation.add("CaidaLibre", [12, 12], 2, true);
 		animation.play("Normal");
@@ -47,7 +47,6 @@ class Enemigo1 extends BaseEnemigo
 	}
 	// movimiento de este enemigo
 	override public function move(){
-		super.move();
 		//trace(saltito + '0');
 		if (isHurt == source.EstadoEnemigo.Normal && saltito == false){ // mientras no esta lastimado y no esta en el aire va poder moverse
 			//trace(saltito + '1');
@@ -84,8 +83,8 @@ class Enemigo1 extends BaseEnemigo
 				flipX = false;
 			}
 		}
-		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2))
-			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2))){
+		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
+			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
 				velocity.x = 0;
 			if (timer <= Reg.effectTimer){
 				golpesVarios++;
@@ -148,7 +147,7 @@ class Enemigo1 extends BaseEnemigo
 		else if (isHurt == source.EstadoEnemigo.Lanzado && saltito == true){
 			punioEnemigo.PosicionarGE();
 		}
-		if (animation.getByName("Ouch").finished && isHurt == source.EstadoEnemigo.Lastimado){
+		if (animation.getByName("Ouch").finished){
 			isHurt = source.EstadoEnemigo.Normal;
 		}
 	}

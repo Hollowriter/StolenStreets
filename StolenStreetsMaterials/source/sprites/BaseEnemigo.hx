@@ -79,27 +79,26 @@ class BaseEnemigo extends FlxSprite
 			}*/ // dura mas tiempo y setea el agarre a false cuando se acaba
 		} // esta cosa con timer hacia OP a mili
 		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
-			timer++;
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 			/* el enemigo es empujado al aire */
-			if (timer <= Reg.effectTimer){ // sale volando
+			/*if (timer <= Reg.effectTimer){ // sale volando
 				velocity.y = Reg.vSpeed;
-			}
-			else if (timer >= Reg.effectTimer){ // y luego cae
+			}*/
+			/*else if (timer >= Reg.effectTimer){ // y luego cae
 				velocity.y = Reg.vSpeed * (-1);
-			}
-			if (agresor.GetDireccion() == true){ // empujado segun la posicion del jugador
+			}*/
+			/*if (agresor.GetDireccion() == true){ // empujado segun la posicion del jugador
 				velocity.x = Reg.EnemigoVelocidadVuelo * ( -5);
-			}
-			else if (agresor.GetDireccion() == false){ // empujando segun la posicion del jugador
+			}*/
+			/*else if (agresor.GetDireccion() == false){ // empujando segun la posicion del jugador
 				velocity.x = Reg.EnemigoVelocidadVuelo * 5;
-			}
-			if (timer > (Reg.effectTimer + Reg.effectTimer) || saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
+			}*/
+			/*if (timer > (Reg.effectTimer + Reg.effectTimer) || saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
 				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
 				timer = 0; // y se reinicia su timer de comportamiento
 				velocity.y = 0; // esto es para evitar que se vaya al carajo cuando sale volando
 				velocity.x = 0; // esto es para evitar que se vaya al carajo cuando sale volando
-			}
+			}*/
 		}
 	}
 	public function Morir():Bool{

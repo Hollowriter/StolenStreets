@@ -43,6 +43,8 @@ class Jugador extends FlxSprite{
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
 	private var testo:Int = 0;
+	private var ultimaVezTilesX:Float;
+	private var ultimaVezTilesY:Float;
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
@@ -61,8 +63,7 @@ class Jugador extends FlxSprite{
 		animation.add("Correr", [11, 12, 13, 14, 15, 16], 6, true);
 		animation.add("Danio", [23, 23, 23], 1, false);
 		animation.add("Caida", [25], 1, true);
-		animation.add("CaidaTemporal", [25, 25], 7, false);
-		animation.add("Muerte", [26, 26, 26, 26], 2, false);
+		animation.add("Muerte", [26, 26, 26, 26], 1, false);
 		animation.add("Agarre", [20, 20, 20], 5, false);
 		animation.add("Agarrando", [20], 2, true);
 		animation.play("Natural");
@@ -166,6 +167,10 @@ class Jugador extends FlxSprite{
 			}
 		}
 		}
+	}
+	public function SetPosRespawn(){
+		ultimaVezTilesX = x;
+		ultimaVezTilesY = y;
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
@@ -315,34 +320,16 @@ class Jugador extends FlxSprite{
 		if (vidaActual <= 0){
 			trace ("muerta");
 			if (vencida == false){
-				animation.play("CaidaTemporal");
 				vencida = true;
 			}
-			if (!(animation.getByName("CaidaTemporal").finished)){
-				if (direccion == false){
-					velocity.y = 80;
-				}
-				else{
-					velocity.y = 80;
-				}
-			}
-			else if (animation.getByName("CaidaTemporal").finished && jump == true){
-				if (direccion == false){
-					velocity.y = 80;
-				}
-				else{
-					velocity.y = 80;
-				}
-				animation.play("Caida");
-			}
-			if (animation.getByName("Muerte").paused && jump == false && animation.getByName("CaidaTemporal").finished){
-				if (jump == false){
+			if (animation.getByName("Muerte").paused){
 					animation.play("Muerte");
-				}
 			}
-			if (animation.getByName("Muerte").finished && animation.getByName("CaidaTemporal").finished && jump == false){
+			if (animation.getByName("Muerte").finished){
 				if (life != 0){
 					vidaActual = Reg.VidaMili;
+					x = ultimaVezTilesX;
+					y = ultimaVezTilesY;
 					life -= 1;
 				}
 				if (life == 0){

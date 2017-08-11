@@ -101,7 +101,7 @@ class Enemigo1 extends BaseEnemigo
 				
 				if (golpesVarios > Reg.golpeCombo){
 					combo = true;
-					//trace("c-c-c-combo breaker!");
+					trace("c-c-c-combo breaker!");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 					if (comboTimer > Reg.comboTimer){
 						//trace("c-c-c-combo breaker!");
@@ -114,12 +114,10 @@ class Enemigo1 extends BaseEnemigo
 						}
 					}
 					comboTimer++;
-					
 				}
-				else if (isHurt == source.EstadoEnemigo.Normal){ 
-					trace("aca");
+				/*else if (isHurt == source.EstadoEnemigo.Normal){
 					punioEnemigo.PunietazoEnemigo(this, direccion);
-				}
+				}*/
 			}
 			else{
 				if (timer > Reg.maxEffectTimer){
@@ -150,7 +148,7 @@ class Enemigo1 extends BaseEnemigo
 		else if (isHurt == source.EstadoEnemigo.Lanzado && saltito == true){
 			punioEnemigo.PosicionarGE();
 		}
-		if (animation.finished){
+		if (animation.getByName("Ouch").finished && isHurt == source.EstadoEnemigo.Lastimado){
 			isHurt = source.EstadoEnemigo.Normal;
 		}
 	}
@@ -174,9 +172,6 @@ class Enemigo1 extends BaseEnemigo
 	public function Sequito():Void{
 		guia.Seguidor(x, y, flipX);
 	}
-	/*public function GetGuia():GuiaEnemigo{
-		return guia;
-	}*/
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		if (!Morir()){

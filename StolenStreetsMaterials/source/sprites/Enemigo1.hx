@@ -90,7 +90,7 @@ class Enemigo1 extends BaseEnemigo
 				golpesVarios++;
 				animation.play("Pegar");
 				still = true;
-				if (golpesVarios > Reg.golpeFuerteMax){
+				if (golpesVarios > Reg.golpeFuerteMax && isHurt == source.EstadoEnemigo.Normal){
 					punioEnemigo.SetGolpeFuerte(true);
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 				}
@@ -98,7 +98,7 @@ class Enemigo1 extends BaseEnemigo
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 				}
 				
-				if (golpesVarios > Reg.golpeCombo){
+				if (golpesVarios > Reg.golpeCombo && isHurt == source.EstadoEnemigo.Normal){
 					combo = true;
 					trace("c-c-c-combo breaker!");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
@@ -128,27 +128,39 @@ class Enemigo1 extends BaseEnemigo
 				punioEnemigo.SetGolpeFuerte(false);
 			}
 			timer++;
-			if (animation.finished){
+			if (animation.finished && isHurt == source.EstadoEnemigo.Normal){
 				animation.play("Normal");
 			}
 		}
 		else
 			still = false;
 		}
-		else{
+		else if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado || isHurt == source.EstadoEnemigo.Lanzado){
 			punioEnemigo.PosicionarGE();
 		}
 	}
 	override public function DolorDelEnemigo(agresor:Jugador){
 		super.DolorDelEnemigo(agresor);
+		if (saltito == false){
+			if (isHurt == source.EstadoEnemigo.Lastimado){
+				if (animation.getByName("Ouch").paused){
+					animation.play("Ouch");
+				}
+			}
+			if (isHurt == source.EstadoEnemigo.Lanzado){
+				if (animation.getByName("Caer").paused){
+					animation.play("Caer");
+				}
+			}
+			if (isHurt == source.EstadoEnemigo.Agarrado){
+				trace("Mili: agarrando al enemigo");
+			}
+		}
 		if (isHurt == source.EstadoEnemigo.Lastimado){
-			punioEnemigo.PosicionarGE();
-		}
-		else if (isHurt == source.EstadoEnemigo.Lanzado && saltito == true){
-			punioEnemigo.PosicionarGE();
-		}
-		if (animation.getByName("Ouch").finished){
-			isHurt = source.EstadoEnemigo.Normal;
+			if (animation.getByName("Ouch").finished){
+				trace("aca tambien entra");
+				isHurt = source.EstadoEnemigo.Normal;
+			}
 		}
 	}
 	override public function EnElAire(){

@@ -307,7 +307,7 @@ class Jugador extends FlxSprite{
 		(FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || 
 		(FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){
 			punios.SetAgarrada(false);
-			pobreVictima.SetHurt(source.EstadoEnemigo.Normal);
+			//pobreVictima.SetHurt(source.EstadoEnemigo.Normal);
 			punios.posicionar();
 		}
 		if (punios.GetAgarrada() == true){

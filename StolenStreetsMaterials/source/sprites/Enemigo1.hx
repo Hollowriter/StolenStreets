@@ -26,6 +26,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Normal", [0, 0], 2, true);
 		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
 		animation.add("Caer", [15], 2, true);
+		animation.add("Lanzado", [15], 4, false);
 		animation.add("Pegar", [1], 7, false);
 		animation.add("Ouch", [14, 14, 14], 4, false);
 		animation.add("Saltar", [10, 10, 10], 4, false);
@@ -100,7 +101,7 @@ class Enemigo1 extends BaseEnemigo
 				
 				if (golpesVarios > Reg.golpeCombo && isHurt == source.EstadoEnemigo.Normal){
 					combo = true;
-					trace("c-c-c-combo breaker!");
+					// trace("c-c-c-combo breaker!");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 					if (comboTimer > Reg.comboTimer){
 						//trace("c-c-c-combo breaker!");
@@ -135,8 +136,9 @@ class Enemigo1 extends BaseEnemigo
 		else
 			still = false;
 		}
-		else if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado || isHurt == source.EstadoEnemigo.Lanzado){
+		else if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){
 			punioEnemigo.PosicionarGE();
+			velocity.x = 0;
 		}
 	}
 	override public function DolorDelEnemigo(agresor:Jugador){
@@ -148,18 +150,27 @@ class Enemigo1 extends BaseEnemigo
 				}
 			}
 			if (isHurt == source.EstadoEnemigo.Lanzado){
-				if (animation.getByName("Caer").paused){
-					animation.play("Caer");
+				if (animation.getByName("Lanzado").paused){
+					animation.play("Lanzado");
+					velocity.y = Reg.jumpSpeed;
 				}
 			}
 			if (isHurt == source.EstadoEnemigo.Agarrado){
-				trace("Mili: agarrando al enemigo");
+				// trace("Mili: agarrando al enemigo");
 			}
 		}
 		if (isHurt == source.EstadoEnemigo.Lastimado){
 			if (animation.getByName("Ouch").finished){
-				trace("aca tambien entra");
 				isHurt = source.EstadoEnemigo.Normal;
+			}
+		}
+		if (isHurt == source.EstadoEnemigo.Lanzado){
+			if (!(animation.getByName("Lanzado").finished)){
+				velocity.y = Reg.jumpSpeed / 2;
+			}
+			if (saltito == false && animation.getByName("Lanzado").finished){
+				isHurt = source.EstadoEnemigo.Normal;
+				animation.play("Normal");
 			}
 		}
 	}
@@ -176,7 +187,7 @@ class Enemigo1 extends BaseEnemigo
 				velocity.y = Reg.jumpSpeed;
 			}
 		}
-		if (saltito == true){
+		if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
 			animation.play("CaidaLibre");
 		}
 	}

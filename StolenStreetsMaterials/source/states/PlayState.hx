@@ -187,9 +187,6 @@ class PlayState extends FlxState{
 		//Colision entre Mili y el tilemap
 		if (FlxG.collide(Reg.Players.members[0], tileMap))
 			Reg.Players.members[0].SetPosRespawn();
-		/*FlxG.collide(chico1, plataforma);
-		FlxG.collide(chico1, tileMap);*/
-		/*testeando los dropeos de las cajas destruibles*/
 		for (v in 0...Reg.Pinches.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
 				Reg.Players.members[0].ColisiondeSP();
@@ -253,21 +250,19 @@ class PlayState extends FlxState{
 			//}
 		}
 		Reg.Players.members[0].Salto();
-
 		for (i in 0...(Reg.Enemigos.length)){
 			Reg.Players.members[0].GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Reg.Players.members[0]);
-		}
-		for (i in 0...(Reg.Enemigos.length)){
 			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
 			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);
+			Reg.Players.members[0].Agarrar(Reg.Enemigos.members[i]);
 		}
 		for (o in 0...Reg.Cajitas.length){
 			Reg.Players.members[0].GetGolpear().ColisionconCaja(Reg.Cajitas.members[o], Reg.Players.members[0]);
 		}
 		// Agarre de Mili (En proceso)
-		for (m in 0...(Reg.Enemigos.length)){
+		/*for (m in 0...(Reg.Enemigos.length)){
 			Reg.Players.members[0].Agarrar(Reg.Enemigos.members[m]);
-		}
+		}*/
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();
@@ -277,7 +272,6 @@ class PlayState extends FlxState{
 		}
 	}
 	//Instanciador
-	//instanciando.CrearSueloPeligroso(pinches);
 		for (i in 0...Reg.Enemigos.length){
 			instanciando.CrearEnemigo(Reg.Enemigos.members[i]);
 		}

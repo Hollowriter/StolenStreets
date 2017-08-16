@@ -288,7 +288,8 @@ class Jugador extends FlxSprite{
 	// agarre
 	public function Agarrar(pobreVictima:BaseEnemigo){
 		if (pobreVictima.GetHurt() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
-			if ((FlxG.keys.justPressed.U && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.E && check == false && meHurt==0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
+			if ((FlxG.keys.justPressed.U && check == false && meHurt == 0 && controlesWASD == true) || 
+			(FlxG.keys.justPressed.E && check == false && meHurt == 0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 				if (jump == false){ // in progress
 					animation.play("Agarre");
 					punios.SetAgarrada(true);
@@ -303,12 +304,11 @@ class Jugador extends FlxSprite{
 				}
 			}
 		}
-		if ((animation.finished && punios.GetAgarrada() == true) || 
-		(FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || 
-		(FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){
+		if ((FlxG.keys.justPressed.J /*&& jump == false && meHurt == 0 && controlesWASD == true*/ && punios.GetAgarrada() == true) || 
+		(FlxG.keys.justPressed.D /*&& jump == false && meHurt == 0 && controlesWASD == false*/ && punios.GetAgarrada() == true)){
 			punios.SetAgarrada(false);
-			//pobreVictima.SetHurt(source.EstadoEnemigo.Normal);
 			punios.posicionar();
+			///trace("las pajas, eso es!");
 		}
 		if (punios.GetAgarrada() == true){
 			velocity.x = 0;

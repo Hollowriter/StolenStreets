@@ -71,6 +71,7 @@ class Golpejugador extends FlxSprite{
 	}
 	public function ColisionDelGolpe(Pum:BaseEnemigo, personaje:Jugador):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum) && !(Pum.Morir())){ // si el golpe es del jugador y choca con el enemigo
+			trace("overlaping");
 			if (Agarrada == false){
 				posicionar(); // lo hace desaparecer
 				if (Pum.GetHurt() == source.EstadoEnemigo.Normal){ // chequea que el enemigo no haya recibido un golpe con anterioridad
@@ -79,10 +80,11 @@ class Golpejugador extends FlxSprite{
 						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
 						personaje.SetCheck(false);
 					}
-					else if (GolpeDuro == true || Pum.GetHurt() == source.EstadoEnemigo.Agarrado){ // pero si es un golpe duro
+					else if (GolpeDuro == true /*|| Pum.GetHurt() == source.EstadoEnemigo.Agarrado*/){ // pero si es un golpe duro
 						Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
 						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal);
 						personaje.SetCheck(false);
+						GolpeDuro = false;
 					}
 					Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
 				}
@@ -93,7 +95,14 @@ class Golpejugador extends FlxSprite{
 					personaje.velocity.y = 0;
 					Pum.SetHurt(source.EstadoEnemigo.Agarrado);
 					personaje.animation.play("Agarrando");
+					GolpeDuro = true;
 				}
+			}
+		}
+		if (!overlaps(Pum) && Pum.GetHurt() == source.EstadoEnemigo.Agarrado){
+			if (Pum.GetHurt() != source.EstadoEnemigo.Lanzado && Pum.GetHurt() != source.EstadoEnemigo.Lastimado){
+				Pum.SetHurt(source.EstadoEnemigo.Normal);
+				Pum.GetGolpeEnemigo().PosicionarGE();
 			}
 		}
 	}

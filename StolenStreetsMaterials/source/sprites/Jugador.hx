@@ -304,12 +304,11 @@ class Jugador extends FlxSprite{
 				}
 			}
 		}
-		if ((FlxG.keys.justPressed.J /*&& jump == false && meHurt == 0 && controlesWASD == true*/ && punios.GetAgarrada() == true) || 
-		(FlxG.keys.justPressed.D /*&& jump == false && meHurt == 0 && controlesWASD == false*/ && punios.GetAgarrada() == true)){
-			punios.SetAgarrada(false);
-			punios.posicionar();
-			///trace("las pajas, eso es!");
-		}
+		// if ((FlxG.keys.justPressed.J /*&& jump == false && meHurt == 0 && controlesWASD == true*/ && punios.GetAgarrada() == true) || 
+		// (FlxG.keys.justPressed.D /*&& jump == false && meHurt == 0 && controlesWASD == false*/ && punios.GetAgarrada() == true)){
+			// punios.SetAgarrada(false);
+			// punios.posicionar();
+		// }
 		if (punios.GetAgarrada() == true){
 			velocity.x = 0;
 			velocity.y = 0;

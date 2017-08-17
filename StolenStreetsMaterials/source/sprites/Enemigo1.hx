@@ -166,12 +166,12 @@ class Enemigo1 extends BaseEnemigo
 		}
 		if (isHurt == source.EstadoEnemigo.Lanzado){
 			if (!(animation.getByName("Lanzado").finished)){
-				velocity.y = Reg.jumpSpeed / 2;
+				velocity.y = Reg.velocidadDeVueloY;
 				if (direccion == false){
-					velocity.x = Reg.jumpSpeed / 2;
+					velocity.x = Reg.velocidadDeVueloX * (-1);
 				}
 				else if (direccion == true){
-					velocity.x = Reg.jumpSpeed / (-2);
+					velocity.x = Reg.velocidadDeVueloX;
 				}
 			}
 			if (saltito == false && animation.getByName("Lanzado").finished){

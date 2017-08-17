@@ -11,7 +11,7 @@ import sprites.Drops;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
-import sprites.PlataformaPrueba;
+//import sprites.PlataformaPrueba;
 import sprites.BaseEnemigo;
 import sprites.Enemigo1;
 import source.Reg;
@@ -35,7 +35,7 @@ class PlayState extends FlxState{
 	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	// plataformas flotantes
-	private var plataforma:PlataformaPrueba;
+	//private var plataforma:PlataformaPrueba;
 	// plataformas flotantes
 	private var Cajas:Obstaculo;
 	private var funca:Bool = false; // esto no se que es, por favor explicar
@@ -54,7 +54,7 @@ class PlayState extends FlxState{
 	override public function create():Void{
 		super.create();
 		instanciando = new Instanciador();
-		plataforma = new PlataformaPrueba(30, 300);
+		//plataforma = new PlataformaPrueba(30, 300);
 		//Cajas.members[0] = new Obstaculo(200, 200);
 		//Cajas.members[1] = new Obstaculo(300, 200);
 		//Plata.members[0] = new Drops(300, 100);
@@ -151,7 +151,7 @@ class PlayState extends FlxState{
 		camera.follow(Reg.Players.members[0]);
 		// add(chico1);
 		add(Reg.Players.members[0].GetGolpear());
-		add(plataforma);	
+		//add(plataforma);	
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
@@ -183,7 +183,7 @@ class PlayState extends FlxState{
 		for (a in 0...Reg.Enemigos.length){
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
-		FlxG.collide(Reg.Players.members[0], plataforma);
+		// FlxG.collide(Reg.Players.members[0], plataforma);
 		//Colision entre Mili y el tilemap
 		if (FlxG.collide(Reg.Players.members[0], tileMap))
 			Reg.Players.members[0].SetPosRespawn();

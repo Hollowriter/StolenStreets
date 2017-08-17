@@ -48,7 +48,7 @@ class Jugador extends FlxSprite{
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
-		super(anchuraObjeto, alturaObjeto, SimpleGraphic);
+		super(anchuraObjeto, 2500, SimpleGraphic); // harcodeo temporal
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73, 82);
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
@@ -320,7 +320,6 @@ class Jugador extends FlxSprite{
 	}
 	public function Muerte(){
 		if (vidaActual <= 0){
-			trace ("muerta");
 			if (vencida == false){
 				vencida = true;
 			}

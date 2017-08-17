@@ -167,6 +167,12 @@ class Enemigo1 extends BaseEnemigo
 		if (isHurt == source.EstadoEnemigo.Lanzado){
 			if (!(animation.getByName("Lanzado").finished)){
 				velocity.y = Reg.jumpSpeed / 2;
+				if (direccion == false){
+					velocity.x = Reg.jumpSpeed / 2;
+				}
+				else if (direccion == true){
+					velocity.x = Reg.jumpSpeed / (-2);
+				}
 			}
 			if (saltito == false && animation.getByName("Lanzado").finished){
 				isHurt = source.EstadoEnemigo.Normal;
@@ -176,12 +182,6 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function EnElAire(){
 		super.EnElAire();
-		/*if (isTouching(FlxObject.ANY)){
-			saltito = false;
-		}
-		else{
-			saltito = true;
-		}*/ // este pedazo de condon pinchado no lo lee aca pero si en playstate, joputa
 		if (y > Reg.posYjugador + 30 && isHurt == source.EstadoEnemigo.Normal){
 			if (saltito == false && velocity.y != Reg.jumpSpeed){
 				velocity.y = Reg.jumpSpeed;

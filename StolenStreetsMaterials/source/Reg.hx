@@ -22,6 +22,7 @@ enum EstadoEnemigo{
 	Lastimado;
 	Lanzado;
 	Agarrado;
+	EnElPiso;
 }
 class Reg{
 	public static inline var hSpeed:Float = 200; // velocidad horizontal estandar del jugador

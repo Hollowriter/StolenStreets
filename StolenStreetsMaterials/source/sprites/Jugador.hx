@@ -174,9 +174,11 @@ class Jugador extends FlxSprite{
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
-		velocity.y = Reg.velocidadDelTrampolin; 
-		animation.stop();
-		animation.play("CaidaLibre");
+		if (meHurt == 0 && !(Muerte())){
+			velocity.y = Reg.velocidadDelTrampolin; 
+			animation.stop();
+			animation.play("CaidaLibre");
+		}
 	}
 	// comportamiento que adopta el personaje cuando colisiona con el pinche
 	public function ColisiondeSP(){

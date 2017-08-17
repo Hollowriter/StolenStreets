@@ -23,7 +23,7 @@ class Jugador extends FlxSprite{
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
 	private var theHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
 	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
-	private var meHurt:UInt; // se utiliza para saber si el personaje fue lastimado
+	private var meHurt:EstadoEnemigo; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
 	private var ay:Int; //descomentar si querer testear vida de jugador;
@@ -64,6 +64,7 @@ class Jugador extends FlxSprite{
 		animation.add("Danio", [23, 23, 23], 1, false);
 		animation.add("Caida", [25], 1, true);
 		animation.add("Muerte", [26, 26, 26, 26], 1, false);
+		animation.add("EnElSuelo", [26, 26], 2, false);
 		animation.add("Agarre", [20, 20, 20], 5, false);
 		animation.add("Agarrando", [20], 2, true);
 		animation.play("Natural");
@@ -80,13 +81,13 @@ class Jugador extends FlxSprite{
 		jump = false;
 		agarrando = false; // sin uso
 		vencida = false;
-		meHurt = 0; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
+		meHurt = source.EstadoEnemigo.Normal; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
-		if (check == false && meHurt == 0 && esquivando == false && agarrando == false){
-			if (FlxG.keys.pressed.D && controlesWASD == true /*&& check == false && meHurt == 0 && esquivando == false*/ || 
-			FlxG.keys.pressed.RIGHT && controlesWASD == false /*&& check == false && meHurt == 0 && esquivando == false*/){
+		if (check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && agarrando == false){
+			if (FlxG.keys.pressed.D && controlesWASD == true || 
+			FlxG.keys.pressed.RIGHT && controlesWASD == false){
 				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
 					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
@@ -132,7 +133,8 @@ class Jugador extends FlxSprite{
 	}
 	//Movimiento de escape del personaje (Probablemente lo saquemos)
 	private function Esquivar(){
-		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || (FlxG.keys.justPressed.W) && jump == false  && controlesWASD == false)){
+		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || 
+		(FlxG.keys.justPressed.W) && jump == false  && controlesWASD == false)){
 			if(direccion)
 				x += Reg.esquivada;
 			else
@@ -147,10 +149,10 @@ class Jugador extends FlxSprite{
 		if (vencida == false)
 		{
 		if 
-		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == true || 
-		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == false||
-		 FlxG.keys.justPressed.L && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == true|| 
-		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == 0 && esquivando == false && /*agarrando == false &&*/ controlesWASD == false){
+		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == true || 
+		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == false||
+		 FlxG.keys.justPressed.L && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == true|| 
+		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == false){
 			velocity.y = Reg.jumpSpeed;
 			animation.play("Saltar");
 		}
@@ -174,7 +176,7 @@ class Jugador extends FlxSprite{
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
-		if (meHurt == 0 && !(Muerte())){
+		if (meHurt == source.EstadoEnemigo.Normal && !(Muerte())){
 			velocity.y = Reg.velocidadDelTrampolin; 
 			animation.stop();
 			animation.play("CaidaLibre");
@@ -188,7 +190,6 @@ class Jugador extends FlxSprite{
 		contadorpinches = 0;
 		}
 		contadorpinches++;
-		
 	}
 	// getter del golpe
 	public function GetGolpear(){
@@ -196,7 +197,8 @@ class Jugador extends FlxSprite{
 	}
 	// el personaje golpea
 	public function Golpear():Void{
-		if ((FlxG.keys.justPressed.J && check == false && meHurt==0 && controlesWASD == true) || (FlxG.keys.justPressed.D && check == false && meHurt==0 && controlesWASD == false)){ // aparicion del puño
+		if ((FlxG.keys.justPressed.J && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
+		(FlxG.keys.justPressed.D && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // aparicion del puño
 			check = true;
 			if (jump == false){ // Animaciones de ataque del jugador
 				if (theHits < Reg.comboFuerteJugador - 1){
@@ -257,11 +259,11 @@ class Jugador extends FlxSprite{
 	}
 	// contador de golpes consecutivos (Combo)
 	public function Combo():Void{
-		if ((FlxG.keys.justPressed.J && jump == false && meHurt == 0 && controlesWASD == true) || 
-		(FlxG.keys.justPressed.D && jump == false && meHurt==0 && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
+		if ((FlxG.keys.justPressed.J && jump == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
+		(FlxG.keys.justPressed.D && jump == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
 			theHits++;
 		}
-		if (time > Reg.effectTimer /*&& agarrando == false*/ || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
+		if (time > Reg.effectTimer || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
 			theHits = 0;
 			time = 0;
 			ComboActivation = false;
@@ -272,7 +274,7 @@ class Jugador extends FlxSprite{
 	}
 	// dolor despues del golpe
 	public function DolorDelJugador(){
-		if (meHurt==1 && vidaActual > 0){
+		if (meHurt == source.EstadoEnemigo.Lastimado && vidaActual > 0){
 			time++;
 			if (jump == false){
 				animation.play("Danio");
@@ -282,7 +284,7 @@ class Jugador extends FlxSprite{
 			}
 			if (time > Reg.effectTimer && jump == false){
 				time = 0;
-				meHurt = 0;
+				meHurt = source.EstadoEnemigo.Normal;
 				animation.play("Natural");
 			}
 		}
@@ -290,8 +292,8 @@ class Jugador extends FlxSprite{
 	// agarre
 	public function Agarrar(pobreVictima:BaseEnemigo){
 		if (pobreVictima.GetHurt() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
-			if ((FlxG.keys.justPressed.U && check == false && meHurt == 0 && controlesWASD == true) || 
-			(FlxG.keys.justPressed.E && check == false && meHurt == 0 && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
+			if ((FlxG.keys.justPressed.U && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
+			(FlxG.keys.justPressed.E && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
 				if (jump == false){ // in progress
 					animation.play("Agarre");
 					punios.SetAgarrada(true);
@@ -306,11 +308,6 @@ class Jugador extends FlxSprite{
 				}
 			}
 		}
-		// if ((FlxG.keys.justPressed.J /*&& jump == false && meHurt == 0 && controlesWASD == true*/ && punios.GetAgarrada() == true) || 
-		// (FlxG.keys.justPressed.D /*&& jump == false && meHurt == 0 && controlesWASD == false*/ && punios.GetAgarrada() == true)){
-			// punios.SetAgarrada(false);
-			// punios.posicionar();
-		// }
 		if (punios.GetAgarrada() == true){
 			velocity.x = 0;
 			velocity.y = 0;
@@ -367,7 +364,7 @@ class Jugador extends FlxSprite{
 		return corriendo;
 	}
 	// setter y getter de si el personaje esta lastimado
-	public function SetMeHurt(duele:UInt){
+	public function SetMeHurt(duele:EstadoEnemigo){
 		meHurt = duele;
 	}
 	public function GetMeHurt(){

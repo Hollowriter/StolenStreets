@@ -31,10 +31,10 @@ class GolpeEnemigo extends FlxSprite{
 	public function ColisionDelGolpeEnemigo(Ouch:Jugador):Void{
 		if (overlaps(Ouch)){ // si el golpe es del enemigo y choca con el jugador
 			PosicionarGE(); // lo hace desaparecer
-			if (Ouch.GetMeHurt() == 0){ // chequea que el personaje no haya recibido un golpe con anterioridad
+			if (Ouch.GetMeHurt() == source.EstadoEnemigo.Normal){ // chequea que el personaje no haya recibido un golpe con anterioridad
 				Ouch.SetCombo(0); // rompe el Combo
 				Ouch.SetTime(0); // reinicia el timer
-				Ouch.SetMeHurt(1); // lo lastima
+				Ouch.SetMeHurt(source.EstadoEnemigo.Lastimado); // lo lastima
 				Ouch.velocity.x = 0; // y lo detiene un rato
 				ljug = Ouch.GetVida(); // la variable almacena la vida del jugador
 				if (!golpeFuerte) ljug += Reg.danioPunioNormal; // la resta

@@ -115,9 +115,6 @@ class Enemigo1 extends BaseEnemigo
 					}
 					comboTimer++;
 				}
-				/*else if (isHurt == source.EstadoEnemigo.Normal){
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-				}*/
 			}
 			else{
 				if (timer > Reg.maxEffectTimer){
@@ -154,9 +151,6 @@ class Enemigo1 extends BaseEnemigo
 					animation.play("Lanzado");
 					velocity.y = Reg.jumpSpeed;
 				}
-			}
-			if (isHurt == source.EstadoEnemigo.Agarrado){
-				// trace("Mili: agarrando al enemigo");
 			}
 		}
 		if (isHurt == source.EstadoEnemigo.Lastimado){

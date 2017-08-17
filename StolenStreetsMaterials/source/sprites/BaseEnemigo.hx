@@ -22,10 +22,6 @@ class BaseEnemigo extends FlxSprite
 	private var anchuraObjeto:Int = 30;
 	private var alturaObjeto:Int = 30;
 	private var guia:GuiaEnemigo;
-	
-	/*private var hitboxPosX = 20;
-	private var hitboxPosY = 0;*/
-	
 	private var enemyRightMin:Float;
 	private var timer:Int;
 	private var comboTimer:Int;
@@ -43,18 +39,6 @@ class BaseEnemigo extends FlxSprite
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		guia = new GuiaEnemigo(x, y);
 	}
-	/*override public function update(elapsed:Float):Void{
-		super.update(elapsed);
-		
-		enemyRightMin = Reg.posXjugador;
-		enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
-		enemyLeftMin = Reg.posXjugador;
-		enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
-		enemyUpper = Reg.posYjugador;
-		EnElAire();
-		Morir();
-		if(x < (Reg.posXjugador + 600) || x > (Reg.posXjugador - 600)) {move();}
-	}*/
 	public function move(){};
 	public function gotHitted(){};
 	public function EnElAire(){

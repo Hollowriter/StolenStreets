@@ -51,7 +51,9 @@ class Reg{
 	public static inline var patadaJugadorVertical:Int = 80;
 	public static inline var danioPunioNormal:Int = -5;
 	public static inline var danioPunioFuerte:Int = -10;
-	public static inline var danioPunioJugadorNormal:Int = -5;
+	public static inline var danioPunioJugadorNormal:Int = -10;
+	public static inline var danioPunioJugadorTercero:Int = -15;
+	public static inline var danioPunioJugadorFuerte:Int = -20;
 	public static inline var velocidadDelTrampolin:Int = -750;
 	public static inline var retardoEsquivar:Int = 30;
 	public static inline var comboFuerteJugador:Int = 3;
@@ -59,7 +61,7 @@ class Reg{
 	public static inline var gravedad:Int = 1500;
 	public static inline var jugadorDrag:Int = 1000;
 	public static inline var esquivada:Int = 25;
-	public static inline var vidaEnemiga:Int = 100;
+	public static inline var vidaEnemiga:Int = 50;
 	public static inline var velocidadEnemiga:Int = 100;
 	public static inline var elNumeroMagicoDeMica:Int = 8000;
 	

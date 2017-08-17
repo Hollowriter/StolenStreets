@@ -48,7 +48,7 @@ class Jugador extends FlxSprite{
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
-		super(anchuraObjeto, 2500, SimpleGraphic); // harcodeo temporal
+		super(176, 2500, SimpleGraphic); // harcodeo temporal (Hasta que se resuelva lo de Mili en OGMO)
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73, 82);
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
@@ -130,7 +130,7 @@ class Jugador extends FlxSprite{
 			}
 		}
 	}
-	//Movimiento de escape del personaje
+	//Movimiento de escape del personaje (Probablemente lo saquemos)
 	private function Esquivar(){
 		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || (FlxG.keys.justPressed.W) && jump == false  && controlesWASD == false)){
 			if(direccion)
@@ -361,6 +361,10 @@ class Jugador extends FlxSprite{
 	// retorna si el personaje esta saltando
 	public function GetJump(){
 		return jump;
+	}
+	// retorna si el personaje esta corriendo
+	public function GetCorriendo(){
+		return corriendo;
 	}
 	// setter y getter de si el personaje esta lastimado
 	public function SetMeHurt(duele:UInt){

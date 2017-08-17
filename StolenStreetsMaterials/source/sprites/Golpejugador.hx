@@ -71,25 +71,24 @@ class Golpejugador extends FlxSprite{
 	}
 	public function ColisionDelGolpe(Pum:BaseEnemigo, personaje:Jugador):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum) && !(Pum.Morir())){ // si el golpe es del jugador y choca con el enemigo
-			trace("overlaping");
-			if (Agarrada == false){
-				posicionar(); // lo hace desaparecer
-				if (Pum.GetHurt() == source.EstadoEnemigo.Normal){ // chequea que el enemigo no haya recibido un golpe con anterioridad
-					if (GolpeDuro == false){ // si es un golpe normal
-						Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
-						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
-						personaje.SetCheck(false);
-					}
-					else if (GolpeDuro == true /*|| Pum.GetHurt() == source.EstadoEnemigo.Agarrado*/){ // pero si es un golpe duro
-						Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
-						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal);
-						personaje.SetCheck(false);
-						GolpeDuro = false;
-					}
-					Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
+			if (Pum.GetHurt() == source.EstadoEnemigo.Normal && Agarrada == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
+				if (GolpeDuro == false){ // si es un golpe normal
+					Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
+					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
+					personaje.SetCheck(false);
+					trace(GolpeDuro + "lA PUTA MADRE QUE TE RECONTRA PARIO");
 				}
+				if (GolpeDuro == true){ // pero si es un golpe duro
+					Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
+					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal);
+					personaje.SetCheck(false);
+					GolpeDuro = false;
+					trace(GolpeDuro + "cOsItO");
+				}
+				Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
+				posicionar(); // lo hace desaparecer
 			}
-			else if (Agarrada == true){
+			if (Agarrada == true){
 				if (overlaps(Pum) && !(Pum.Morir())){
 					personaje.velocity.x = 0;
 					personaje.velocity.y = 0;
@@ -103,6 +102,7 @@ class Golpejugador extends FlxSprite{
 			if (Pum.GetHurt() != source.EstadoEnemigo.Lanzado && Pum.GetHurt() != source.EstadoEnemigo.Lastimado){
 				Pum.SetHurt(source.EstadoEnemigo.Normal);
 				Pum.GetGolpeEnemigo().PosicionarGE();
+				trace("punchipunchichichipu");
 			}
 		}
 	}

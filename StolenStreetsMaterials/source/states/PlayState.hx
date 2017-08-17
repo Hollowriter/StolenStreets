@@ -250,11 +250,15 @@ class PlayState extends FlxState{
 			//}
 		}
 		Reg.Players.members[0].Salto();
-		for (i in 0...(Reg.Enemigos.length)){
+		// colisiones de los enemigos
+		for (i in 0...Reg.Enemigos.length){
 			Reg.Players.members[0].GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Reg.Players.members[0]);
-			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
-			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);
 			Reg.Players.members[0].Agarrar(Reg.Enemigos.members[i]);
+			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);
+			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
+			if (Reg.Players.members[0].GetGolpear().overlaps(Reg.Enemigos.members[i])){
+				//trace("choco con " + i);
+			}
 		}
 		for (o in 0...Reg.Cajitas.length){
 			Reg.Players.members[0].GetGolpear().ColisionconCaja(Reg.Cajitas.members[o], Reg.Players.members[0]);

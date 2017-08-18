@@ -43,8 +43,8 @@ class Jugador extends FlxSprite{
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
 	private var testo:Int = 0;
-	private var ultimaVezTilesX:Float;
-	private var ultimaVezTilesY:Float;
+	private var CPX:Float;
+	private var CPY:Float;
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
@@ -170,9 +170,9 @@ class Jugador extends FlxSprite{
 		}
 		}
 	}
-	public function SetPosRespawn(){
-		ultimaVezTilesX = x;
-		ultimaVezTilesY = y;
+	public function SavingXY(){
+		CPX = x;
+		CPY = y;
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
@@ -328,8 +328,8 @@ class Jugador extends FlxSprite{
 			if (animation.getByName("Muerte").finished){
 				if (life != 0){
 					vidaActual = Reg.VidaMili;
-					x = ultimaVezTilesX;
-					y = ultimaVezTilesY;
+					x = CPX;
+					y = CPY;
 					life -= 1;
 				}
 				if (life == 0){

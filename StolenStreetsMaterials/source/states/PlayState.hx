@@ -23,6 +23,7 @@ import sprites.DropFalling;
 import sprites.SueloPeligroso;
 import sprites.PisoLetal;
 import sprites.Instanciador;
+import sprites.CheckPoint;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -114,6 +115,7 @@ class PlayState extends FlxState{
 		Reg.Monedas = new FlxTypedGroup<Drops>();
 		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
+		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -157,6 +159,7 @@ class PlayState extends FlxState{
 		add(Reg.Trampolines);
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
+		add(Reg.Checkpoints);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			// add(Reg.Enemigos.members[i].GetGuia());
@@ -185,8 +188,6 @@ class PlayState extends FlxState{
 		}
 		// FlxG.collide(Reg.Players.members[0], plataforma);
 		//Colision entre Mili y el tilemap
-		if (FlxG.collide(Reg.Players.members[0], tileMap))
-			Reg.Players.members[0].SetPosRespawn();
 		for (v in 0...Reg.Pinches.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
 				Reg.Players.members[0].ColisiondeSP();
@@ -249,6 +250,11 @@ class PlayState extends FlxState{
 				Reg.Players.members[0].instaKill();
 			}
 			//}
+		}
+		for (i in 0...(Reg.Checkpoints.length)){
+			if (FlxG.overlap(Reg.Players.members[0], Reg.Checkpoints.members[i]))
+				Reg.Players.members[0].SavingXY();
+				
 		}
 		Reg.Players.members[0].Salto();
 		// colisiones de los enemigos

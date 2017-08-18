@@ -25,7 +25,6 @@ class Obstaculo extends FlxSprite{ // Base para una clase por lo que no comentar
 		if (destructible == 1 && golpeado == false){
 			danio += 1; //por cada golpe lastima la caja 6 veces. 3 golpes para matarla.
 			contador = Reg.effectTimer - 5;
-			trace ("crash");
 			if (danio == 3){
 				dropeable = new DropFalling(x+14, y+29); 
 				dropeable.SetBroken(true);

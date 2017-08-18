@@ -43,12 +43,12 @@ class Jugador extends FlxSprite{
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
 	private var testo:Int = 0;
-	private var ultimaVezTilesX:Float;
-	private var ultimaVezTilesY:Float;
+	private var CPX:Float=176;
+	private var CPY:Float=2500;
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
-		super(176, 2500, SimpleGraphic); // harcodeo temporal (Hasta que se resuelva lo de Mili en OGMO)
+		super(0, 0, SimpleGraphic); // harcodeo temporal (Hasta que se resuelva lo de Mili en OGMO)
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73, 82);
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
@@ -170,9 +170,12 @@ class Jugador extends FlxSprite{
 		}
 		}
 	}
-	public function SetPosRespawn(){
-		ultimaVezTilesX = x;
-		ultimaVezTilesY = y;
+	public function SavingXY(checkX:Float, checkY:Float){
+		CPX = checkX / 20;
+		CPY = checkY / 20;
+		trace("Guardado: ");
+		trace(CPX);
+		trace(CPY);
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
@@ -186,7 +189,8 @@ class Jugador extends FlxSprite{
 	public function ColisiondeSP(){
 		if (contadorpinches == unSegundo)
 		{
-		vidaActual -= 1;
+			if (vidaActual > 0)
+				vidaActual -= 1;
 		contadorpinches = 0;
 		}
 		contadorpinches++;
@@ -327,9 +331,15 @@ class Jugador extends FlxSprite{
 			}
 			if (animation.getByName("Muerte").finished){
 				if (life != 0){
+					y = CPY;
+					x = CPX;
+					trace("datos guardados");
+					trace(CPX);
+					trace(CPY);
+					trace("donde aparezco");
+					trace(x);
+					trace(y);
 					vidaActual = Reg.VidaMili;
-					x = ultimaVezTilesX;
-					y = ultimaVezTilesY;
 					life -= 1;
 				}
 				if (life == 0){

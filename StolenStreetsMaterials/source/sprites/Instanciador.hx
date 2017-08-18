@@ -108,4 +108,12 @@ class Instanciador extends FlxSprite{
 			dropFalling.kill();
 		}
 	}
+	public function CrearCheckPoint(checkPoint:CheckPoint){
+		if (!(checkPoint.isOnScreen())){
+			checkPoint.kill();
+		}
+		else{
+			checkPoint.revive();
+		}
+	}
 }

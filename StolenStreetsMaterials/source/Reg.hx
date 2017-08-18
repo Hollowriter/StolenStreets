@@ -1,6 +1,7 @@
 package source;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
+import sprites.CheckPoint;
 import sprites.Jugador;
 import sprites.Golpejugador;
 import sprites.Enemigo1;
@@ -12,6 +13,7 @@ import sprites.SueloPeligroso;
 import sprites.Drops;
 import sprites.DropsVida;
 import sprites.PisoLetal;
+import sprites.CheckPoint;
 
 /**
  * ...
@@ -86,5 +88,6 @@ class Reg{
 	static public var Monedas:FlxTypedGroup<Drops>;
 	static public var Botiquines:FlxTypedGroup<DropsVida>;
 	static public var PisosLetales:FlxTypedGroup<PisoLetal>;
+	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	
 }

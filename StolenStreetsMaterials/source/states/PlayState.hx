@@ -23,6 +23,7 @@ import sprites.DropFalling;
 import sprites.SueloPeligroso;
 import sprites.PisoLetal;
 import sprites.Instanciador;
+import sprites.CheckPoint;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -114,6 +115,7 @@ class PlayState extends FlxState{
 		Reg.Monedas = new FlxTypedGroup<Drops>();
 		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
+		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -157,6 +159,7 @@ class PlayState extends FlxState{
 		add(Reg.Trampolines);
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
+		add(Reg.Checkpoints);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			// add(Reg.Enemigos.members[i].GetGuia());
@@ -170,6 +173,7 @@ class PlayState extends FlxState{
 		puntaje.text = ("SCORE: " + Reg.puntaje);
 		vida.text = ("HEALTH: " + Reg.Players.members[0].GetVida());
 		// HUD
+		FlxG.collide(Reg.Players.members[0], tileMap);
 		for (i in 0...Reg.Cajitas.length){
 			FlxG.collide(Reg.Cajitas.members[i], Reg.Players.members[0]);
 			FlxG.collide(Reg.Cajitas.members[i], tileMap);
@@ -185,8 +189,6 @@ class PlayState extends FlxState{
 		}
 		// FlxG.collide(Reg.Players.members[0], plataforma);
 		//Colision entre Mili y el tilemap
-		if (FlxG.collide(Reg.Players.members[0], tileMap))
-			Reg.Players.members[0].SetPosRespawn();
 		for (v in 0...Reg.Pinches.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
 				Reg.Players.members[0].ColisiondeSP();
@@ -250,6 +252,14 @@ class PlayState extends FlxState{
 			}
 			//}
 		}
+		for (i in 0...(Reg.Checkpoints.length)){
+			if (FlxG.overlap(Reg.Players.members[0], Reg.Checkpoints.members[i])){
+				if (Reg.Checkpoints.members[i].GetCheck() == false){
+					Reg.Players.members[0].SavingXY(Reg.Checkpoints.members[i].GetCheckpointX(), Reg.Checkpoints.members[i].GetCheckpointY());
+					Reg.Checkpoints.members[i].SetCheck(true);
+				}
+			}
+		}
 		Reg.Players.members[0].Salto();
 		// colisiones de los enemigos
 		for (i in 0...Reg.Enemigos.length){
@@ -257,23 +267,15 @@ class PlayState extends FlxState{
 			Reg.Players.members[0].Agarrar(Reg.Enemigos.members[i]);
 			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);
 			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
-			if (Reg.Players.members[0].GetGolpear().overlaps(Reg.Enemigos.members[i])){
-				//trace("choco con " + i);
-			}
 		}
 		for (o in 0...Reg.Cajitas.length){
 			Reg.Players.members[0].GetGolpear().ColisionconCaja(Reg.Cajitas.members[o], Reg.Players.members[0]);
 		}
-		// Agarre de Mili (En proceso)
-		/*for (m in 0...(Reg.Enemigos.length)){
-			Reg.Players.members[0].Agarrar(Reg.Enemigos.members[m]);
-		}*/
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
 			FlxG.resetState();
 			Reg.guita = 0;
 			Reg.puntaje = 0;
-			// trace(Reg.Enemigos.length);
 		}
 	}
 	//Instanciador
@@ -325,6 +327,8 @@ class PlayState extends FlxState{
 				Reg.Botiquines.add(new DropsVida(entityStartX, entityStartY));
 			case "pisoletal":
 				Reg.PisosLetales.add(new PisoLetal(entityStartX, entityStartY));
+			case "checkpoint":
+				Reg.Checkpoints.add(new CheckPoint(entityStartX, entityStartY));
 		}
 	}
 }

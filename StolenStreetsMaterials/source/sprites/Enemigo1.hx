@@ -30,6 +30,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Pegar", [1], 7, false);
 		animation.add("Ouch", [14, 14, 14], 4, false);
 		animation.add("Saltar", [10, 10, 10], 4, false);
+		animation.add("Caido", [9], 4, false);
 		animation.add("CaidaLibre", [12, 12], 2, true);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
@@ -150,6 +151,7 @@ class Enemigo1 extends BaseEnemigo
 				if (animation.getByName("Lanzado").paused){
 					animation.play("Lanzado");
 					velocity.y = Reg.jumpSpeed;
+					trace("ACACACACACACACACACA");
 				}
 			}
 		}
@@ -168,10 +170,16 @@ class Enemigo1 extends BaseEnemigo
 					velocity.x = Reg.velocidadDeVueloX;
 				}
 			}
-			if (saltito == false && animation.getByName("Lanzado").finished){
-				isHurt = source.EstadoEnemigo.Normal;
-				animation.play("Normal");
+			if (saltito == false && animation.getByName("Lanzado").finished && isHurt == source.EstadoEnemigo.Lanzado){
+				isHurt = source.EstadoEnemigo.EnElPiso;
+				animation.play("Caido");
 			}
+		}
+		if (isHurt == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
+			trace("cosita");
+			velocity.x = 0;
+			velocity.y = 0;
+			isHurt = source.EstadoEnemigo.Normal;
 		}
 	}
 	override public function EnElAire(){

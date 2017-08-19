@@ -171,13 +171,11 @@
     <pinches id="36" x="1520" y="2688" />
     <pinches id="37" x="1536" y="2688" />
     <pinches id="38" x="1552" y="2688" />
-    <enemigo id="39" x="2960" y="1968" />
     <pinches id="10" x="3056" y="2016" />
     <pinches id="40" x="3072" y="2016" />
     <pinches id="41" x="3040" y="2016" />
     <pinches id="42" x="3024" y="2016" />
     <trampolin id="55" x="2816" y="2688" />
-    <jugador id="56" x="96" y="2656" />
     <monedas id="14" x="560" y="2688" />
     <monedas id="23" x="592" y="2688" />
     <monedas id="24" x="624" y="2688" />
@@ -194,7 +192,6 @@
     <monedas id="57" x="2848" y="2608" />
     <monedas id="58" x="2848" y="2560" />
     <monedas id="59" x="2848" y="2512" />
-    <enemigo id="60" x="3040" y="2336" />
     <monedas id="62" x="3648" y="2448" />
     <monedas id="63" x="3680" y="2448" />
     <monedas id="64" x="3712" y="2448" />
@@ -206,7 +203,6 @@
     <monedas id="70" x="3072" y="1904" />
     <monedas id="71" x="3040" y="1904" />
     <plataformaflotante id="73" x="3152" y="2592" />
-    <enemigo id="74" x="2976" y="2336" />
     <pisoletal id="44" x="2624" y="2048" />
     <pisoletal id="61" x="2368" y="2048" />
     <pisoletal id="72" x="2112" y="2048" />
@@ -215,10 +211,6 @@
     <enemigo id="76" x="1744" y="1568" />
     <enemigo id="77" x="1632" y="1568" />
     <enemigo id="43" x="2384" y="2608" />
-    <checkpoint id="4" x="2592" y="2656" />
-    <checkpoint id="5" x="3568" y="2448" />
-    <checkpoint id="81" x="2912" y="1968" />
-    <checkpoint id="82" x="2048" y="1888" />
     <enemigo id="83" x="1312" y="1968" />
     <enemigo id="84" x="1392" y="1968" />
     <enemigo id="85" x="1552" y="1968" />
@@ -237,5 +229,14 @@
     <monedas id="53" x="4624" y="2352" />
     <monedas id="54" x="4672" y="2352" />
     <pisoletal id="86" x="1856" y="2048" />
+    <enemigo id="87" x="1360" y="2608" />
+    <jugador id="56" x="64" y="2624" />
+    <enemigo id="60" x="2960" y="2416" />
+    <enemigo id="74" x="3024" y="2416" />
+    <enemigo id="39" x="2960" y="1936" />
+    <checkpoint id="82" x="2560" y="2688" />
+    <checkpoint id="88" x="3536" y="2464" />
+    <checkpoint id="4" x="2880" y="2016" />
+    <checkpoint id="5" x="2016" y="1920" />
   </entidades>
 </level>

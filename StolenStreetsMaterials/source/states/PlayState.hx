@@ -55,19 +55,6 @@ class PlayState extends FlxState{
 	override public function create():Void{
 		super.create();
 		instanciando = new Instanciador();
-		//plataforma = new PlataformaPrueba(30, 300);
-		//Cajas.members[0] = new Obstaculo(200, 200);
-		//Cajas.members[1] = new Obstaculo(300, 200);
-		//Plata.members[0] = new Drops(300, 100);
-		//Plata.members[1] = new Drops(350, 100);
-		// PlataCaida.members[0] = new DropFalling(400, 100);
-		// PlataCaida.members[1] = new DropFalling(450, 100); // ambas son de prueba
-		//Botiquin.members[0] = new DropsVida(400, 150);
-		//Botiquin.members[1] = new DropsVida(450, 150);
-		// chico1 = new Enemigo1(90, 30); //nueva clase enemigo (enemigo de testeo)
-		//testFloatingPlatform = new PlataformaFlotante(300, 250);
-		//testFloatingPlatform1 = new PlataformaFlotante(50, 250); 
-		//pinches = new SueloPeligroso(500, 290);
 		// crea el HUD del dinero
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
@@ -137,23 +124,13 @@ class PlayState extends FlxState{
 		add(Reg.Monedas);
 		add(Reg.Botiquines);
 		add(Reg.Pinches);
-		/*if (Cajas.members[0].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
-			add(Cajas.members[0].GetDrop());
-			//trace('true');
-		}*/
-		/*if (Cajas.members[1].GetDrop() != null){ // si es una caja indestructible, no va a agregar un objeto nulo que no existe
-			add(Cajas.members[1].GetDrop());
-			//trace('true2');
-		}*/
 		add(puntaje);
 		add(money);
 		add(vida);
 		add(lifes);
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
-		// add(chico1);
-		add(Reg.Players.members[0].GetGolpear());
-		//add(plataforma);	
+		add(Reg.Players.members[0].GetGolpear());	
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
@@ -187,7 +164,6 @@ class PlayState extends FlxState{
 		for (a in 0...Reg.Enemigos.length){
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
-		// FlxG.collide(Reg.Players.members[0], plataforma);
 		//Colision entre Mili y el tilemap
 		for (v in 0...Reg.Pinches.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
@@ -303,10 +279,13 @@ class PlayState extends FlxState{
 		for (k in 0...Reg.PisosLetales.length){
 			instanciando.CrearPisoLetal(Reg.PisosLetales.members[k]);
 		}
+		for (c in 0...Reg.Checkpoints.length){
+			instanciando.CrearCheckPoint(Reg.Checkpoints.members[c]);
+		}
 	}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
-		var entityStartX:Int = Std.parseInt(entityData.get("x"));
-		var entityStartY:Int = Std.parseInt(entityData.get("y"));
+		var entityStartX:Float = Std.parseInt(entityData.get("x"));
+		var entityStartY:Float = Std.parseInt(entityData.get("y"));
 		//	Me fijo qué tipo de entidad tengo que inicializar...
 		switch(entityName){
 			case "enemigo":

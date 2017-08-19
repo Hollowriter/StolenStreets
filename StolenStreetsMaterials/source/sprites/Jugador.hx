@@ -48,7 +48,10 @@ class Jugador extends FlxSprite{
 	private static inline var unSegundo:Int = 1;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
-		super(0, 0, SimpleGraphic); // harcodeo temporal (Hasta que se resuelva lo de Mili en OGMO)
+		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
+		trace("ZonaDeIncio");
+		trace(X);
+		trace(Y);
 		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73, 82);
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
@@ -171,8 +174,8 @@ class Jugador extends FlxSprite{
 		}
 	}
 	public function SavingXY(checkX:Float, checkY:Float){
-		CPX = checkX / 20;
-		CPY = checkY / 20;
+		CPX = Reg.posXjugador;
+		CPY = Reg.posYjugador;
 		trace("Guardado: ");
 		trace(CPX);
 		trace(CPY);

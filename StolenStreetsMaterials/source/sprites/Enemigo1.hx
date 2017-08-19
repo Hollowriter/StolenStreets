@@ -151,7 +151,6 @@ class Enemigo1 extends BaseEnemigo
 				if (animation.getByName("Lanzado").paused){
 					animation.play("Lanzado");
 					velocity.y = Reg.jumpSpeed;
-					trace("ACACACACACACACACACA");
 				}
 			}
 		}
@@ -176,7 +175,6 @@ class Enemigo1 extends BaseEnemigo
 			}
 		}
 		if (isHurt == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
-			trace("cosita");
 			velocity.x = 0;
 			velocity.y = 0;
 			isHurt = source.EstadoEnemigo.Normal;

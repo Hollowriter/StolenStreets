@@ -22,16 +22,17 @@ class Enemigo1 extends BaseEnemigo
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		loadGraphic(AssetPaths.ThyEnemigo__png, true, 50, 70);
-		animation.add("Normal", [0, 0], 2, true);
-		animation.add("Caminar", [5, 6, 7, 8, 9], 4, true);
-		animation.add("Caer", [15], 2, true);
-		animation.add("Lanzado", [15], 4, false);
-		animation.add("Pegar", [1], 7, false);
-		animation.add("Ouch", [14, 14, 14], 4, false);
-		animation.add("Saltar", [10, 10, 10], 4, false);
-		animation.add("Caido", [9], 4, false);
-		animation.add("CaidaLibre", [12, 12], 2, true);
+		loadGraphic(AssetPaths.PrimerEnemigo__png, true, 50, 70);
+		animation.add("Normal", [1, 2, 3, 4, 5], 4, true);
+		animation.add("Caminar", [12, 13, 14, 15, 16, 17], 4, true);
+		// animation.add("Caer", [15], 2, true);
+		animation.add("Lanzado", [23, 28, 29, 30], 6, false);
+		animation.add("Pegar", [6, 7], 6, false);
+		animation.add("GolpeFuerte", [10, 11], 6, false);
+		animation.add("Ouch", [22, 22, 22], 4, false);
+		animation.add("Saltar", [20, 20, 20], 4, false);
+		animation.add("Caido", [30, 31, 32], 4, false);
+		animation.add("CaidaLibre", [20, 20], 2, true);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
@@ -90,7 +91,12 @@ class Enemigo1 extends BaseEnemigo
 				velocity.x = 0;
 			if (timer <= Reg.effectTimer){
 				golpesVarios++;
-				animation.play("Pegar");
+				if (golpesVarios < Reg.golpeFuerteMax){
+					animation.play("Pegar");
+				}
+				else{
+					animation.play("GolpeFuerte");
+				}
 				still = true;
 				if (golpesVarios > Reg.golpeFuerteMax && isHurt == source.EstadoEnemigo.Normal){
 					punioEnemigo.SetGolpeFuerte(true);

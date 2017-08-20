@@ -188,11 +188,11 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function EnElAire(){
 		super.EnElAire();
-		if (y > Reg.posYjugador + 30 && isHurt == source.EstadoEnemigo.Normal){
+		/*if (y > Reg.posYjugador + 30 && isHurt == source.EstadoEnemigo.Normal){
 			if (saltito == false && velocity.y != Reg.jumpSpeed){
 				velocity.y = Reg.jumpSpeed;
 			}
-		}
+		}*/
 		if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
 			animation.play("CaidaLibre");
 		}

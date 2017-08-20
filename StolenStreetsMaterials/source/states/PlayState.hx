@@ -231,8 +231,9 @@ class PlayState extends FlxState{
 		for (i in 0...(Reg.Checkpoints.length)){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Checkpoints.members[i])){
 				if (Reg.Checkpoints.members[i].GetCheck() == false){
-					Reg.Players.members[0].SavingXY(Reg.Checkpoints.members[i].GetCheckpointX(), Reg.Checkpoints.members[i].GetCheckpointY());
+					Reg.Players.members[0].SavingXY(/*Reg.Checkpoints.members[i].GetCheckpointX(), Reg.Checkpoints.members[i].GetCheckpointY()*/);
 					Reg.Checkpoints.members[i].SetCheck(true);
+					trace("true");
 				}
 			}
 		}

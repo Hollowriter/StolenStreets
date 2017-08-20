@@ -9,7 +9,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 /**
  * ...
- * @author ...
+ * @author MorenaMontero
  */
 class CheckPoint extends FlxSprite 
 {

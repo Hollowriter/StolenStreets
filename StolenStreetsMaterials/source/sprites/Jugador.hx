@@ -173,12 +173,15 @@ class Jugador extends FlxSprite{
 		}
 		}
 	}
-	public function SavingXY(checkX:Float, checkY:Float){
+	public function SavingXY(/*checkX:Float, checkY:Float*/){
 		CPX = Reg.posXjugador;
 		CPY = Reg.posYjugador;
 		trace("Guardado: ");
 		trace(CPX);
 		trace(CPY);
+		trace("true guardado");
+		trace(Reg.posXjugador);
+		trace(Reg.posYjugador);
 	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
@@ -334,14 +337,17 @@ class Jugador extends FlxSprite{
 			}
 			if (animation.getByName("Muerte").finished){
 				if (life != 0){
-					y = CPY;
 					x = CPX;
-					trace("datos guardados");
+					y = CPY;
+					/*trace("datos guardados");
 					trace(CPX);
 					trace(CPY);
 					trace("donde aparezco");
 					trace(x);
 					trace(y);
+					trace("donde realmente aparezco"); // esto me comprueba que hay algo mas tocando la x y la y
+					trace(Reg.posXjugador);
+					trace(Reg.posYjugador);*/
 					vidaActual = Reg.VidaMili;
 					life -= 1;
 				}
@@ -425,10 +431,10 @@ class Jugador extends FlxSprite{
 		Reg.posYjugador = y;
 		Reg.widthJugador = width;
 		Reg.heightJugador = height; //actualiza el reg con los datos del jugador
-		if (x <= FlxG.camera.scroll.x + 5)
+		/*if (x <= FlxG.camera.scroll.x + 5)
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
-			x = FlxG.camera.scroll.x + FlxG.camera.width - width;
+			x = FlxG.camera.scroll.x + FlxG.camera.width - width;*/
 		//¿Cuanta vida tiene?
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
 		if (!Muerte()){
@@ -463,5 +469,15 @@ class Jugador extends FlxSprite{
 				corriendo = false;
 		}
 		Muerte();
+		/*trace("datos");
+		trace(CPX);
+		trace(CPY);
+		trace("donde estoy");
+		trace(x);
+		trace(y);
+		trace("donde realmente estoy");
+		trace(Reg.posXjugador);
+		trace(Reg.posYjugador);*/
+		//trace((FlxG.camera.scroll.x + 5) + " " + x);
 	}
 }

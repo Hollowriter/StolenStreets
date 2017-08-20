@@ -229,7 +229,6 @@
     <monedas id="53" x="4624" y="2352" />
     <monedas id="54" x="4672" y="2352" />
     <pisoletal id="86" x="1856" y="2048" />
-    <enemigo id="87" x="1360" y="2608" />
     <jugador id="56" x="64" y="2624" />
     <enemigo id="60" x="2960" y="2416" />
     <enemigo id="74" x="3024" y="2416" />
@@ -238,5 +237,6 @@
     <checkpoint id="88" x="3536" y="2464" />
     <checkpoint id="4" x="2880" y="2016" />
     <checkpoint id="5" x="2016" y="1920" />
+    <checkpoint id="81" x="176" y="2704" />
   </entidades>
 </level>

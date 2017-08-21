@@ -25,6 +25,7 @@ class BaseEnemigo extends FlxSprite
 	private var enemyRightMin:Float;
 	private var timer:Int;
 	private var comboTimer:Int;
+	private var muerto:Bool;
 	public var enemyRightMax:Float;
 	public var enemyLeftMin:Float;
 	public var enemyLeftMax:Float;
@@ -85,12 +86,7 @@ class BaseEnemigo extends FlxSprite
 			}*/
 		}
 	}
-	public function Morir():Bool{
-		if (vidaEnemiga <= 0){
-			return true;
-		}
-		return false;
-	}
+	public function Morir():Void{}
 	public function SetVida(health:Int){
 		vidaEnemiga = health;
 	}
@@ -131,15 +127,21 @@ class BaseEnemigo extends FlxSprite
 	public function GetGuia():GuiaEnemigo{
 		return guia;
 	}
+	public function SetMuerto(moribundo:Bool){
+		muerto = moribundo;
+	}
+	public function GetMuerto():Bool{
+		return muerto;
+	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		if (!Morir()){
+		if (muerto == false){
 			enemyRightMin = Reg.posXjugador;
 			enemyRightMax = Reg.posXjugador - (Reg.widthJugador * 2);
 			enemyLeftMin = Reg.posXjugador;
 			enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
 			enemyUpper = Reg.posYjugador;
-			EnElAire();
+			//EnElAire();
 		if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();}
 		}
 	}

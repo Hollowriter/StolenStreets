@@ -12,7 +12,7 @@ class Instanciador extends FlxSprite{
 		super(X, Y, SimpleGraphic);
 	}
 	public function CrearEnemigo(enemigo:BaseEnemigo){
-		if (!(enemigo.Morir())){
+		if (!(enemigo.GetMuerto())){
 			if (!(enemigo.isOnScreen())){
 				enemigo.kill();
 			}

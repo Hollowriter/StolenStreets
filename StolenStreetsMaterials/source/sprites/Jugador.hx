@@ -52,7 +52,7 @@ class Jugador extends FlxSprite{
 		trace("ZonaDeIncio");
 		trace(X);
 		trace(Y);
-		loadGraphic(AssetPaths.MiliPlaceholder__png, true, 73, 82);
+		loadGraphic(AssetPaths.MiliFinal__png, true, 73, 82);
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		animation.add("Natural", [0, 10], 2, true);
@@ -68,8 +68,8 @@ class Jugador extends FlxSprite{
 		animation.add("Caida", [25], 1, true);
 		animation.add("Muerte", [26, 26, 26, 26], 1, false);
 		animation.add("EnElSuelo", [26, 26], 2, false);
-		animation.add("Agarre", [20, 20, 20], 5, false);
-		animation.add("Agarrando", [20], 2, true);
+		animation.add("Agarre", [29, 29, 29], 5, false);
+		animation.add("Agarrando", [29], 2, true);
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = Reg.gravedad; // gravedad

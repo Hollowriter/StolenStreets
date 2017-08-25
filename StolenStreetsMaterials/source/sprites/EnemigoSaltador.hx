@@ -169,8 +169,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		super.update(elapsed);
 		if (vidaEnemiga > 0){
 			move();
-			EnElAire();
-			trace(velocity.y);
+			//EnElAire();
 			Sequito();
 		}
 		else{

@@ -157,15 +157,6 @@ class PlayState extends FlxState{
 			}
 		}
 		//COLISIONES DE LOS ENEMIGOS CON EL MAPA
-		for(i in 0...(Reg.Enemigos.members.length)){
-			FlxG.collide(Reg.Enemigos.members[i], tileMap);
-			if (Reg.Enemigos.members[i].isTouching(FlxObject.ANY)){
-				Reg.Enemigos.members[i].SetSaltito(false);
-			}
-			else{
-				Reg.Enemigos.members[i].SetSaltito(true);
-			}
-		}
 		for (a in 0...Reg.Pinches.length){
 			FlxG.collide(Reg.Pinches.members[a], tileMap);
 		}
@@ -244,6 +235,16 @@ class PlayState extends FlxState{
 		}
 		for (o in 0...Reg.Cajitas.length){
 			Reg.Players.members[0].GetGolpear().ColisionconCaja(Reg.Cajitas.members[o], Reg.Players.members[0]);
+		}
+		for (i in 0...(Reg.Enemigos.members.length)){
+			Reg.Enemigos.members[i].EnElAire();
+			FlxG.collide(Reg.Enemigos.members[i], tileMap);
+			if (Reg.Enemigos.members[i].isTouching(FlxObject.ANY)){
+				Reg.Enemigos.members[i].SetSaltito(false);
+			}
+			else{
+				Reg.Enemigos.members[i].SetSaltito(true);
+			}
 		}
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){

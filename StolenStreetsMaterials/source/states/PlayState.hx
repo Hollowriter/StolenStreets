@@ -137,7 +137,7 @@ class PlayState extends FlxState{
 		add(Reg.Checkpoints);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
-			add(Reg.Enemigos.members[i].GetGuia());
+			// add(Reg.Enemigos.members[i].GetGuia());
 		}
 	}
 	override public function update(elapsed:Float):Void{

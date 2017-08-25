@@ -25,6 +25,7 @@ import sprites.SueloPeligroso;
 import sprites.PisoLetal;
 import sprites.Instanciador;
 import sprites.CheckPoint;
+import sprites.Puertas;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -101,6 +102,9 @@ class PlayState extends FlxState{
 		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
+		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
+		Reg.PuertasLimitadoras.members[0].SetEnemigosAAsesinar(Reg.Enemigos.length);
+		
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -135,6 +139,7 @@ class PlayState extends FlxState{
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
 		add(Reg.Checkpoints);
+		add(Reg.PuertasLimitadoras);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			add(Reg.Enemigos.members[i].GetGuia());

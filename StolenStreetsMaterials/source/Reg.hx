@@ -8,12 +8,14 @@ import sprites.Enemigo1;
 import sprites.Obstaculo;
 import sprites.PlataformaFlotante;
 import sprites.BaseEnemigo;
+import sprites.Puertas;
 import sprites.Trampolin;
 import sprites.SueloPeligroso;
 import sprites.Drops;
 import sprites.DropsVida;
 import sprites.PisoLetal;
 import sprites.CheckPoint;
+import sprites.Puertas;
 
 /**
  * ...
@@ -91,5 +93,6 @@ class Reg{
 	static public var Botiquines:FlxTypedGroup<DropsVida>;
 	static public var PisosLetales:FlxTypedGroup<PisoLetal>;
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
+	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
 	
 }

@@ -18,13 +18,17 @@ class Puertas extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(15, 70, FlxColor.RGB(144,255,155));		
+		makeGraphic(15, 70, FlxColor.fromRGB(144, 255, 155));	
+	}
+	public function SetEnemigosAAsesinar(cant:Int){
+		enemigosAAsesinar = cant;
+		enemigosPedidos = enemigosAAsesinar;
 	}
 	public function GetEnemigosPedidos(){
-		return enemigosPedidos
+		return enemigosPedidos;
 	}
-	public function SetEnemigosPedidos(cant:Int){
-		enemigosPedidos = cant;
+	public function Enemigoasesinado(){
+		enemigosAAsesinar--;
 	}
 	public function CheckeodeEmpuje(){
 		if (Reg.posXjugador > x){

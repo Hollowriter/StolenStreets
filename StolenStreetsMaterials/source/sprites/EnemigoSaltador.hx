@@ -135,6 +135,7 @@ class EnemigoSaltador extends BaseEnemigo{
 			if (animation.getByName("Saltar").paused){
 				animation.play("Saltar");
 				velocity.y = Reg.velocidadDeVueloY;
+				velocity.x = Reg.velocidadDeVueloX;
 			}
 			if (animation.getByName("Saltar").finished){
 				if (saltito == false){

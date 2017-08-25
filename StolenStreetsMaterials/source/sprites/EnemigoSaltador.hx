@@ -20,8 +20,8 @@ class EnemigoSaltador extends BaseEnemigo{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.EnemigoSaltador__png, true, 50, 70);
-		animation.add("Normal", [0, 1, 2, 3, 4], 4, true);
-		animation.add("Caminar", [5, 6, 7, 8, 9, 10, 11], 4, true);
+		animation.add("Normal", [0, 1, 2, 3], 4, true);
+		animation.add("Caminar", [5, 6, 7, 8, 9, 10, 11], 7, true);
 		animation.add("Lanzado", [15, 16, 17, 18], 6, false);
 		animation.add("Pegar", [12, 13], 6, false);
 		animation.add("Ouch", [20, 21], 4, false);
@@ -46,13 +46,11 @@ class EnemigoSaltador extends BaseEnemigo{
 	}
 	// movimiento de este enemigo
 	override public function move(){
-		//trace(saltito + '0');
-		if (isHurt == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){ // mientras no esta lastimado y no esta en el aire va poder moverse
-			//trace(saltito + '1');
-		if (!still){
-			timer = 0;
+		//trace(saltito + '0');;
+		if (isHurt == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){
 			if (x < enemyRightMin && x < (enemyRightMax)){
 				direccion = false;
+				trace("asd");
 				punioEnemigo.PosicionarGE();
 				if (saltito == false){
 					if (guia.GetColision() == true){
@@ -81,59 +79,14 @@ class EnemigoSaltador extends BaseEnemigo{
 				}
 				flipX = false;
 			}
-		}
-		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
-			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
-				velocity.x = 0;
-			if (timer <= Reg.effectTimer){
-				golpesVarios++;
-				if (golpesVarios < Reg.golpeFuerteMax){
-					animation.play("Pegar");
-				}
-				else{
-					animation.play("GolpeFuerte");
-				}
-				still = true;
-				if (golpesVarios > Reg.golpeFuerteMax && isHurt == source.EstadoEnemigo.Normal){
-					punioEnemigo.SetGolpeFuerte(true);
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-				}
-				else if (isHurt == source.EstadoEnemigo.Normal){
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-				}
-				if (golpesVarios > Reg.golpeCombo && isHurt == source.EstadoEnemigo.Normal){
-					combo = true;
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-					if (comboTimer > Reg.comboTimer){
-						if (comboTimer > Reg.comboTimerMax){
-							punioEnemigo.PosicionarGE();
-							punioEnemigo.PunietazoEnemigo(this, direccion);
-							golpesVarios = 0;
-							combo = false;
-							comboTimer = 0;
-						}
-					}
-					comboTimer++;
-				}
-			}
-			else{
-				if (timer > Reg.maxEffectTimer){
-					timer = 0;
-				}
-				if (!combo){
-					punioEnemigo.PosicionarGE();
-				}
-				punioEnemigo.SetGolpeFuerte(false);
-			}
-			timer++;
-			if (animation.finished && isHurt == source.EstadoEnemigo.Normal){
-				animation.play("Normal");
+			if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
+				|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
+				trace("ENTRE");
+				isHurt = source.EstadoEnemigo.Saltando;
+				EnElAire();
 			}
 		}
-		else
-			still = false;
-		}
-		else if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){
+		if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){
 			punioEnemigo.PosicionarGE();
 			velocity.x = 0;
 		}
@@ -180,17 +133,14 @@ class EnemigoSaltador extends BaseEnemigo{
 		}
 	}
 	override public function EnElAire(){
-		super.EnElAire();
-		/*if (y > Reg.posYjugador + 30 && isHurt == source.EstadoEnemigo.Normal){
-			if (saltito == false && velocity.y != Reg.jumpSpeed){
-				velocity.y = Reg.jumpSpeed;
-			}
-		}*/
-		if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
-			animation.play("CaidaLibre");
+		if (animation.getByName("Saltar").paused && isHurt == source.EstadoEnemigo.Saltando){
+			animation.play("Saltar");
+		}
+		if (isHurt == source.EstadoEnemigo.Saltando){
+			velocity.y = Reg.jumpSpeed;
 		}
 	}
-		override public function Morir():Void{
+	override public function Morir():Void{
 		if (vidaEnemiga <= 0){
 			if (animacionEmpezo == false){
 				animation.play("Muerte");

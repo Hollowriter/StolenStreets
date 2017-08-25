@@ -17,7 +17,6 @@ class Enemigo1 extends BaseEnemigo
 {
 	private var still:Bool;
 	private var combo:Bool;
-	private var animacionEmpezo:Bool;
 	private var golpesVarios:Int;
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -91,7 +90,7 @@ class Enemigo1 extends BaseEnemigo
 		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
 			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
 				velocity.x = 0;
-				trace("golpeando");
+				// trace("golpeando");
 			if (timer <= Reg.effectTimer){
 				golpesVarios++;
 				if (golpesVarios < Reg.golpeFuerteMax){

@@ -238,5 +238,6 @@
     <checkpoint id="4" x="2880" y="2016" />
     <checkpoint id="5" x="2016" y="1920" />
     <checkpoint id="81" x="176" y="2704" />
+    <enemigosaltador id="87" x="896" y="2592" />
   </entidades>
 </level>

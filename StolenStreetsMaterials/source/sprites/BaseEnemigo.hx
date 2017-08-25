@@ -30,7 +30,7 @@ class BaseEnemigo extends FlxSprite
 	public var enemyLeftMin:Float;
 	public var enemyLeftMax:Float;
 	public var enemyUpper:Float;
-	
+	private var animacionEmpezo:Bool;
 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
@@ -39,6 +39,7 @@ class BaseEnemigo extends FlxSprite
 		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		guia = new GuiaEnemigo(x, y);
+		animacionEmpezo = false;
 	}
 	public function move(){};
 	public function gotHitted(){};

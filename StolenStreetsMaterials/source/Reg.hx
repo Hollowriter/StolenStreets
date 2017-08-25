@@ -24,6 +24,7 @@ enum EstadoEnemigo{
 	Lastimado;
 	Lanzado;
 	Agarrado;
+	Saltando;
 	EnElPiso;
 	Muerto;
 }

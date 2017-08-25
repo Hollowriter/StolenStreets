@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import sprites.Drops;
+import sprites.EnemigoSaltador;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
@@ -35,9 +36,6 @@ class PlayState extends FlxState{
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
-	// plataformas flotantes
-	//private var plataforma:PlataformaPrueba;
-	// plataformas flotantes
 	private var Cajas:Obstaculo;
 	private var funca:Bool = false; // esto no se que es, por favor explicar
 	private var puntaje:FlxText; // HUD puntaje
@@ -139,7 +137,7 @@ class PlayState extends FlxState{
 		add(Reg.Checkpoints);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
-			// add(Reg.Enemigos.members[i].GetGuia());
+			add(Reg.Enemigos.members[i].GetGuia());
 		}
 	}
 	override public function update(elapsed:Float):Void{
@@ -158,6 +156,16 @@ class PlayState extends FlxState{
 				FlxG.collide(Reg.Cajitas.members[i], Reg.Cajitas.members[b]);
 			}
 		}
+		//COLISIONES DE LOS ENEMIGOS CON EL MAPA
+		for(i in 0...(Reg.Enemigos.members.length)){
+			FlxG.collide(Reg.Enemigos.members[i], tileMap);
+			if (Reg.Enemigos.members[i].isTouching(FlxObject.ANY)){
+				Reg.Enemigos.members[i].SetSaltito(false);
+			}
+			else{
+				Reg.Enemigos.members[i].SetSaltito(true);
+			}
+		}
 		for (a in 0...Reg.Pinches.length){
 			FlxG.collide(Reg.Pinches.members[a], tileMap);
 		}
@@ -170,7 +178,6 @@ class PlayState extends FlxState{
 				Reg.Players.members[0].ColisiondeSP();
 			}
 		}
-		// Collider complicado para las plataformas trampolin de colision con el jugador
 		// Overlap del jugador con los objetos recolectables
 		for (i in 0...Reg.Monedas.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Monedas.members[i])){
@@ -208,16 +215,6 @@ class PlayState extends FlxState{
 				if (Reg.Enemigos.members[i].isOnScreen() && Reg.Enemigos.members[j].isOnScreen()){
 					FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
 				}
-			}
-		}
-		//COLISIONES DE LOS ENEMIGOS CON EL MAPA
-		for(i in 0...(Reg.Enemigos.members.length)){
-			FlxG.collide(Reg.Enemigos.members[i], tileMap);
-			if (Reg.Enemigos.members[i].isTouching(FlxObject.ANY)){
-				Reg.Enemigos.members[i].SetSaltito(false);
-			}
-			else{
-				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
 		//colision entre Mili y el piso letal
@@ -291,6 +288,8 @@ class PlayState extends FlxState{
 		switch(entityName){
 			case "enemigo":
 				Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
+			case "enemigosaltador":
+				Reg.Enemigos.add(new EnemigoSaltador(entityStartX, entityStartY));
 			case "plataformaflotante":
 				Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
 			case "trampolin":

@@ -102,8 +102,8 @@ class PlayState extends FlxState{
 		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
-		//Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
-		Reg.PuertasLimitadoras.members[0].SetEnemigosAAsesinar(Reg.Enemigos.length);
+		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
+		//Reg.PuertasLimitadoras.members[0].SetEnemigosAAsesinar(Reg.Enemigos.length); // Null reference exception from: Hollowriter To: More997
 		
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
@@ -139,7 +139,7 @@ class PlayState extends FlxState{
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
 		add(Reg.Checkpoints);
-		//add(Reg.PuertasLimitadoras);
+		add(Reg.PuertasLimitadoras);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			// add(Reg.Enemigos.members[i].GetGuia());

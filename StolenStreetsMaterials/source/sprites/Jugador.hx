@@ -337,6 +337,8 @@ class Jugador extends FlxSprite{
 			}
 			if (animation.getByName("Muerte").finished){
 				if (life != 0){
+					vidaActual = Reg.VidaMili;
+					life -= 1;
 					x = CPX;
 					y = CPY;
 					/*trace("datos guardados");
@@ -348,8 +350,6 @@ class Jugador extends FlxSprite{
 					trace("donde realmente aparezco"); // esto me comprueba que hay algo mas tocando la x y la y
 					trace(Reg.posXjugador);
 					trace(Reg.posYjugador);*/
-					vidaActual = Reg.VidaMili;
-					life -= 1;
 				}
 				if (life == 0){
 					kill();

@@ -46,7 +46,7 @@ class EnemigoSaltador extends BaseEnemigo{
 	}
 	// movimiento de este enemigo
 	override public function move(){
-		//trace(saltito + '0');;
+		//trace(saltito + '0');
 		if (isHurt == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){
 			if (x < enemyRightMin && x < (enemyRightMax)){
 				direccion = false;
@@ -81,9 +81,7 @@ class EnemigoSaltador extends BaseEnemigo{
 			}
 			if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
 				|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
-				trace("ENTRE");
 				isHurt = source.EstadoEnemigo.Saltando;
-				EnElAire();
 			}
 		}
 		if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){
@@ -133,11 +131,24 @@ class EnemigoSaltador extends BaseEnemigo{
 		}
 	}
 	override public function EnElAire(){
-		if (animation.getByName("Saltar").paused && isHurt == source.EstadoEnemigo.Saltando){
-			animation.play("Saltar");
-		}
 		if (isHurt == source.EstadoEnemigo.Saltando){
-			velocity.y = Reg.jumpSpeed;
+			if (animation.getByName("Saltar").paused){
+				animation.play("Saltar");
+				velocity.y = Reg.velocidadDeVueloY;
+				velocity.x = Reg.velocidadDeVueloX;
+			}
+			if (animation.getByName("Saltar").finished){
+				if (saltito == false){
+					animation.play("CaidaLibre");
+				}
+				if (saltito == true){
+					animation.play("Normal");
+					isHurt = source.EstadoEnemigo.Normal;
+				}
+			}
+			else{
+				velocity.y = Reg.velocidadDeVueloY;
+			}
 		}
 	}
 	override public function Morir():Void{
@@ -159,6 +170,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		if (vidaEnemiga > 0){
 			move();
 			EnElAire();
+			trace(velocity.y);
 			Sequito();
 		}
 		else{

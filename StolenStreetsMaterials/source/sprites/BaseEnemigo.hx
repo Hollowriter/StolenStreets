@@ -143,7 +143,7 @@ class BaseEnemigo extends FlxSprite
 			enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
 			enemyUpper = Reg.posYjugador;
 			//EnElAire();
-		if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();}
+		/*if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();}*/
 		}
 	}
 }

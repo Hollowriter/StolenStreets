@@ -71,7 +71,7 @@ class Reg{
 	public static inline var velocidadEnemiga:Int = 100;
 	public static inline var elNumeroMagicoDeMica:Int = 8000;
 	public static inline var velocidadDeVueloX:Float = 160;
-	public static inline var velocidadDeVueloY:Float = -250;
+	public static inline var velocidadDeVueloY:Float = -150;
 	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador

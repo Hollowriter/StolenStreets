@@ -24,7 +24,7 @@ class Enemigo1 extends BaseEnemigo
 		loadGraphic(AssetPaths.PrimerEnemigo__png, true, 50, 70);
 		animation.add("Normal", [1, 2, 3, 4, 5], 4, true);
 		animation.add("Caminar", [12, 13, 14, 15, 16, 17], 4, true);
-		animation.add("Lanzado", [23, 28, 29, 30], 6, false);
+		animation.add("Lanzado", [23, 28, 29, 30], 7, false);
 		animation.add("Pegar", [6, 7], 6, false);
 		animation.add("GolpeFuerte", [10, 11], 6, false);
 		animation.add("Ouch", [22, 22, 22], 4, false);

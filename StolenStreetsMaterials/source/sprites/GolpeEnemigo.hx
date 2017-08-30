@@ -44,9 +44,8 @@ class GolpeEnemigo extends FlxSprite{
 		}
 	}
 	// colocacion del golpe enemigo
-	public function PunietazoEnemigo(?atacante:Enemigo1 = null, observando:Bool):Void{
+	public function PunietazoEnemigo(?atacante:BaseEnemigo = null, observando:Bool):Void{
 		if (atacante != null){ // si el enemigo existe
-			// YouundMe = false; // chequea que el golpe no es del jugador (No utilizado)
 			y = atacante.y + Reg.punietazoEnemigoPosVertical; // esta a la misma altura del enemigo
 			if (observando == false){
 				x = atacante.x + Reg.punietazoEnemigoDerecha; // pero mas adelante de el

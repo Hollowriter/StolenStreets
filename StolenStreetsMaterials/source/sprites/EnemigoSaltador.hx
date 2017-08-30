@@ -50,8 +50,9 @@ class EnemigoSaltador extends BaseEnemigo{
 		if (isHurt == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){
 			if (x < enemyRightMin && x < (enemyRightMax)){
 				direccion = false;
-				trace("asd");
-				punioEnemigo.PosicionarGE();
+				if (saltito == false){
+					punioEnemigo.PosicionarGE();
+				}
 				if (saltito == false){
 					if (guia.GetColision() == true){
 						velocity.x = Reg.velocidadEnemiga;
@@ -135,7 +136,12 @@ class EnemigoSaltador extends BaseEnemigo{
 			if (animation.getByName("Saltar").paused){
 				animation.play("Saltar");
 				velocity.y = Reg.velocidadDeVueloY;
-				velocity.x = Reg.velocidadDeVueloX;
+				if (direccion == false){
+					velocity.x = Reg.velocidadDeVueloX;
+				}
+				else if (direccion == true){
+					velocity.x = Reg.velocidadDeVueloX * ( -1);
+				}
 			}
 			if (animation.getByName("Saltar").finished){
 				if (saltito == false){
@@ -143,12 +149,21 @@ class EnemigoSaltador extends BaseEnemigo{
 				}
 				if (saltito == true){
 					animation.play("Normal");
+					animation.play("Pegar");
+					punioEnemigo.PunietazoEnemigo(this, direccion);
 					isHurt = source.EstadoEnemigo.Normal;
+					trace("enter");
 				}
 			}
 			else{
 				velocity.y = Reg.velocidadDeVueloY;
 			}
+		}
+		else if (saltito == true && animation.getByName("Saltar").finished && isHurt == source.EstadoEnemigo.Normal){
+			punioEnemigo.PunietazoEnemigo(this, direccion);
+		}
+		else{
+			punioEnemigo.PosicionarGE();
 		}
 	}
 	override public function Morir():Void{
@@ -175,6 +190,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		else{
 			isHurt = source.EstadoEnemigo.Muerto;
 			Morir();
+			velocity.x = 0;
 		}
 	}
 }

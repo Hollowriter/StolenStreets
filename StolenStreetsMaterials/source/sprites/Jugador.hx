@@ -17,7 +17,7 @@ class Jugador extends FlxSprite{
 	private var punios:Golpejugador; // los golpes
 	private var testTrampolin:Trampolin;
 	private var direccion:Bool; // donde mira el personaje. true es derecha, false es izquierda.
-	private var check:Bool; // chequea si el puñetazo esta presente (probablemente no sirva cuando haya animaciones)
+	private var check:Bool; // chequea si el puÃ±etazo esta presente (probablemente no sirva cuando haya animaciones)
 	private var jump:Bool; // chequea si el personaje esta en el aire/saltando
 	private var agarrando:Bool; // este es un booleano para chequear el agarre
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
@@ -42,11 +42,7 @@ class Jugador extends FlxSprite{
 	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
-	private var testo:Int = 0;
-	private var CPX:Float=176;
-	private var CPY:Float=2500;
 	private static inline var unSegundo:Int = 1;
-	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
 		trace("ZonaDeIncio");
@@ -173,16 +169,6 @@ class Jugador extends FlxSprite{
 		}
 		}
 	}
-	public function SavingXY(/*checkX:Float, checkY:Float*/){
-		CPX = Reg.posXjugador;
-		CPY = Reg.posYjugador;
-		trace("Guardado: ");
-		trace(CPX);
-		trace(CPY);
-		trace("true guardado");
-		trace(Reg.posXjugador);
-		trace(Reg.posYjugador);
-	}
 	// comportamiento que adopta el personaje cuando colisiona con un trampolin
 	public function SaltoTrampolin(){
 		if (meHurt == source.EstadoEnemigo.Normal && !(Muerte())){
@@ -208,7 +194,7 @@ class Jugador extends FlxSprite{
 	// el personaje golpea
 	public function Golpear():Void{
 		if ((FlxG.keys.justPressed.J && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
-		(FlxG.keys.justPressed.D && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // aparicion del puño
+		(FlxG.keys.justPressed.D && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // aparicion del puÃ±o
 			check = true;
 			if (jump == false){ // Animaciones de ataque del jugador
 				if (theHits < Reg.comboFuerteJugador - 1){
@@ -239,8 +225,8 @@ class Jugador extends FlxSprite{
 			}
 			time = 0; // reinicia el timer
 		}
-		if (check == true){ // el puñetazo esta presente
-			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puñetazo
+		if (check == true){ // el puÃ±etazo esta presente
+			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puÃ±etazo
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
 				velocity.y = 0;
@@ -338,27 +324,14 @@ class Jugador extends FlxSprite{
 			if (animation.getByName("Muerte").finished){
 				if (life != 0){
 					vidaActual = Reg.VidaMili;
-					life -= 1;
-					x = CPX;
-					y = CPY;
-					trace("datos guardados");
-					trace(CPX);
-					trace(CPY);
-					trace("donde aparezco");
+					x = Reg.checkpointX;
+					y = Reg.checkpointY;
+					trace("posicion guardada");
+					trace(Reg.checkpointX);
+					trace(Reg.checkpointY);
+					trace("donde realmente aparezco");
 					trace(x);
 					trace(y);
-					trace("donde realmente aparezco"); // esto me comprueba que hay algo mas tocando la x y la y
-					trace(Reg.posXjugador);
-					trace(Reg.posYjugador);
-				/*Experimento con checkpoints:
-					 * x:
-					 * si moris varios pasos a la izquierda desde la x guardada vas a aparecer en una posicion menor a la x salvada. Si moris en
-					 * una posicion a la derecha de la x guardada, vas a aparecer en una posicion mayor a la x salvada.
-					 * y:
-					 * Si moris en lowground, vas a parecer en una posicion menorde la y salvada. Si moris en high ground vas a aparecer 
-					 * en una posicion menor a la y salvada.
-					 * x e y:
-					 * si moris en la misma posicion del a coordenada salvada, apareceras en la misma salvada.*/
 				}
 				if (life == 0){
 					kill();
@@ -444,7 +417,7 @@ class Jugador extends FlxSprite{
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
 			x = FlxG.camera.scroll.x + FlxG.camera.width - width;*/
-		//¿Cuanta vida tiene?
+		//Â¿Cuanta vida tiene?
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
 		if (!Muerte()){
 			if (piniaCorriendo == false){

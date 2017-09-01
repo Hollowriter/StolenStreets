@@ -79,6 +79,9 @@ class Reg{
 	static public var heightJugador:Float; //guardar el alto del jugador
 	
 	
+	static public var checkpointX:Float;
+	static public var checkpointY:Float;
+	
 	static public var puntaje:Int = 0; //guarda el puntaje
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador

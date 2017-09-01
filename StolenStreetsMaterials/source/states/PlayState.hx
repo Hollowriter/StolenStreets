@@ -46,6 +46,8 @@ class PlayState extends FlxState{
 	private var life:Int; // vida
 	private var pinches:SueloPeligroso;
 	private var instanciando:Instanciador;
+	private var cpActivo:Int = -1;
+
 	// private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
 	//EL nivel
 	var ogmoLoader:FlxOgmoLoader;
@@ -223,11 +225,15 @@ class PlayState extends FlxState{
 		}
 		for (i in 0...(Reg.Checkpoints.length)){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Checkpoints.members[i])){
-				if (Reg.Checkpoints.members[i].GetCheck() == false){
-					Reg.Players.members[0].SavingXY(/*Reg.Checkpoints.members[i].GetCheckpointX(), Reg.Checkpoints.members[i].GetCheckpointY()*/);
-					Reg.Checkpoints.members[i].SetCheck(true);
-					trace("true");
-				}
+			//	if (Reg.Checkpoints.members[i].GetActivo() == false && Reg.Checkpoints.members[i].GetPasado() == false){
+					Reg.checkpointX = Reg.Checkpoints.members[i].GetX();
+					Reg.checkpointY = Reg.Checkpoints.members[i].GetY();
+					if (cpActivo >= 0)
+						Reg.Checkpoints.members[cpActivo].SetActivo(false);
+					cpActivo = i;
+					Reg.Checkpoints.members[i].SetActivo(true);
+					Reg.Checkpoints.members[i].SetPasado(true);					
+				// }
 			}
 		}
 		Reg.Players.members[0].Salto();
@@ -257,10 +263,6 @@ class PlayState extends FlxState{
 			Reg.guita = 0;
 			Reg.puntaje = 0;
 		}
-		if (FlxG.keys.justPressed.Z){
-			Reg.Players.members[0].SavingXY();
-		}
-	}
 	//Instanciador
 		for (i in 0...Reg.Enemigos.length){
 			instanciando.CrearEnemigo(Reg.Enemigos.members[i]);
@@ -290,10 +292,11 @@ class PlayState extends FlxState{
 			instanciando.CrearCheckPoint(Reg.Checkpoints.members[c]);
 		}
 	}
+}
 	private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Float = Std.parseInt(entityData.get("x"));
 		var entityStartY:Float = Std.parseInt(entityData.get("y"));
-		//	Me fijo qué tipo de entidad tengo que inicializar...
+		//	Me fijo quÃ© tipo de entidad tengo que inicializar...
 		switch(entityName){
 			case "enemigo":
 				Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));

@@ -80,8 +80,8 @@ class EnemigoSaltador extends BaseEnemigo{
 				}
 				flipX = false;
 			}
-			if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
-				|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
+			if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - ((Reg.widthJugador * 2) + 150)) && isHurt == source.EstadoEnemigo.Normal)
+				|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + ((Reg.widthJugador * 2) + 150))) && isHurt == source.EstadoEnemigo.Normal){
 				isHurt = source.EstadoEnemigo.Saltando;
 			}
 		}

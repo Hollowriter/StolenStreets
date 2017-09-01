@@ -257,6 +257,9 @@ class PlayState extends FlxState{
 			Reg.guita = 0;
 			Reg.puntaje = 0;
 		}
+		if (FlxG.keys.justPressed.Z){
+			Reg.Players.members[0].SavingXY();
+		}
 	}
 	//Instanciador
 		for (i in 0...Reg.Enemigos.length){

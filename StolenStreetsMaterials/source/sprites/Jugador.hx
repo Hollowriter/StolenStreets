@@ -341,7 +341,7 @@ class Jugador extends FlxSprite{
 					life -= 1;
 					x = CPX;
 					y = CPY;
-					/*trace("datos guardados");
+					trace("datos guardados");
 					trace(CPX);
 					trace(CPY);
 					trace("donde aparezco");
@@ -349,7 +349,16 @@ class Jugador extends FlxSprite{
 					trace(y);
 					trace("donde realmente aparezco"); // esto me comprueba que hay algo mas tocando la x y la y
 					trace(Reg.posXjugador);
-					trace(Reg.posYjugador);*/
+					trace(Reg.posYjugador);
+				/*Experimento con checkpoints:
+					 * x:
+					 * si moris varios pasos a la izquierda desde la x guardada vas a aparecer en una posicion menor a la x salvada. Si moris en
+					 * una posicion a la derecha de la x guardada, vas a aparecer en una posicion mayor a la x salvada.
+					 * y:
+					 * Si moris en lowground, vas a parecer en una posicion menorde la y salvada. Si moris en high ground vas a aparecer 
+					 * en una posicion menor a la y salvada.
+					 * x e y:
+					 * si moris en la misma posicion del a coordenada salvada, apareceras en la misma salvada.*/
 				}
 				if (life == 0){
 					kill();

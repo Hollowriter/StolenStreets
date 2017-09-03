@@ -287,9 +287,12 @@
     <pinches id="37" x="1536" y="1824" />
     <pinches id="38" x="1632" y="1824" />
     <checkpoint id="34" x="176" y="2640" />
-    <checkpoint id="35" x="2560" y="2640" />
-    <checkpoint id="40" x="3536" y="2400" />
-    <checkpoint id="76" x="2880" y="1920" />
-    <checkpoint id="77" x="2016" y="1824" />
+    <checkpoint id="5" x="2592" y="2576" />
+    <checkpoint id="4" x="3536" y="2320" />
+    <checkpoint id="35" x="2880" y="1872" />
+    <checkpoint id="40" x="2016" y="1792" />
+    <checkpoint id="76" x="1168" y="1728" />
+    <checkpoint id="77" x="352" y="1472" />
+    <checkpoint id="81" x="1984" y="784" />
   </entidades>
 </level>

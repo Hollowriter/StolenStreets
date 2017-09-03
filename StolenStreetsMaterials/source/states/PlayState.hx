@@ -198,7 +198,7 @@ class PlayState extends FlxState{
 		//Colision entre Mili y los trampolines
 		for (i in 0...(Reg.Trampolines.members.length)){
 			if ((Reg.Players.members[0].y + (Reg.Players.members[0].height / 2)) < Reg.Trampolines.members[i].y){
-				if (FlxG.collide(Reg.Players.members[0], Reg.Trampolines.members[i])){
+				if (FlxG.overlap(Reg.Players.members[0], Reg.Trampolines.members[i])){
 					Reg.Players.members[0].SaltoTrampolin();
 				}
 		}

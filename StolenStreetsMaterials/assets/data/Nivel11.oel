@@ -294,5 +294,6 @@
     <checkpoint id="76" x="1168" y="1728" />
     <checkpoint id="77" x="352" y="1472" />
     <checkpoint id="81" x="1984" y="784" />
+    <enemigoconbate id="82" x="736" y="2640" />
   </entidades>
 </level>

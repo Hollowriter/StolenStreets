@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import sprites.Drops;
+import sprites.EnemigoConBate;
 import sprites.EnemigoSaltador;
 import sprites.Golpejugador;
 import sprites.Jugador;
@@ -296,12 +297,14 @@ class PlayState extends FlxState{
 	private function entityCreator(entityName:String, entityData:Xml):Void{
 		var entityStartX:Float = Std.parseInt(entityData.get("x"));
 		var entityStartY:Float = Std.parseInt(entityData.get("y"));
-		//	Me fijo quÃ© tipo de entidad tengo que inicializar...
+		//	Me fijo que tipo de entidad tengo que inicializar...
 		switch(entityName){
 			case "enemigo":
 				Reg.Enemigos.add(new Enemigo1(entityStartX, entityStartY));
 			case "enemigosaltador":
 				Reg.Enemigos.add(new EnemigoSaltador(entityStartX, entityStartY));
+			case "enemigoconbate":
+				Reg.Enemigos.add(new EnemigoConBate(entityStartX, entityStartY));
 			case "plataformaflotante":
 				Reg.PlataformasFlotantes.add(new PlataformaFlotante(entityStartX, entityStartY));
 			case "trampolin":

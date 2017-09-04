@@ -26,12 +26,12 @@ class EnemigoConBate extends BaseEnemigo
 		animation.add("Caminar", [5, 6, 7, 8, 9, 10], 4, true); // cambiada
 		animation.add("Lanzado", [23, 28, 29, 30], 7, false);
 		animation.add("Pegar", [11, 12, 13, 14], 6, false); // cambiada
-		// animation.add("GolpeFuerte", [10, 11], 6, false); // no existe
-		animation.add("Ouch", [22, 22, 22], 4, false);
-		animation.add("Saltar", [20, 20, 20], 4, false);
-		animation.add("Caido", [30, 31, 32], 4, false);
-		animation.add("CaidaLibre", [20, 20], 2, true);
-		animation.add("Muerte", [23, 24, 25, 26, 27, 27, 27], 3, false);
+		animation.add("Ouch", [21, 22], 4, false);
+		animation.add("Grah", [22, 23], 4, false);
+		// animation.add("Saltar", [20, 20, 20], 4, false);
+		animation.add("Caido", [31, 32, 33], 4, false);
+		animation.add("CaidaLibre", [17], 2, true);
+		animation.add("Muerte", [25, 26, 27, 27, 27], 3, false);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;

@@ -176,6 +176,7 @@ class Enemigo1 extends BaseEnemigo
 			}
 			if (saltito == false && animation.getByName("Lanzado").finished && isHurt == source.EstadoEnemigo.Lanzado){
 				isHurt = source.EstadoEnemigo.EnElPiso;
+				velocity.x = 0;
 				animation.play("Caido");
 			}
 		}
@@ -198,6 +199,7 @@ class Enemigo1 extends BaseEnemigo
 	}
 	override public function Morir():Void{
 		if (vidaEnemiga <= 0){
+			velocity.x = 0;
 			if (animacionEmpezo == false){
 				animation.play("Muerte");
 				animacionEmpezo = true;

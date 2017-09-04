@@ -92,6 +92,7 @@ class EnemigoConBate extends BaseEnemigo
 				velocity.x = 0;
 				// trace("golpeando");
 			if (timer <= Reg.effectTimer){
+				punioEnemigo.SetGolpeFuerte(true);
 				golpesVarios++;
 				/*if (golpesVarios < Reg.golpeFuerteMax){*/
 					animation.play("Pegar");
@@ -129,7 +130,7 @@ class EnemigoConBate extends BaseEnemigo
 				if (!combo){
 					punioEnemigo.PosicionarGE();
 				}
-				punioEnemigo.SetGolpeFuerte(false);
+				//punioEnemigo.SetGolpeFuerte(false);
 			}
 			timer++;
 			if (animation.finished && isHurt == source.EstadoEnemigo.Normal){
@@ -176,6 +177,7 @@ class EnemigoConBate extends BaseEnemigo
 			}
 			if (saltito == false && animation.getByName("Lanzado").finished && isHurt == source.EstadoEnemigo.Lanzado){
 				isHurt = source.EstadoEnemigo.EnElPiso;
+				velocity.x = 0;
 				animation.play("Caido");
 			}
 		}
@@ -198,6 +200,7 @@ class EnemigoConBate extends BaseEnemigo
 	}
 	override public function Morir():Void{
 		if (vidaEnemiga <= 0){
+			velocity.x = 0;
 			if (animacionEmpezo == false){
 				animation.play("Muerte");
 				animacionEmpezo = true;

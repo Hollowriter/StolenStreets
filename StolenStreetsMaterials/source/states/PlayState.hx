@@ -27,6 +27,7 @@ import sprites.PisoLetal;
 import sprites.Instanciador;
 import sprites.CheckPoint;
 import sprites.Puertas;
+import sprites.Musica;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -34,6 +35,7 @@ import flixel.tile.FlxTilemap;
 import flixel.FlxObject;
 
 class PlayState extends FlxState{
+	private var musicaMaestro:Musica;
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
@@ -56,6 +58,7 @@ class PlayState extends FlxState{
 	var tmpMap:TiledObjectLayer;
 	override public function create():Void{
 		super.create();
+		musicaMaestro = new Musica(0, 0);
 		instanciando = new Instanciador();
 		// crea el HUD del dinero
 		lifes = new FlxText (150, 30);
@@ -107,14 +110,13 @@ class PlayState extends FlxState{
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
 		//Reg.PuertasLimitadoras.members[0].SetEnemigosAAsesinar(Reg.Enemigos.length); // Null reference exception from: Hollowriter To: More997
-		
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
-		tileMap = ogmoLoader.loadTilemap(AssetPaths.tilesetnivel1__png, 20, 20, "tilesets");
+		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		//tileMap.follow();
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
-		for (i in 0...27){
-			if (i == 0 || i == 15 || i == 16 || i == 30 || i == 31){ //14 15 29 30
+		for (i in 0...17){
+			if (i == 0 || i == 6 || i == 7 || i == 8 || i == 9 || i == 15 || i == 16 || i == 17){
 				// trace("inside");
 				tileMap.setTileProperties(i, FlxObject.NONE);
 			}
@@ -124,6 +126,7 @@ class PlayState extends FlxState{
 			}
 		}
 		add(tileMap);
+		add(musicaMaestro);
 		add(instanciando);
 		// crea el HUD de la vida
 		add(Reg.Monedas);
@@ -150,6 +153,7 @@ class PlayState extends FlxState{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
+		musicaMaestro.PlayMusic();
 		// HUD
 		lifes.text = ("LIFE: " + Reg.Players.members[0].GetLife());
 		money.text = ("MONEY: $" + Reg.guita);

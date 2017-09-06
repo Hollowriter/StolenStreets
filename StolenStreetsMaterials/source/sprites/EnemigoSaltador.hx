@@ -26,7 +26,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		animation.add("Pegar", [12, 13], 6, false);
 		animation.add("Ouch", [20, 21], 4, false);
 		animation.add("Grah", [22, 23], 4, false);
-		animation.add("Saltar", [14, 14, 14], 4, false);
+		animation.add("Saltar", [14, 14, 14], 5, false);
 		animation.add("Caido", [24, 25, 26], 4, false);
 		animation.add("CaidaLibre", [14], 2, true);
 		animation.add("Muerte", [27, 28, 29, 29, 29], 2, false);
@@ -80,8 +80,8 @@ class EnemigoSaltador extends BaseEnemigo{
 				}
 				flipX = false;
 			}
-			if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - ((Reg.widthJugador * 2) + 150)) && isHurt == source.EstadoEnemigo.Normal)
-				|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + ((Reg.widthJugador * 2) + 150))) && isHurt == source.EstadoEnemigo.Normal){
+			if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - ((Reg.widthJugador * 2) + 200)) && (direccion != Reg.direccionJugador) && isHurt == source.EstadoEnemigo.Normal)
+				|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + ((Reg.widthJugador * 2) + 200))) && (direccion != Reg.direccionJugador) && isHurt == source.EstadoEnemigo.Normal){
 				isHurt = source.EstadoEnemigo.Saltando;
 			}
 		}

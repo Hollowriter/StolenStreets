@@ -413,6 +413,7 @@ class Jugador extends FlxSprite{
 		Reg.posYjugador = y;
 		Reg.widthJugador = width;
 		Reg.heightJugador = height; //actualiza el reg con los datos del jugador
+		Reg.direccionJugador = direccion;
 		/*if (x <= FlxG.camera.scroll.x + 5)
 			x = FlxG.camera.scroll.x + 5;
 		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)

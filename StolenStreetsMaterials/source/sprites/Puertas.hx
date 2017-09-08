@@ -30,12 +30,20 @@ class Puertas extends FlxSprite
 	public function Enemigoasesinado(){
 		enemigosAAsesinar--;
 	}
-	public function CheckeodeEmpuje(){
-		if (Reg.posXjugador > x){
-			empujarJugador = true; //-- la empuja para la izquierda
+	public function CheckeodeEmpuje(lady:Jugador){
+		if (Reg.posXjugador == x){
+			if (puertaAbierta == false){
+				if (Reg.direccionJugador == true){
+					lady.SetXJugador(lady.GetXJugador() - 50);
+				}
+				else if (Reg.direccionJugador == false){
+					lady.SetXJugador(lady.GetXJugador() + 50);
+				}
+			}
+			else if (puertaAbierta == true){
+				kill();
+			}
 		}
-		else 
-			empujarJugador = false;//++ la empuja para la derecha
 	}
 	public function CheckeodePuertas(){
 		if (enemigosAAsesinar == enemigosPedidos)

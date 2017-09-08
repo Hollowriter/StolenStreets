@@ -22,6 +22,7 @@ class BaseEnemigo extends FlxSprite
 	private var anchuraObjeto:Int = 30;
 	private var alturaObjeto:Int = 30;
 	private var guia:GuiaEnemigo;
+	private var camarada:GuiaEnemigo;
 	private var enemyRightMin:Float;
 	private var timer:Int;
 	private var comboTimer:Int;
@@ -39,52 +40,18 @@ class BaseEnemigo extends FlxSprite
 		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		guia = new GuiaEnemigo(x, y);
+		camarada = new GuiaEnemigo(x, y);
 		animacionEmpezo = false;
 	}
 	public function move(){};
 	public function gotHitted(){};
-	public function EnElAire(){
-		/*if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
-			saltito = false;
-		}
-		else{
-			saltito = true;
-		}*/
-	}
+	public function EnElAire(){}
 	public function DolorDelEnemigo(agresor:Jugador){
 		if (isHurt == source.EstadoEnemigo.Lastimado){ // si esta lastimado normalmente
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
-			/*if (timer > Reg.effectTimer && isHurt != source.EstadoEnemigo.Agarrado){ // si es mayor el timer que este numero y no es un agarre
-				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
-				timer = 0; // y se reinicia su timer de comportamiento
-			}*/
-			/*else if (timer > Reg.effectTimer + 100 && isHurt == source.EstadoEnemigo.Agarrado){ // esto es lo que hace que el enemigo se escape del agarre
-				isHurt = source.EstadoEnemigo.Normal; // esto esta por las dudas
-				timer = 0; // setea el timer a cero
-				// agresor.SetAgarrando(false); // y se libera del agarre
-			}*/ // dura mas tiempo y setea el agarre a false cuando se acaba
 		} // esta cosa con timer hacia OP a mili
 		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
-			/* el enemigo es empujado al aire */
-			/*if (timer <= Reg.effectTimer){ // sale volando
-				velocity.y = Reg.vSpeed;
-			}*/
-			/*else if (timer >= Reg.effectTimer){ // y luego cae
-				velocity.y = Reg.vSpeed * (-1);
-			}*/
-			/*if (agresor.GetDireccion() == true){ // empujado segun la posicion del jugador
-				velocity.x = Reg.EnemigoVelocidadVuelo * ( -5);
-			}*/
-			/*else if (agresor.GetDireccion() == false){ // empujando segun la posicion del jugador
-				velocity.x = Reg.EnemigoVelocidadVuelo * 5;
-			}*/
-			/*if (timer > (Reg.effectTimer + Reg.effectTimer) || saltito == false){ // si es mayor el timer que este numero y esta tocando el piso
-				isHurt = source.EstadoEnemigo.Normal; // el enemigo se recupera
-				timer = 0; // y se reinicia su timer de comportamiento
-				velocity.y = 0; // esto es para evitar que se vaya al carajo cuando sale volando
-				velocity.x = 0; // esto es para evitar que se vaya al carajo cuando sale volando
-			}*/
 		}
 	}
 	public function Morir():Void{}
@@ -128,11 +95,17 @@ class BaseEnemigo extends FlxSprite
 	public function GetGuia():GuiaEnemigo{
 		return guia;
 	}
+	public function GetCamarada():GuiaEnemigo{
+		return camarada;
+	}
 	public function SetMuerto(moribundo:Bool){
 		muerto = moribundo;
 	}
 	public function GetMuerto():Bool{
 		return muerto;
+	}
+	public function SetearVelocidadACero(){
+		velocity.x = 0;
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
@@ -142,8 +115,6 @@ class BaseEnemigo extends FlxSprite
 			enemyLeftMin = Reg.posXjugador;
 			enemyLeftMax = Reg.posXjugador + (Reg.widthJugador * 2);
 			enemyUpper = Reg.posYjugador;
-			//EnElAire();
-		/*if(x < (Reg.posXjugador + Reg.elNumeroMagicoDeMica) || x > (Reg.posXjugador - Reg.elNumeroMagicoDeMica)) {move();}*/
 		}
 	}
 }

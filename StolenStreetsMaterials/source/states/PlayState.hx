@@ -38,7 +38,6 @@ class PlayState extends FlxState{
 	private var musicaMaestro:Musica;
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
-	// private var PlataCaida = new FlxTypedGroup<DropFalling>(2); // dinero con gravedad (prueba)
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	private var Cajas:Obstaculo;
 	private var funca:Bool = false; // esto no se que es, por favor explicar
@@ -50,9 +49,6 @@ class PlayState extends FlxState{
 	private var pinches:SueloPeligroso;
 	private var instanciando:Instanciador;
 	private var cpActivo:Int = -1;
-
-	// private var chico1:BaseEnemigo; //nueva clase enemigo (bajo test)
-	//EL nivel
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
@@ -60,7 +56,6 @@ class PlayState extends FlxState{
 		super.create();
 		musicaMaestro = new Musica(0, 0);
 		instanciando = new Instanciador();
-		// crea el HUD del dinero
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
 		lifes.color = 0xB2FFB5;
@@ -77,8 +72,6 @@ class PlayState extends FlxState{
 		money.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		money.scrollFactor.set(0, 0);
 		money.visible = true;
-		// crea el HUD del dinero
-		// crea el HUD de los puntos
 		puntaje = new FlxText(20, 1);
 		puntaje.color = 0xefff0a;
 		puntaje.text = "SCORE?";
@@ -87,8 +80,6 @@ class PlayState extends FlxState{
 		puntaje.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		puntaje.scrollFactor.set(0, 0);
 		puntaje.visible = true;
-		// crea el HUD de los puntos
-		// crea el HUD de la vida
 		vida = new FlxText(30, 30);
 		vida.color = 0x800000;
 		vida.text = "HEALTH?";
@@ -97,7 +88,6 @@ class PlayState extends FlxState{
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
 		vida.visible = true;
-		//Grupos de objetos para Ogmo
 		Reg.Players = new FlxTypedGroup<Jugador>();
 		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
@@ -109,7 +99,6 @@ class PlayState extends FlxState{
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
-		//Reg.PuertasLimitadoras.members[0].SetEnemigosAAsesinar(Reg.Enemigos.length); // Null reference exception from: Hollowriter To: More997
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -148,7 +137,8 @@ class PlayState extends FlxState{
 		add(Reg.PuertasLimitadoras);
 		for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
-			// add(Reg.Enemigos.members[i].GetGuia());
+			add(Reg.Enemigos.members[i].GetGuia());
+			add(Reg.Enemigos.members[i].GetCamarada());
 		}
 	}
 	override public function update(elapsed:Float):Void{
@@ -174,6 +164,19 @@ class PlayState extends FlxState{
 		}
 		for (a in 0...Reg.Enemigos.length){
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
+		}
+		for (a in 0...Reg.Enemigos.length){
+			for (b in 0...Reg.Enemigos.length){
+				if (b != a){
+					if (Reg.Enemigos.members[a].GetCamarada().overlaps(Reg.Enemigos.members[b])){
+						Reg.Enemigos.members[a].GetCamarada().SetNoEnemigos(false);
+						Reg.Enemigos.members[a].SetearVelocidadACero();
+					}
+					else{
+						Reg.Enemigos.members[a].GetCamarada().SetNoEnemigos(true);
+					}
+				}
+			}
 		}
 		//Colision entre Mili y el tilemap
 		for (v in 0...Reg.Pinches.length){
@@ -211,14 +214,6 @@ class PlayState extends FlxState{
 		for (i in 0...(Reg.PlataformasFlotantes.members.length)){
 			if((Reg.Players.members[0].y + Reg.Players.members[0].height) <  (Reg.PlataformasFlotantes.members[i]).y +  Reg.PlataformasFlotantes.members[i].height)
 			FlxG.collide(Reg.Players.members[0], Reg.PlataformasFlotantes.members[i]);
-		}
-		//COLISIONES ENTRE ENEMIGOS
-		for (i in 0...(Reg.Enemigos.members.length)){
-			for (j in 0...(Reg.Enemigos.members.length)){
-				if (Reg.Enemigos.members[i].isOnScreen() && Reg.Enemigos.members[j].isOnScreen()){
-					FlxG.collide(Reg.Enemigos.members[i], Reg.Enemigos.members[j]);
-				}
-			}
 		}
 		//colision entre Mili y el piso letal
 		for (i in 0...(Reg.PisosLetales.length)){

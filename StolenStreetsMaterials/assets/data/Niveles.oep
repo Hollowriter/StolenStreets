@@ -16,7 +16,7 @@
     <Width>50000</Width>
     <Height>30000</Height>
   </LevelMaximumSize>
-  <Filename>D:\Desktop\Repo\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
+  <Filename>C:\Users\822\Desktop\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -64,8 +64,8 @@
       <Name>losTiles</Name>
       <FilePath>..\images\levelOneTiles.png</FilePath>
       <TileSize>
-        <Width>45</Width>
-        <Height>45</Height>
+        <Width>20</Width>
+        <Height>20</Height>
       </TileSize>
       <TileSep>0</TileSep>
     </Tileset>

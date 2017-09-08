@@ -406,6 +406,19 @@ class Jugador extends FlxSprite{
 	public function GetAgarrando(){
 		return agarrando;
 	}
+	// setters y getters de la X y la Y
+	public function SetXJugador(thyX:Float){
+		x = thyX;
+	}
+	public function SetYJugador(thyY:Float){
+		y = thyY;
+	}
+	public function GetXJugador():Float{
+		return x;
+	}
+	public function GetYJugador():Float{
+		return y;
+	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// camara

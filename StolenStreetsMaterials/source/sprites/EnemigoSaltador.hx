@@ -46,7 +46,6 @@ class EnemigoSaltador extends BaseEnemigo{
 	}
 	// movimiento de este enemigo
 	override public function move(){
-		//trace(saltito + '0');
 		if (isHurt == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){
 			if (x < enemyRightMin && x < (enemyRightMax)){
 				direccion = false;
@@ -54,11 +53,11 @@ class EnemigoSaltador extends BaseEnemigo{
 					punioEnemigo.PosicionarGE();
 				}
 				if (saltito == false){
-					if (guia.GetColision() == true){
+					if (guia.GetMovete() == true && camarada.GetNoEnemigos() == true){
 						velocity.x = Reg.velocidadEnemiga;
 						animation.play("Caminar");
 					}
-					else if (guia.GetColision() == false){
+					else if (guia.GetMovete() == false || camarada.GetNoEnemigos() == false){
 						velocity.x = 0;
 						animation.play("Normal");
 					}
@@ -69,11 +68,11 @@ class EnemigoSaltador extends BaseEnemigo{
 				direccion = true;
 				punioEnemigo.PosicionarGE();
 				if (saltito == false){
-					if (guia.GetColision() == true){
+					if (guia.GetMovete() == true && camarada.GetNoEnemigos() == true){
 						velocity.x = -(Reg.velocidadEnemiga);
 						animation.play("Caminar");
 					}
-					else if (guia.GetColision() == false){
+					else if (guia.GetMovete() == false || camarada.GetNoEnemigos() == false){
 						velocity.x = 0;
 						animation.play("Normal");
 					}
@@ -179,14 +178,20 @@ class EnemigoSaltador extends BaseEnemigo{
 			}
 		}
 	}
+	override public function SetearVelocidadACero(){
+		super.SetearVelocidadACero();
+		if (animation.getByName("Normal").paused){
+			animation.play("Normal");
+		}
+	}
 	public function Sequito():Void{
 		guia.Seguidor(x, y, flipX);
+		camarada.DetectorDeCamaradas(x, y, flipX);
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		if (vidaEnemiga > 0){
 			move();
-			//EnElAire();
 			Sequito();
 		}
 		else{

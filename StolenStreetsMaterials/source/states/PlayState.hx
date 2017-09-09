@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -52,6 +53,7 @@ class PlayState extends FlxState{
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
+	var fondito:FlxBackdrop;
 	override public function create():Void{
 		super.create();
 		musicaMaestro = new Musica(0, 0);
@@ -102,22 +104,20 @@ class PlayState extends FlxState{
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
-		//tileMap.follow();
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
 		for (i in 0...17){
 			if (i == 0 || i == 6 || i == 7 || i == 8 || i == 9 || i == 15 || i == 16 || i == 17){
-				// trace("inside");
 				tileMap.setTileProperties(i, FlxObject.NONE);
 			}
 			else{
-				// trace("inside");
 				tileMap.setTileProperties(i, FlxObject.ANY);
 			}
 		}
+		fondito = new FlxBackdrop(AssetPaths.Fondo__jpeg, 1, 1, true, true, 0, 0);
+		add(fondito);
 		add(tileMap);
 		add(musicaMaestro);
 		add(instanciando);
-		// crea el HUD de la vida
 		add(Reg.Monedas);
 		add(Reg.Botiquines);
 		add(Reg.Pinches);
@@ -127,7 +127,7 @@ class PlayState extends FlxState{
 		add(lifes);
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
-		add(Reg.Players.members[0].GetGolpear());	
+		// add(Reg.Players.members[0].GetGolpear());	
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
@@ -135,11 +135,11 @@ class PlayState extends FlxState{
 		add(Reg.PisosLetales);
 		add(Reg.Checkpoints);
 		add(Reg.PuertasLimitadoras);
-		for (i in 0...(Reg.Enemigos.length)){
+		/*for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			add(Reg.Enemigos.members[i].GetGuia());
 			add(Reg.Enemigos.members[i].GetCamarada());
-		}
+		}*/
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

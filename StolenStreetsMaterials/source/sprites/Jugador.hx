@@ -326,12 +326,7 @@ class Jugador extends FlxSprite{
 					vidaActual = Reg.VidaMili;
 					x = Reg.checkpointX;
 					y = Reg.checkpointY;
-					trace("posicion guardada");
-					trace(Reg.checkpointX);
-					trace(Reg.checkpointY);
-					trace("donde realmente aparezco");
-					trace(x);
-					trace(y);
+					life--;
 				}
 				if (life == 0){
 					kill();

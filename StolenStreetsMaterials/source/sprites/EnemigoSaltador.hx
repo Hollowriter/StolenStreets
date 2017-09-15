@@ -29,7 +29,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		animation.add("Saltar", [14, 14, 14], 5, false);
 		animation.add("Caido", [24, 25, 26], 4, false);
 		animation.add("CaidaLibre", [14], 2, true);
-		animation.add("Muerte", [27, 28, 29, 29, 29], 2, false);
+		animation.add("Muerte", [27, 28, 29, 29, 29], 7, false);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
@@ -169,6 +169,8 @@ class EnemigoSaltador extends BaseEnemigo{
 	override public function Morir():Void{
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
+			guia.MuerteEnemigo();
+			camarada.MuerteEnemigo();
 			if (animacionEmpezo == false){
 				animation.play("Muerte");
 				animacionEmpezo = true;

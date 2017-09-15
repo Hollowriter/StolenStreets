@@ -30,7 +30,7 @@ class EnemigoConBate extends BaseEnemigo
 		animation.add("Grah", [22, 23], 4, false);
 		animation.add("Caido", [31, 32, 33], 4, false);
 		animation.add("CaidaLibre", [17], 2, true);
-		animation.add("Muerte", [25, 26, 27, 27, 27], 3, false);
+		animation.add("Muerte", [25, 26, 27, 27, 27], 7, false);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
@@ -165,6 +165,8 @@ class EnemigoConBate extends BaseEnemigo
 	override public function Morir():Void{
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
+			guia.MuerteEnemigo();
+			camarada.MuerteEnemigo();
 			if (animacionEmpezo == false){
 				animation.play("Muerte");
 				animacionEmpezo = true;

@@ -31,7 +31,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Saltar", [20, 20, 20], 4, false);
 		animation.add("Caido", [30, 31, 32], 4, false);
 		animation.add("CaidaLibre", [20, 20], 2, true);
-		animation.add("Muerte", [23, 24, 25, 26, 27, 27, 27], 3, false);
+		animation.add("Muerte", [23, 24, 25, 26, 27, 27, 27], 7, false);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
@@ -145,17 +145,15 @@ class Enemigo1 extends BaseEnemigo
 				if (animation.getByName("Ouch").paused){
 					animation.play("Ouch");
 				}
+				if (animation.getByName("Ouch").finished){
+					isHurt = source.EstadoEnemigo.Normal;
+				}
 			}
 			if (isHurt == source.EstadoEnemigo.Lanzado){
 				if (animation.getByName("Lanzado").paused){
 					animation.play("Lanzado");
 					velocity.y = Reg.jumpSpeed;
 				}
-			}
-		}
-		if (isHurt == source.EstadoEnemigo.Lastimado){
-			if (animation.getByName("Ouch").finished){
-				isHurt = source.EstadoEnemigo.Normal;
 			}
 		}
 		if (isHurt == source.EstadoEnemigo.Lanzado){
@@ -189,6 +187,8 @@ class Enemigo1 extends BaseEnemigo
 	override public function Morir():Void{
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
+			guia.MuerteEnemigo();
+			camarada.MuerteEnemigo();
 			if (animacionEmpezo == false){
 				animation.play("Muerte");
 				animacionEmpezo = true;

@@ -44,7 +44,7 @@ class Reg{
 	public static inline var maxEffectTimer:Float = effectTimer * 5; // un timer de comportamiento por encima del estandar (por si algo dura sin efecto)
 	public static inline var jumpSpeed:Float = -600; // velocidad estandar de un Salto
 	public static inline var VidaMili:Int = 100; //Vida base de Mili
-	public static inline var posicionDeLosPunios:Int = 1000; // a donde se van las hitboxes cuando no aparecen
+	public static inline var posicionDeLosPunios:Int = 0; // a donde se van las hitboxes cuando no aparecen
 	public static inline var velocidadPlataformasFlotantes:Float = 50; // velocidad de las plataformas que flotan
 	public static inline var golpeFuerteMax:Int = 100;
 	public static inline var golpeCombo:Int = 200;

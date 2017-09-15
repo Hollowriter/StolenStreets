@@ -127,7 +127,7 @@ class PlayState extends FlxState{
 		add(lifes);
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
-		// add(Reg.Players.members[0].GetGolpear());	
+		// add(Reg.Players.members[0].GetGolpear());	// testing testing
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
@@ -168,7 +168,7 @@ class PlayState extends FlxState{
 		for (a in 0...Reg.Enemigos.length){
 			for (b in 0...Reg.Enemigos.length){
 				if (b != a){
-					if (Reg.Enemigos.members[a].GetCamarada().overlaps(Reg.Enemigos.members[b])){
+					if (Reg.Enemigos.members[a].GetCamarada().overlaps(Reg.Enemigos.members[b]) && Reg.Enemigos.members[b].alive){
 						Reg.Enemigos.members[a].GetCamarada().SetNoEnemigos(false);
 						Reg.Enemigos.members[a].SetearVelocidadACero();
 					}

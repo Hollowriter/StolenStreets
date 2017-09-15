@@ -107,6 +107,18 @@ class BaseEnemigo extends FlxSprite
 	public function SetearVelocidadACero(){
 		velocity.x = 0;
 	}
+	public function SetX(seinX:Float){
+		x = seinX;
+	}
+	public function SetY(seinY:Float){
+		y = seinY;
+	}
+	public function GetX():Float{
+		return x;
+	}
+	public function GetY():Float{
+		return y;
+	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		if (muerto == false){

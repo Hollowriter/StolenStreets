@@ -1,6 +1,5 @@
 package sprites;
 
-//import cpp.Void;
 import cpp.Void;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
@@ -50,7 +49,12 @@ class GuiaEnemigo extends FlxSprite{
 	}
 	public function HayUnCamarada(meinFriend:BaseEnemigo){
 		if (overlaps(meinFriend)){
-			noEnemigos = false;
+			if (meinFriend.alive){
+				noEnemigos = false;
+			}
+			else{
+				noEnemigos = true;
+			}
 		}
 		else{
 			noEnemigos = true;
@@ -64,5 +68,9 @@ class GuiaEnemigo extends FlxSprite{
 	}
 	public function GetNoEnemigos():Bool{
 		return noEnemigos;
+	}
+	public function MuerteEnemigo(){
+		x = 0;
+		y = 0;
 	}
 }

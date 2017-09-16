@@ -27,6 +27,7 @@ class BaseEnemigo extends FlxSprite
 	private var timer:Int;
 	private var comboTimer:Int;
 	private var muerto:Bool;
+	private var muriendo:Bool;
 	public var enemyRightMax:Float;
 	public var enemyLeftMin:Float;
 	public var enemyLeftMax:Float;
@@ -42,6 +43,7 @@ class BaseEnemigo extends FlxSprite
 		guia = new GuiaEnemigo(x, y);
 		camarada = new GuiaEnemigo(x, y);
 		animacionEmpezo = false;
+		muriendo = false;
 	}
 	public function move(){};
 	public function gotHitted(){};
@@ -54,7 +56,12 @@ class BaseEnemigo extends FlxSprite
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 		}
 	}
-	public function Morir():Void{}
+	public function Morir(){
+		if (vidaEnemiga <= 0 && muriendo == false){
+			Reg.enemigosMuertos++;
+			muriendo = true;
+		}
+	}
 	public function SetVida(health:Int){
 		vidaEnemiga = health;
 	}

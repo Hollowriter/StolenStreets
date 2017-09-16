@@ -43,6 +43,7 @@ class EnemigoConBate extends BaseEnemigo
 		isHurt = source.EstadoEnemigo.Normal;
 		saltito = false;
 		animacionEmpezo = false;
+		muriendo = false;
 		muerto = false;
 	}
 	// movimiento de este enemigo
@@ -162,7 +163,8 @@ class EnemigoConBate extends BaseEnemigo
 			animation.play("CaidaLibre");
 		}
 	}
-	override public function Morir():Void{
+	override public function Morir(){
+		super.Morir();
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
 			guia.MuerteEnemigo();

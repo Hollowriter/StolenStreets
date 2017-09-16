@@ -11,7 +11,7 @@ import source.Reg;
  */
 class Puertas extends FlxSprite 
 {
-	static var enemigosAAsesinar:Int = 21;
+	static var enemigosAAsesinar:Int = 2;
 	var enemigosPedidos:Int = 0;
 	var empujarJugador:Bool;
 	var puertaAbierta:Bool = false;
@@ -27,9 +27,9 @@ class Puertas extends FlxSprite
 	public function GetEnemigosPedidos(){
 		return enemigosPedidos;
 	}
-	public function Enemigoasesinado(){
+	/*public function Enemigoasesinado(){
 		enemigosAAsesinar--;
-	}
+	}*/
 	public function CheckeodeEmpuje(lady:Jugador){
 		if (Reg.posXjugador == x){
 			if (puertaAbierta == false){
@@ -41,7 +41,9 @@ class Puertas extends FlxSprite
 				}
 			}
 			else if (puertaAbierta == true){
-				kill();
+				if (overlaps(lady)){
+					kill();
+				}
 			}
 		}
 	}
@@ -51,5 +53,10 @@ class Puertas extends FlxSprite
 		else
 			puertaAbierta = false;
 		return puertaAbierta;
+	}
+	override public function update(elapsed:Float){
+		super.update(elapsed);
+		//Enemigoasesinado();
+		CheckeodePuertas();
 	}
 }

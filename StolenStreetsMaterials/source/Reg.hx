@@ -31,6 +31,8 @@ enum EstadoEnemigo{
 	Muerto;
 }
 class Reg{
+	public static var enemigosMuertos:Int = 0;
+	
 	public static inline var hSpeed:Float = 200; // velocidad horizontal estandar del jugador
 	public static inline var maxhSpeed:Float = 200; // velocidad horizontal maxima del jugador
 	public static inline var hSpeedEnemigo:Float = 100; // velocidad horizontal estandar del enemigo
@@ -78,7 +80,6 @@ class Reg{
 	static public var widthJugador:Float; //guarda el ancho del jugador
 	static public var heightJugador:Float; //guardar el alto del jugador
 	static public var direccionJugador:Bool;
-	
 	
 	static public var checkpointX:Float;
 	static public var checkpointY:Float;

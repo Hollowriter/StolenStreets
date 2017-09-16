@@ -45,6 +45,7 @@ class Enemigo1 extends BaseEnemigo
 		saltito = false;
 		animacionEmpezo = false;
 		muerto = false;
+		muriendo = false;
 	}
 	// movimiento de este enemigo
 	override public function move(){
@@ -184,7 +185,8 @@ class Enemigo1 extends BaseEnemigo
 			animation.play("CaidaLibre");
 		}
 	}
-	override public function Morir():Void{
+	override public function Morir(){
+		super.Morir();
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
 			guia.MuerteEnemigo();

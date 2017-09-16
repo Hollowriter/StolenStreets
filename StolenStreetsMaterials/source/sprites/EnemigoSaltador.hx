@@ -42,6 +42,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		isHurt = source.EstadoEnemigo.Normal;
 		saltito = false;
 		animacionEmpezo = false;
+		muriendo = false;
 		muerto = false;
 	}
 	// movimiento de este enemigo
@@ -166,7 +167,8 @@ class EnemigoSaltador extends BaseEnemigo{
 			punioEnemigo.PosicionarGE();
 		}
 	}
-	override public function Morir():Void{
+	override public function Morir(){
+		super.Morir();
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
 			guia.MuerteEnemigo();

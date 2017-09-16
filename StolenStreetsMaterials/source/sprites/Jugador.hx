@@ -39,7 +39,6 @@ class Jugador extends FlxSprite{
 	private var alturaObjeto:Int = 30;
 	private var hitboxPosX = 20;
 	private var hitboxPosY = 0;
-	private var controlesWASD:Bool = false; //PULIR ANIMACIONES EN WASD
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
 	private static inline var unSegundo:Int = 1;
@@ -85,19 +84,16 @@ class Jugador extends FlxSprite{
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
 		if (check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && agarrando == false){
-			if (FlxG.keys.pressed.D && controlesWASD == true || 
-			FlxG.keys.pressed.RIGHT && controlesWASD == false){
+			if (FlxG.keys.pressed.RIGHT){
 				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
-					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
-						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
+					if ((!FlxG.keys.pressed.UP && !FlxG.keys.pressed.S) && jump == false){
 						animation.play("Caminar");
 					}
 				}
 				else{
 					velocity.x = velocidadCorrer;
-					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
-						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
+					if (((!FlxG.keys.pressed.UP && !FlxG.keys.pressed.S) && jump == false)){
 					animation.play("Correr");
 					}
 				}
@@ -105,18 +101,16 @@ class Jugador extends FlxSprite{
 			direccion = false;
 			setFacingFlip(FlxObject.RIGHT, direccion, false);
 		}
-	    if (FlxG.keys.pressed.A && controlesWASD == true || FlxG.keys.pressed.LEFT && controlesWASD == false){
+	    if (FlxG.keys.pressed.LEFT){
 				if(corriendo == false){
 					velocity.x = -Reg.hSpeed;
-					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
-						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
+					if (((!FlxG.keys.pressed.UP && !FlxG.keys.pressed.S) && jump == false)){
 						animation.play("Caminar");
 					}
 				}
 				else{
 					velocity.x = -velocidadCorrer;
-					if ((((!FlxG.keys.pressed.UP && controlesWASD == false && !FlxG.keys.pressed.S && controlesWASD == false) && jump == false) ||
-						  (!FlxG.keys.pressed.W && controlesWASD == true && !FlxG.keys.pressed.L && controlesWASD == true) && jump == false)){
+					if ((!FlxG.keys.pressed.UP && !FlxG.keys.pressed.S) && jump == false){
 						animation.play("Correr");
 					}
 				}
@@ -124,22 +118,9 @@ class Jugador extends FlxSprite{
 				direccion = true;
 				setFacingFlip(FlxObject.LEFT, direccion, false);
 			}
-			if (((FlxG.keys.justReleased.D || FlxG.keys.justReleased.A) && controlesWASD == true ||
-			(FlxG.keys.justReleased.RIGHT || FlxG.keys.justReleased.LEFT) && controlesWASD == false)&& jump == false){
+			if ((FlxG.keys.justReleased.RIGHT || FlxG.keys.justReleased.LEFT) && (jump == false)){
 				animation.play("Natural");
 			}
-		}
-	}
-	//Movimiento de escape del personaje (Probablemente lo saquemos)
-	private function Esquivar(){
-		if ((((((FlxG.keys.justPressed.I) && jump == false)) && esquivando == false && controlesWASD == true)  || 
-		(FlxG.keys.justPressed.W) && jump == false  && controlesWASD == false)){
-			if(direccion)
-				x += Reg.esquivada;
-			else
-				x -= Reg.esquivada;
-			velocity.x = 0;
-			esquivando = true;
 		}
 	}
 	// el Salto 
@@ -148,10 +129,9 @@ class Jugador extends FlxSprite{
 		if (vencida == false)
 		{
 		if 
-		(FlxG.keys.justPressed.W && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == true || 
-		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == false||
-		 FlxG.keys.justPressed.L && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == true|| 
-		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && controlesWASD == false){
+		(
+		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal || 
+		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal ){
 			velocity.y = Reg.jumpSpeed;
 			animation.play("Saltar");
 		}
@@ -193,8 +173,7 @@ class Jugador extends FlxSprite{
 	}
 	// el personaje golpea
 	public function Golpear():Void{
-		if ((FlxG.keys.justPressed.J && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
-		(FlxG.keys.justPressed.D && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // aparicion del puÃ±o
+		if (FlxG.keys.justPressed.D && check == false && meHurt == source.EstadoEnemigo.Normal){ // aparicion del puÃ±o
 			check = true;
 			if (jump == false){ // Animaciones de ataque del jugador
 				if (theHits < Reg.comboFuerteJugador - 1){
@@ -232,10 +211,10 @@ class Jugador extends FlxSprite{
 				velocity.y = 0;
 			}
 			else{ // pero si esta saltando no ignora el movimiento del Salto
-				if ((FlxG.keys.pressed.D && controlesWASD == true) || (FlxG.keys.pressed.RIGHT && controlesWASD == false)){ // chequea si te mueves a la derecha
+				if (FlxG.keys.pressed.RIGHT){ // chequea si te mueves a la derecha
 					velocity.x = Reg.hSpeed;
 				}
-				else if (FlxG.keys.pressed.A && controlesWASD == true || FlxG.keys.pressed.LEFT && controlesWASD == false){ // o a la izquierda
+				else if (FlxG.keys.pressed.LEFT){ // o a la izquierda
 					velocity.x = -Reg.hSpeed;
 				}
 			}
@@ -255,8 +234,7 @@ class Jugador extends FlxSprite{
 	}
 	// contador de golpes consecutivos (Combo)
 	public function Combo():Void{
-		if ((FlxG.keys.justPressed.J && jump == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
-		(FlxG.keys.justPressed.D && jump == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // si no saltas, puedes hacer Combos en tierra
+		if (FlxG.keys.justPressed.D && jump == false && meHurt == source.EstadoEnemigo.Normal){ // si no saltas, puedes hacer Combos en tierra
 			theHits++;
 		}
 		if (time > Reg.effectTimer || jump == true){ // si saltas, no, y lo agarras no se seteara a 0 hasta que se suelte
@@ -288,8 +266,7 @@ class Jugador extends FlxSprite{
 	// agarre
 	public function Agarrar(pobreVictima:BaseEnemigo){
 		if (pobreVictima.GetHurt() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
-			if ((FlxG.keys.justPressed.U && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == true) || 
-			(FlxG.keys.justPressed.E && check == false && meHurt == source.EstadoEnemigo.Normal && controlesWASD == false)){ // y apretas Z (Para probar, despues cambiamos la letra)
+			if (FlxG.keys.justPressed.E && check == false && meHurt == source.EstadoEnemigo.Normal){ // y apretas Z (Para probar, despues cambiamos la letra)
 				if (jump == false){ // in progress
 					animation.play("Agarre");
 					punios.SetAgarrada(true);
@@ -297,7 +274,7 @@ class Jugador extends FlxSprite{
 				}
 			}
 			if (punios.GetAgarrada() == true && pobreVictima.GetHurt() == source.EstadoEnemigo.Agarrado){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
-				if ((FlxG.keys.justPressed.J && controlesWASD == true) || (FlxG.keys.justPressed.D && controlesWASD == false)){ // si la sostenes de un lado y apretas Atacar y avanzar
+				if (FlxG.keys.justPressed.D){ // si la sostenes de un lado y apretas Atacar y avanzar
 					punios.SetAgarrada(false);
 					pobreVictima.SetHurt(source.EstadoEnemigo.Lanzado); // vuela en esa direccion
 					pobreVictima.SetTimer(0); // y reinicia el timer
@@ -433,7 +410,6 @@ class Jugador extends FlxSprite{
 				MovimientoDelJugador();
 				Combo();
 				DolorDelJugador();
-				Esquivar();
 			}
 			Golpear();
 			if (piniaCorriendo == true){
@@ -454,7 +430,7 @@ class Jugador extends FlxSprite{
 			else if (esquivando == true){
 				contadorEsquivar++;
 			}
-			if (FlxG.keys.pressed.L && controlesWASD == true || FlxG.keys.pressed.A && controlesWASD == false || FlxG.keys.pressed.SHIFT && controlesWASD == true || FlxG.keys.pressed.SHIFT && controlesWASD == false)
+			if (FlxG.keys.pressed.A || FlxG.keys.pressed.SHIFT)
 				corriendo = true;
 			else
 				corriendo = false;

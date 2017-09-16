@@ -8,6 +8,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
 import sprites.GolpeEnemigo;
 import sprites.GuiaEnemigo;
+import flixel.system.FlxSound;
 
 /**
  * ...

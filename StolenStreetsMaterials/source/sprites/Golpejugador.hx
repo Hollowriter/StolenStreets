@@ -6,17 +6,23 @@ import flixel.util.FlxColor;
 import flixel.FlxG;
 import source.Reg;
 import sprites.Jugador;
+import flixel.system.FlxSound;
 
 /**
  * ...
  * @author RodrigoDiazKlipphan(inicial)
  */
 class Golpejugador extends FlxSprite{
+	private var damageSound:FlxSound;
 	private var GolpeDuro:Bool; // detecta cuando es un golpe que te tira al piso
 	private var Agarrada:Bool; // para determinar si el jugador intenta hacer un agarre
+	
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 11, FlxColor.RED);
+		damageSound = new FlxSound();
+		damageSound.loadEmbedded(AssetPaths.slap__wav);
+		damageSound.volume = 100;
 		GolpeDuro = false;
 		Agarrada = false;
 	}
@@ -61,14 +67,6 @@ class Golpejugador extends FlxSprite{
 			}
 		}
 	}
-	// colision del golpe
-	public function ColisionconCaja(caja:Obstaculo, personaje:Jugador):Void{
-		if (overlaps(caja) && caja.GetGolpeado() == false && Agarrada == false){
-			posicionar();
-			caja.Golpeada(personaje);
-			caja.SetGolpeado(true);
-		}
-	}
 	public function ColisionDelGolpe(Pum:BaseEnemigo, personaje:Jugador):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum) && !(Pum.GetMuerto())){ // si el golpe es del jugador y choca con el enemigo
 			if (Pum.GetHurt() == source.EstadoEnemigo.Normal && Agarrada == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
@@ -76,6 +74,7 @@ class Golpejugador extends FlxSprite{
 					Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
 					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
 					personaje.SetCheck(false);
+					damageSound.play();
 				}
 				if (GolpeDuro == true || Pum.GetHurt() == source.EstadoEnemigo.Saltando){ // pero si es un golpe duro
 					Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente

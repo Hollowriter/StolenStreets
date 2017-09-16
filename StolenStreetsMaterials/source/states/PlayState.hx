@@ -251,9 +251,6 @@ class PlayState extends FlxState{
 			Reg.Enemigos.members[i].DolorDelEnemigo(Reg.Players.members[0]);
 			Reg.Enemigos.members[i].GetGolpeEnemigo().ColisionDelGolpeEnemigo(Reg.Players.members[0]);
 		}
-		for (o in 0...Reg.Cajitas.length){
-			Reg.Players.members[0].GetGolpear().ColisionconCaja(Reg.Cajitas.members[o], Reg.Players.members[0]);
-		}
 		for (i in 0...(Reg.Enemigos.members.length)){
 			Reg.Enemigos.members[i].EnElAire();
 			FlxG.collide(Reg.Enemigos.members[i], tileMap);

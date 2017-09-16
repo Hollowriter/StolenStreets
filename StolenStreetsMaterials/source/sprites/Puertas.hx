@@ -12,7 +12,7 @@ import source.Reg;
  */
 class Puertas extends FlxSprite 
 {
-	static var enemigosAAsesinar:Int;
+	var enemigosAAsesinar:Int;
 	var enemigosPedidos:Int = 0;
 	var empujarJugador:Bool;
 	var puertaAbierta:Bool = false;
@@ -22,7 +22,7 @@ class Puertas extends FlxSprite
 		super(X, Y, SimpleGraphic);
 		makeGraphic(15, 70, FlxColor.fromRGB(144, 255, 155));
 		immovable = true;
-		enemigosAAsesinar:Int = 1;
+		enemigosAAsesinar = 1;
 	}
 	public function SetEnemigosAAsesinar(cant:Int){
 		enemigosAAsesinar = cant;

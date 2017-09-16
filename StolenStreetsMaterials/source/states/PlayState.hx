@@ -50,6 +50,7 @@ class PlayState extends FlxState{
 	private var pinches:SueloPeligroso;
 	private var instanciando:Instanciador;
 	private var cpActivo:Int = -1;
+	private var puertaDePrueba:Puertas;
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
@@ -101,6 +102,7 @@ class PlayState extends FlxState{
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
+		puertaDePrueba = new Puertas(1800, 2600);
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -134,6 +136,7 @@ class PlayState extends FlxState{
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
 		add(Reg.PuertasLimitadoras);
+		add(puertaDePrueba);
 		/*for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			add(Reg.Enemigos.members[i].GetGuia());
@@ -236,6 +239,9 @@ class PlayState extends FlxState{
 			}
 		}
 		Reg.Players.members[0].Salto();
+		if (FlxG.collide(Reg.Players.members[0], puertaDePrueba)){
+			puertaDePrueba.CheckeodePuertas();
+		}
 		// colisiones de los enemigos
 		for (i in 0...Reg.Enemigos.length){
 			Reg.Players.members[0].GetGolpear().ColisionDelGolpe(Reg.Enemigos.members[i], Reg.Players.members[0]);

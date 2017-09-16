@@ -153,7 +153,6 @@ class EnemigoSaltador extends BaseEnemigo{
 					animation.play("Pegar");
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 					isHurt = source.EstadoEnemigo.Normal;
-					trace("enter");
 				}
 			}
 			else{

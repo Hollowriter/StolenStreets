@@ -16,6 +16,7 @@ class Puertas extends FlxSprite
 	var enemigosPedidos:Int = 0;
 	var empujarJugador:Bool;
 	var puertaAbierta:Bool = false;
+	var puertaDesruida:Bool = false;
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
@@ -31,8 +32,12 @@ class Puertas extends FlxSprite
 	}
 	public function CheckeodePuertas(){
 		if (enemigosAAsesinar <= Reg.enemigosMuertos){
+			puertaDesruida = true;
 			kill();
 		}
+	}
+	public function PuertaFuera(){
+		return puertaDesruida;
 	}
 	override public function update(elapsed:Float){
 		super.update(elapsed);

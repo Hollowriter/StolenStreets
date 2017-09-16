@@ -371,5 +371,9 @@
     <pinches id="122" x="2663" y="2771" />
     <enemigo id="136" x="3360" y="2016" />
     <enemigo id="19" x="1696" y="2608" />
+    <Puertas id="0" x="1808" y="2592" />
+    <Puertas id="20" x="2528" y="2624" />
+    <Puertas id="42" x="3456" y="2384" />
+    <Puertas id="78" x="4096" y="2624" />
   </entidades>
 </level>

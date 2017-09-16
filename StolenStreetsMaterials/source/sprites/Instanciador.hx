@@ -116,4 +116,17 @@ class Instanciador extends FlxSprite{
 			checkPoint.revive();
 		}
 	}
+	public function CrearPuerta(puertas:Puertas){
+		if (!puertas.PuertaFuera()){
+			if (!(puertas.isOnScreen())){
+				puertas.kill();
+			}
+			else{
+				puertas.revive();
+			}
+		}
+		else{
+			puertas.kill();
+		}
+	}
 }

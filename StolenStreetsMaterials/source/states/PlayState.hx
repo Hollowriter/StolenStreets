@@ -50,7 +50,7 @@ class PlayState extends FlxState{
 	private var pinches:SueloPeligroso;
 	private var instanciando:Instanciador;
 	private var cpActivo:Int = -1;
-	private var puertaDePrueba:Puertas;
+	//private var puertaDePrueba:Puertas;
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
@@ -102,7 +102,7 @@ class PlayState extends FlxState{
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
-		puertaDePrueba = new Puertas(1800, 2600);
+		//puertaDePrueba = new Puertas(1800, 2600);
 		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -136,7 +136,7 @@ class PlayState extends FlxState{
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
 		add(Reg.PuertasLimitadoras);
-		add(puertaDePrueba);
+		//add(puertaDePrueba);
 		/*for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
 			add(Reg.Enemigos.members[i].GetGuia());
@@ -239,8 +239,10 @@ class PlayState extends FlxState{
 			}
 		}
 		Reg.Players.members[0].Salto();
-		if (FlxG.collide(Reg.Players.members[0], puertaDePrueba)){
-			puertaDePrueba.CheckeodePuertas();
+		for (q in 0...Reg.PuertasLimitadoras.length){
+			if (FlxG.collide(Reg.Players.members[0], Reg.PuertasLimitadoras.members[q])){
+				Reg.PuertasLimitadoras.members[q].CheckeodePuertas();
+			}
 		}
 		// colisiones de los enemigos
 		for (i in 0...Reg.Enemigos.length){
@@ -296,6 +298,9 @@ class PlayState extends FlxState{
 		for (c in 0...Reg.Checkpoints.length){
 			instanciando.CrearCheckPoint(Reg.Checkpoints.members[c]);
 		}
+		for (b in 0...Reg.PuertasLimitadoras.length){
+			instanciando.CrearPuerta(Reg.PuertasLimitadoras.members[b]);
+		}
 	}
 }
 	private function entityCreator(entityName:String, entityData:Xml):Void{
@@ -327,6 +332,8 @@ class PlayState extends FlxState{
 				Reg.PisosLetales.add(new PisoLetal(entityStartX, entityStartY));
 			case "checkpoint":
 				Reg.Checkpoints.add(new CheckPoint(entityStartX, entityStartY));
+			case "Puertas":
+				Reg.PuertasLimitadoras.add(new Puertas(entityStartX, entityStartY));
 		}
 	}
 }

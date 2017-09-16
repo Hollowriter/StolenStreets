@@ -88,6 +88,7 @@ class Reg{
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
 	
+	static public var enemigosNivel1:FlxTypedGroup<Int> = [1, 3, 5, 8];
 	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
 	static public var Trampolines:FlxTypedGroup<Trampolin>;
@@ -99,5 +100,4 @@ class Reg{
 	static public var PisosLetales:FlxTypedGroup<PisoLetal>;
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
-	
 }

@@ -115,6 +115,7 @@ class PlayState extends FlxState{
 				tileMap.setTileProperties(i, FlxObject.ANY);
 			}
 		}
+		for (Reg.)
 		fondito = new FlxBackdrop(AssetPaths.Fondo__jpeg, 1, 1, true, true, 0, 0);
 		add(fondito);
 		add(tileMap);

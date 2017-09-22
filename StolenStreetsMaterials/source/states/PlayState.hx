@@ -189,6 +189,11 @@ class PlayState extends FlxState{
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
 				Reg.Players.members[0].ColisiondeSP();
 			}
+				for (o in 0...Reg.Enemigos.length){
+				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.Pinches.members[v])){
+					Reg.Enemigos.members[o].SetVida(0);
+				}
+			}
 		}
 		// Overlap del jugador con los objetos recolectables
 		for (i in 0...Reg.Monedas.length){
@@ -201,14 +206,15 @@ class PlayState extends FlxState{
 				Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
 			}
 		}
-		/*dropeo de las cajas*/
+		/*
+		 * dropeo de las cajas
 		for (t in 0...Reg.Cajitas.length){
 			if (Reg.Cajitas.members[t].GetDrop() != null){
 				if (FlxG.overlap(Reg.Players.members[0], Reg.Cajitas.members[t].GetDrop())){
 					Reg.Cajitas.members[t].GetDrop().Juntado();
 				}
 			}
-		}
+		}*/
 		//Colision entre Mili y los trampolines
 		for (i in 0...(Reg.Trampolines.members.length)){
 			if ((Reg.Players.members[0].y + (Reg.Players.members[0].height / 2)) < Reg.Trampolines.members[i].y){
@@ -221,11 +227,16 @@ class PlayState extends FlxState{
 			if((Reg.Players.members[0].y + Reg.Players.members[0].height) <  (Reg.PlataformasFlotantes.members[i]).y +  Reg.PlataformasFlotantes.members[i].height)
 			FlxG.collide(Reg.Players.members[0], Reg.PlataformasFlotantes.members[i]);
 		}
-		//colision entre Mili y el piso letal
+		//colision entre Mili y el piso letal (Y enemigos y piso letal)
 		for (i in 0...(Reg.PisosLetales.length)){
 			if(FlxG.collide(Reg.Players.members[0], Reg.PisosLetales.members[i])){
 			//if (FlxG.overlap(Reg.Players.members[0], Reg.PisosLetales.members[i])){
 				Reg.Players.members[0].instaKill();
+			}
+			for (o in 0...Reg.Enemigos.length){
+				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.PisosLetales.members[o])){
+					Reg.Enemigos.members[o].SetVida(0);
+				}
 			}
 			//}
 		}

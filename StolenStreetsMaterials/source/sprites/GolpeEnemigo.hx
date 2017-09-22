@@ -5,6 +5,7 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import source.Reg;
+import flixel.system.FlxSound;
 
 /**
  * ...
@@ -13,11 +14,15 @@ import source.Reg;
 class GolpeEnemigo extends FlxSprite{
 	private var golpeFuerte:Bool; // check gancho
 	private var ljug:Int; // para afectar al jugador
+	private var sonidoDanio:FlxSound;
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 11, FlxColor.BLUE);
 		golpeFuerte = false;
 		ljug = 0;
+		sonidoDanio = new FlxSound();
+		sonidoDanio.loadEmbedded(AssetPaths.enemypunch__wav);
+		sonidoDanio.volume = 1;
 	}
 	override public function update(elapsed:Float):Void{
 		
@@ -40,6 +45,7 @@ class GolpeEnemigo extends FlxSprite{
 				if (!golpeFuerte) ljug += Reg.danioPunioNormal; // la resta
 				else ljug += Reg.danioPunioFuerte; // la resta
 				Ouch.SetVida(ljug); // y la setea
+				sonidoDanio.play();
 			}
 		}
 	}

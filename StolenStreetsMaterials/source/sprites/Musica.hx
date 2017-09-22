@@ -16,7 +16,7 @@ class Musica extends FlxSprite{
 	}
 	public function PlayMusic():Void{
 		if (FlxG.sound.music == null){
-			FlxG.sound.playMusic(AssetPaths.musicaoficial__ogg, 1, true);
+			FlxG.sound.playMusic(AssetPaths.musicaoficial__ogg, 0.5, true);
 		}
 	}
 	

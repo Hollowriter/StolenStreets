@@ -6,6 +6,7 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
+import source.Reg;
 
 class MenuState extends FlxState{
 	private var comando:FlxText; //Toca Enter para empezar el Juego
@@ -27,7 +28,13 @@ class MenuState extends FlxState{
 		super.update(elapsed);
 		if (FlxG.keys.justPressed.ENTER)
 		 {
+			 Reg.Personaje = true;
 			 FlxG.switchState(new PlayState());
 		 }
+		if (FlxG.keys.justPressed.SHIFT)
+		{
+			Reg.Personaje = false;
+			FlxG.switchState(new PlayState());
+		}
 	}
 }

@@ -8,7 +8,7 @@ import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
 import sprites.Golpejugador;
-
+import flixel.system.FlxSound;
 /**
  * ...
  * @author RodrigoDiazKlipphan(inicial)
@@ -42,6 +42,8 @@ class Jugador extends FlxSprite{
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
 	private static inline var unSegundo:Int = 1;
+	private var golpeAlAire:FlxSound;
+	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
 		trace("ZonaDeIncio");
@@ -80,6 +82,10 @@ class Jugador extends FlxSprite{
 		agarrando = false; // sin uso
 		vencida = false;
 		meHurt = source.EstadoEnemigo.Normal; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
+		golpeAlAire = new FlxSound();
+		golpeAlAire.loadEmbedded(AssetPaths.airslap__wav);
+		golpeAlAire.volume = 1;
+		
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
@@ -178,6 +184,7 @@ class Jugador extends FlxSprite{
 			if (jump == false){ // Animaciones de ataque del jugador
 				if (theHits < Reg.comboFuerteJugador - 1){
 					animation.play("Golpe");
+					golpeAlAire.play();
 				}
 				else if (theHits == Reg.comboFuerteJugador - 1){
 					animation.play("SegundoGolpe");

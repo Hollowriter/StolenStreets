@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.system.FlxSound;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
@@ -28,7 +29,6 @@ import sprites.PisoLetal;
 import sprites.Instanciador;
 import sprites.CheckPoint;
 import sprites.Puertas;
-import sprites.Musica;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
@@ -36,7 +36,6 @@ import flixel.tile.FlxTilemap;
 import flixel.FlxObject;
 
 class PlayState extends FlxState{
-	private var musicaMaestro:Musica;
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
 	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
@@ -55,9 +54,12 @@ class PlayState extends FlxState{
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
 	var fondito:FlxBackdrop;
+	var musica:FlxSound;
 	override public function create():Void{
 		super.create();
-		musicaMaestro = new Musica(0, 0);
+		musica = new FlxSound();
+		musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
+		musica.volume = 0.1;
 		instanciando = new Instanciador();
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
@@ -121,7 +123,7 @@ class PlayState extends FlxState{
 		fondito = new FlxBackdrop(AssetPaths.Fondo__jpeg, 1, 1, true, true, 0, 0);
 		add(fondito);
 		add(tileMap);
-		add(musicaMaestro);
+		musica.play();
 		add(instanciando);
 		add(Reg.Monedas);
 		add(Reg.Botiquines);
@@ -148,7 +150,6 @@ class PlayState extends FlxState{
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		musicaMaestro.PlayMusic();
 		// HUD
 		lifes.text = ("LIFE: " + Reg.Players.members[0].GetLife());
 		money.text = ("MONEY: $" + Reg.guita);
@@ -266,6 +267,7 @@ class PlayState extends FlxState{
 		}
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
+			musica.stop();
 			FlxG.resetState();
 			Reg.guita = 0;
 			Reg.puntaje = 0;

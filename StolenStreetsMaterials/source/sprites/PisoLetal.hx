@@ -19,13 +19,17 @@ class PisoLetal extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		//256 X 16
-		makeGraphic(256, 16, FlxColor.PURPLE);
+		loadGraphic(AssetPaths.PlataformaLetal__png, 91, 23);
 		immovable = true;
+		animation.add("LaLetal", [0, 1, 2], 4, true);
 		
 	}
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		if (animation.getByName("LaLetal").paused){
+			animation.getByName("LaLetal").play();
+		}
 	}
 	
 }

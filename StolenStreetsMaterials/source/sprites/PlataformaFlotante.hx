@@ -23,7 +23,7 @@ class PlataformaFlotante extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(70, 15, FlxColor.BLUE);
+		loadGraphic(AssetPaths.PlataformaF__png, true, 82, 9);
 		puntoMedioVertical = y;
 		puntoMedioHorizontal = x;
 		immovable = true;

@@ -26,7 +26,9 @@ class Drops extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		// lista de tipos de monedas
-		makeGraphic(10, 10, FlxColor.ORANGE);
+		loadGraphic(AssetPaths.Items__png, true, 15, 19);
+		animation.add("Vueltas", [0, 1, 2, 3, 4], 5, true);
+		animation.play("Vueltas");
 		puntos = 5;
 	}
 	override public function update(elapsed:Float):Void{

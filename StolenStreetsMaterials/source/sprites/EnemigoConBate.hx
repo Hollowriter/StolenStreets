@@ -82,8 +82,10 @@ class EnemigoConBate extends BaseEnemigo
 				flipX = false;
 			}
 		}
-		if ((x < enemyRightMin - Reg.widthJugador && x > (enemyLeftMin - Reg.widthJugador * 2) && isHurt == source.EstadoEnemigo.Normal)
-			|| (x > enemyLeftMin + Reg.widthJugador && x < (enemyRightMin + Reg.widthJugador * 2)) && isHurt == source.EstadoEnemigo.Normal){
+		if ((x < enemyRightMin - Reg.widthJugador && x > ((enemyLeftMin - Reg.widthJugador * 2) - Reg.enemigoPegaDerecha) 
+			&& isHurt == source.EstadoEnemigo.Normal)
+			|| (x > enemyLeftMin + Reg.widthJugador && x < ((enemyRightMin + Reg.widthJugador * 2) - Reg.enemigoPegaIzquierda)) 
+			&& isHurt == source.EstadoEnemigo.Normal){
 				velocity.x = 0;
 			if (timer <= Reg.effectTimer){
 				punioEnemigo.SetGolpeFuerte(true);
@@ -185,8 +187,14 @@ class EnemigoConBate extends BaseEnemigo
 		}
 	}
 	public function Sequito():Void{
-		guia.Seguidor(x, y, flipX);
-		camarada.DetectorDeCamaradas(x, y, flipX);
+		if (isHurt == source.EstadoEnemigo.Normal){
+			guia.Seguidor(x, y, flipX);
+			camarada.DetectorDeCamaradas(x, y, flipX);
+		}
+		else{
+			guia.Seguidor(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios, flipX);
+			camarada.DetectorDeCamaradas(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios, flipX);
+		}
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

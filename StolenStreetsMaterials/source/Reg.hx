@@ -74,6 +74,8 @@ class Reg{
 	public static inline var elNumeroMagicoDeMica:Int = 8000;
 	public static inline var velocidadDeVueloX:Float = 160;
 	public static inline var velocidadDeVueloY:Float = -150;
+	public static inline var enemigoPegaIzquierda:Float = -25;
+	public static inline var enemigoPegaDerecha:Float = 10;
 	
 	static public var posYjugador:Float; //guarda la posicion del jugador
 	static public var posXjugador:Float; //guarda la posicion del jugador

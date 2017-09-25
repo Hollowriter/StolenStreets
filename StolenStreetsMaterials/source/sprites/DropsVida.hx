@@ -17,32 +17,33 @@ class DropsVida extends FlxSprite{
 	private var recolectado:Bool = false;
 	// te da la salud o la oportunidad extra
 	public function Curado(enfermito:Jugador):Void{
-		if (vidaExtra == false){ // si no es una oportunidad extra
-			if (enfermito.GetVida() < Reg.VidaMili){ // y el jugador esta lastimado
-				enfermito.SetVida(enfermito.GetVida() + salud); // lo cura
-				if (enfermito.GetVida() > Reg.VidaMili){ // si se pasa de la cantidad de vida estandar
-					enfermito.SetVida(Reg.VidaMili); // no dejarla pasar de ese valor
+		if (overlaps(enfermito)){
+			if (vidaExtra == false){ // si no es una oportunidad extra
+				if (enfermito.GetVida() < Reg.VidaMili){ // y el jugador esta lastimado
+					enfermito.SetVida(enfermito.GetVida() + salud); // lo cura
+					if (enfermito.GetVida() > Reg.VidaMili){ // si se pasa de la cantidad de vida estandar
+						enfermito.SetVida(Reg.VidaMili); // no dejarla pasar de ese valor
+					}
 				}
 			}
+			else if (vidaExtra == true){ // si es una oportunidad extra
+				enfermito.SetLife(enfermito.GetLife() + 1); // se la otorga
+			}
+			recolectado = true;
+			kill();
 		}
-		else if (vidaExtra == true){ // si es una oportunidad extra
-			enfermito.SetLife(enfermito.GetLife() + 1); // se la otorga
-		}
-		recolectado = true;
 	}
 	public function Recoleccion(){
 		return recolectado;
 	}
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
-		// lista de tipos de botiquines
-		if (valor >= 5 && valor <= 8){
-			valor -= 5;
-		}
-		else if (valor > 8){
-			valor -= 9;
-		}
-		switch (valor){ // el random decide cual de estos
+		loadGraphic(AssetPaths.Items__png, true, 15, 19);
+		animation.add("Caramelo", [6], 1, true);
+		animation.play("Caramelo");
+		vidaExtra = false;
+		salud = 10;
+		/*switch (valor){ // lista de valores. Random eliminado
 			case 0: // botiquin rojo con poca recuperacion de slaud
 				makeGraphic(30, 10, FlxColor.RED);
 				vidaExtra = false;
@@ -66,7 +67,7 @@ class DropsVida extends FlxSprite{
 				makeGraphic(35, 15, FlxColor.WHITE);
 				vidaExtra = false;
 				salud = 1;	
-		}
+		}*/
 	}
 	
 }

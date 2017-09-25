@@ -19,7 +19,7 @@ class Golpejugador extends FlxSprite{
 	
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
-		makeGraphic(30, 11, FlxColor.RED);
+		makeGraphic(30, 9, FlxColor.RED);
 		damageSound = new FlxSound();
 		damageSound.loadEmbedded(AssetPaths.slap__wav);
 		damageSound.volume = 100;

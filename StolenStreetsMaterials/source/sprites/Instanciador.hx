@@ -79,6 +79,32 @@ class Instanciador extends FlxSprite{
 			dropsVida.kill();
 		}
 	}
+	public function CrearDropsVidaHelado(dropsVidaHelado:DropsVidaHelado){
+		if (!(dropsVidaHelado.Recoleccion())){
+			if (!(dropsVidaHelado.isOnScreen())){
+				dropsVidaHelado.kill();
+			}
+			else{
+				dropsVidaHelado.revive();
+			}
+		}
+		else{
+			dropsVidaHelado.kill();
+		}
+	}
+	public function CrearDropsVidaBotiquin(dropsVidaBotiquin:DropsVidaBotiquin){
+		if (!(dropsVidaBotiquin.Recoleccion())){
+			if (!(dropsVidaBotiquin.isOnScreen())){
+				dropsVidaBotiquin.kill();
+			}
+			else{
+				dropsVidaBotiquin.revive();
+			}
+		}
+		else{
+			dropsVidaBotiquin.kill();
+		}
+	}
 	public function CrearTrampolin(trampolin:Trampolin){
 		if (!(trampolin.isOnScreen())){
 			trampolin.kill();

@@ -2,6 +2,9 @@ package source;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 import sprites.CheckPoint;
+import sprites.DropsVida;
+import sprites.DropsVidaHelado;
+import sprites.DropsVidaBotiquin;
 import sprites.Jugador;
 import sprites.Golpejugador;
 import sprites.Enemigo1;
@@ -12,7 +15,6 @@ import sprites.Puertas;
 import sprites.Trampolin;
 import sprites.SueloPeligroso;
 import sprites.Drops;
-import sprites.DropsVida;
 import sprites.PisoLetal;
 import sprites.CheckPoint;
 import sprites.Puertas;
@@ -98,7 +100,9 @@ class Reg{
 	static public var Cajitas:FlxTypedGroup<Obstaculo>;
 	static public var Pinches:FlxTypedGroup<SueloPeligroso>;
 	static public var Monedas:FlxTypedGroup<Drops>;
-	static public var Botiquines:FlxTypedGroup<DropsVida>;
+	static public var Caramelos:FlxTypedGroup<DropsVida>;
+	static public var Helados:FlxTypedGroup<DropsVidaHelado>;
+	static public var Botiquines:FlxTypedGroup<DropsVidaBotiquin>;
 	static public var PisosLetales:FlxTypedGroup<PisoLetal>;
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;

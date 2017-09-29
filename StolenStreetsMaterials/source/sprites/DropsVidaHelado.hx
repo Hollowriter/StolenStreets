@@ -10,7 +10,7 @@ import source.Reg;
  * ...
  * @author RodrigoDiazKlipphan(Igual afane de otro codigo)
  */
-class DropsVida extends FlxSprite{
+class DropsVidaHelado extends FlxSprite{
 	private var salud:Int; // cantidad de salud que da el objeto
 	private var vidaExtra:Bool; // si el random da una oportunidad extra
 	private var valor:Int = FlxG.random.int(0, 12); // el tipo de valor que tendra
@@ -39,10 +39,10 @@ class DropsVida extends FlxSprite{
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.Items__png, true, 18, 19);
-		animation.add("Caramelo", [4], 1, true);
-		animation.play("Caramelo");
+		animation.add("Helado", [5], 1, true);
+		animation.play("Helado");
 		vidaExtra = false;
-		salud = 10;
+		salud = 25;
 	}
 	
 }

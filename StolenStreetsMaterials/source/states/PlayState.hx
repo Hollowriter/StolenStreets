@@ -10,6 +10,8 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import sprites.Drops;
+import sprites.DropsVidaBotiquin;
+import sprites.DropsVidaHelado;
 import sprites.EnemigoConBate;
 import sprites.EnemigoSaltador;
 import sprites.Golpejugador;
@@ -100,7 +102,9 @@ class PlayState extends FlxState{
 		Reg.Cajitas = new FlxTypedGroup<Obstaculo>();
 		Reg.Pinches = new FlxTypedGroup<SueloPeligroso>();
 		Reg.Monedas = new FlxTypedGroup<Drops>();
-		Reg.Botiquines = new FlxTypedGroup<DropsVida>();
+		Reg.Caramelos = new FlxTypedGroup<DropsVida>();
+		Reg.Helados = new FlxTypedGroup<DropsVidaHelado>();
+		Reg.Botiquines = new FlxTypedGroup<DropsVidaBotiquin>();
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
@@ -126,6 +130,8 @@ class PlayState extends FlxState{
 		musica.play();
 		add(instanciando);
 		add(Reg.Monedas);
+		add(Reg.Caramelos);
+		add(Reg.Helados);
 		add(Reg.Botiquines);
 		add(Reg.Pinches);
 		add(puntaje);
@@ -201,20 +207,15 @@ class PlayState extends FlxState{
 				Reg.Monedas.members[i].Juntado();
 			}
 		}
-		for (b in 0...Reg.Botiquines.length){
-			//if (FlxG.overlap(Reg.Players.members[0], Botiquin.members[b])){
-				Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
-			//}
+		for (b in 0...Reg.Caramelos.length){
+			Reg.Caramelos.members[b].Curado(Reg.Players.members[0]);
 		}
-		/*
-		 * dropeo de las cajas
-		for (t in 0...Reg.Cajitas.length){
-			if (Reg.Cajitas.members[t].GetDrop() != null){
-				if (FlxG.overlap(Reg.Players.members[0], Reg.Cajitas.members[t].GetDrop())){
-					Reg.Cajitas.members[t].GetDrop().Juntado();
-				}
-			}
-		}*/
+		for (b in 0...Reg.Helados.length){
+			Reg.Helados.members[b].Curado(Reg.Players.members[0]);
+		}
+		for (b in 0...Reg.Botiquines.length){
+			Reg.Botiquines.members[b].Curado(Reg.Players.members[0]);
+		}
 		//Colision entre Mili y los trampolines
 		for (i in 0...(Reg.Trampolines.members.length)){
 			if ((Reg.Players.members[0].y + (Reg.Players.members[0].height / 2)) < Reg.Trampolines.members[i].y){
@@ -242,15 +243,13 @@ class PlayState extends FlxState{
 		}
 		for (i in 0...(Reg.Checkpoints.length)){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Checkpoints.members[i])){
-			//	if (Reg.Checkpoints.members[i].GetActivo() == false && Reg.Checkpoints.members[i].GetPasado() == false){
-					Reg.checkpointX = Reg.Checkpoints.members[i].GetX();
-					Reg.checkpointY = Reg.Checkpoints.members[i].GetY();
-					if (cpActivo >= 0)
-						Reg.Checkpoints.members[cpActivo].SetActivo(false);
-					cpActivo = i;
-					Reg.Checkpoints.members[i].SetActivo(true);
-					Reg.Checkpoints.members[i].SetPasado(true);					
-				// }
+				Reg.checkpointX = Reg.Checkpoints.members[i].GetX();
+				Reg.checkpointY = Reg.Checkpoints.members[i].GetY();
+				if (cpActivo >= 0)
+					Reg.Checkpoints.members[cpActivo].SetActivo(false);
+				cpActivo = i;
+				Reg.Checkpoints.members[i].SetActivo(true);
+				Reg.Checkpoints.members[i].SetPasado(true);
 			}
 		}
 		Reg.Players.members[0].Salto();
@@ -299,8 +298,14 @@ class PlayState extends FlxState{
 		for (p in 0...Reg.Monedas.length){
 			instanciando.CrearDrops(Reg.Monedas.members[p]);
 		}
+		for (b in 0...Reg.Caramelos.length){
+			instanciando.CrearDropsVida(Reg.Caramelos.members[b]);
+		}
+		for (b in 0...Reg.Helados.length){
+			instanciando.CrearDropsVidaHelado(Reg.Helados.members[b]);
+		}
 		for (b in 0...Reg.Botiquines.length){
-			instanciando.CrearDropsVida(Reg.Botiquines.members[b]);
+			instanciando.CrearDropsVidaBotiquin(Reg.Botiquines.members[b]);
 		}
 		for (q in 0...Reg.Pinches.length){
 			instanciando.CrearSueloPeligroso(Reg.Pinches.members[q]);
@@ -339,8 +344,12 @@ class PlayState extends FlxState{
 				Reg.Pinches.add(new SueloPeligroso(entityStartX, entityStartY));
 			case "monedas":
 				Reg.Monedas.add(new Drops(entityStartX, entityStartY));
+			case "caramelos":
+				Reg.Caramelos.add(new DropsVida(entityStartX, entityStartY));
+			case "helados":
+				Reg.Helados.add(new DropsVidaHelado(entityStartX, entityStartY));
 			case "botiquines":
-				Reg.Botiquines.add(new DropsVida(entityStartX, entityStartY));
+				Reg.Botiquines.add(new DropsVidaBotiquin(entityStartX, entityStartY));
 			case "pisoletal":
 				Reg.PisosLetales.add(new PisoLetal(entityStartX, entityStartY));
 			case "checkpoint":

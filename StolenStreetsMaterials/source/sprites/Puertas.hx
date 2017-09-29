@@ -20,7 +20,10 @@ class Puertas extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(15, 70, FlxColor.fromRGB(144, 255, 155));
+		loadGraphic(AssetPaths.PuertayTrampolin__png, true, 15, 75);
+		animation.add("Cerrada", [10], 1, true);
+		animation.add("Abriendose", [10, 11, 12, 13], 4, false);
+		animation.play("Cerrada");
 		immovable = true;
 		enemigosAAsesinar = 1;
 	}
@@ -32,7 +35,7 @@ class Puertas extends FlxSprite
 		return enemigosPedidos;
 	}
 	public function CheckeodePuertas(){
-		if (enemigosAAsesinar <= Reg.enemigosMuertos){
+		if (enemigosAAsesinar <= Reg.enemigosMuertos && animation.getByName("Abriendose").finished){
 			puertaDesruida = true;
 			kill();
 		}
@@ -42,5 +45,11 @@ class Puertas extends FlxSprite
 	}
 	override public function update(elapsed:Float){
 		super.update(elapsed);
+		if (enemigosAAsesinar <= Reg.enemigosMuertos){
+			animation.play("Abriendose");
+		}
+		else{
+			animation.play("Cerrada");
+		}
 	}
 }

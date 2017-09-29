@@ -190,6 +190,9 @@ class PlayState extends FlxState{
 				}
 			}
 		}
+		for (a in 0...Reg.Enemigos.length){
+			// pending
+		}
 		//Colision entre Mili y el tilemap
 		for (v in 0...Reg.Pinches.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){

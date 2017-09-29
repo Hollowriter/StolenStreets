@@ -107,4 +107,5 @@ class Reg{
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
 	static public var Personaje:Bool;
+	static public var numlvl:Int;
 }

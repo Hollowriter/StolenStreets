@@ -38,8 +38,8 @@ class DropsVida extends FlxSprite{
 	}
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
-		loadGraphic(AssetPaths.Items__png, true, 15, 19);
-		animation.add("Caramelo", [6], 1, true);
+		loadGraphic(AssetPaths.Items__png, true, 18, 19);
+		animation.add("Caramelo", [4], 1, true);
 		animation.play("Caramelo");
 		vidaExtra = false;
 		salud = 10;

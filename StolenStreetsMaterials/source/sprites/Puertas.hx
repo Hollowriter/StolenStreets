@@ -15,6 +15,7 @@ class Puertas extends FlxSprite
 	var enemigosAAsesinar:Int;
 	var enemigosPedidos:Int = 0;
 	var empujarJugador:Bool;
+	var conseguido:Bool = false;
 	var puertaAbierta:Bool = false;
 	var puertaDesruida:Bool = false;
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
@@ -45,11 +46,13 @@ class Puertas extends FlxSprite
 	}
 	override public function update(elapsed:Float){
 		super.update(elapsed);
-		if (enemigosAAsesinar <= Reg.enemigosMuertos){
+		if (enemigosAAsesinar <= Reg.enemigosMuertos && conseguido == false){
 			animation.play("Abriendose");
+			conseguido = true;
 		}
-		else{
+		if (enemigosAAsesinar > Reg.enemigosMuertos){
 			animation.play("Cerrada");
+			conseguido = false;
 		}
 	}
 }

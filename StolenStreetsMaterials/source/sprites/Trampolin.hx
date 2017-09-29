@@ -17,7 +17,7 @@ class Trampolin extends FlxSprite {
 		loadGraphic(AssetPaths.PuertayTrampolin__png, true, 70, 30);
 		immovable = true;
 		animation.add("Titilado", [0, 1], 4, true);
-		animation.add("Aplastada", [4, 0], 5, true);
+		animation.add("Aplastada", [3, 0], 5, false);
 		animation.play("Titilado");
 	}
 	public function Aplastandolo(player:Jugador){

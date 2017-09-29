@@ -226,6 +226,7 @@ class PlayState extends FlxState{
 		for (i in 0...(Reg.Trampolines.members.length)){
 			if ((Reg.Players.members[0].y + (Reg.Players.members[0].height / 2)) < Reg.Trampolines.members[i].y){
 				if (FlxG.overlap(Reg.Players.members[0], Reg.Trampolines.members[i])){
+					Reg.Trampolines.members[i].Aplastandolo(Reg.Players.members[0]);
 					Reg.Players.members[0].SaltoTrampolin();
 				}
 		}

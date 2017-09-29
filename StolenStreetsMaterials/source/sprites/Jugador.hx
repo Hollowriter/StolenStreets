@@ -44,6 +44,7 @@ class Jugador extends FlxSprite{
 	private static inline var unSegundo:Int = 1;
 	private var golpeAlAire:FlxSound;
 	private var sonidoRespawn:FlxSound;
+	private var sonidoSalto:FlxSound;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
@@ -89,6 +90,9 @@ class Jugador extends FlxSprite{
 		sonidoRespawn = new FlxSound();
 		sonidoRespawn.loadEmbedded(AssetPaths.respawn__wav);
 		sonidoRespawn.volume = 1;
+		sonidoSalto = new FlxSound();
+		sonidoSalto.loadEmbedded(AssetPaths.jump__wav);
+		sonidoSalto.volume = 1;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
@@ -143,6 +147,7 @@ class Jugador extends FlxSprite{
 		 FlxG.keys.justPressed.S && (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal ){
 			velocity.y = Reg.jumpSpeed;
 			animation.play("Saltar");
+			sonidoSalto.play();
 		}
 		// chequea si el personaje esta en el aire/saltando
 		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){

@@ -287,6 +287,7 @@ class PlayState extends FlxState{
 			FlxG.resetState();
 			Reg.guita = 0;
 			Reg.puntaje = 0;
+			Reg.enemigosMuertos = 0;
 		}
 	//Instanciador
 		for (i in 0...Reg.Enemigos.length){

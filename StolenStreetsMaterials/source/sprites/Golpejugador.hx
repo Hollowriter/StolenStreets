@@ -13,16 +13,20 @@ import flixel.system.FlxSound;
  * @author RodrigoDiazKlipphan(inicial)
  */
 class Golpejugador extends FlxSprite{
-	private var damageSound:FlxSound;
+	private var sonidoGolpeJugador:FlxSound;
+	private var sonidoGolpeJugadorFuerte:FlxSound;
 	private var GolpeDuro:Bool; // detecta cuando es un golpe que te tira al piso
 	private var Agarrada:Bool; // para determinar si el jugador intenta hacer un agarre
-	
+		
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
 		makeGraphic(30, 9, FlxColor.RED);
-		damageSound = new FlxSound();
-		damageSound.loadEmbedded(AssetPaths.slap__wav);
-		damageSound.volume = 100;
+		sonidoGolpeJugador = new FlxSound();
+		sonidoGolpeJugador.loadEmbedded(AssetPaths.slap__wav);
+		sonidoGolpeJugador.volume = 100;
+		sonidoGolpeJugadorFuerte = new FlxSound();
+		sonidoGolpeJugadorFuerte.loadEmbedded(AssetPaths.strongpunch__wav);
+		sonidoGolpeJugadorFuerte.volume = 100;
 		GolpeDuro = false;
 		Agarrada = false;
 	}
@@ -74,7 +78,7 @@ class Golpejugador extends FlxSprite{
 					Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
 					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
 					personaje.SetCheck(false);
-					damageSound.play();
+					sonidoGolpeJugador.play();
 				}
 				if (GolpeDuro == true || Pum.GetHurt() == source.EstadoEnemigo.Saltando){ // pero si es un golpe duro
 					Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
@@ -86,6 +90,7 @@ class Golpejugador extends FlxSprite{
 					}
 					personaje.SetCheck(false);
 					GolpeDuro = false;
+					sonidoGolpeJugadorFuerte.play();
 				}
 				Pum.SetTimer(0); // y reinicia el timer de comportamiento del mismo
 				posicionar(); // lo hace desaparecer

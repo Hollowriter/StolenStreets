@@ -30,11 +30,13 @@ class MenuState extends FlxState{
 		 {
 			 Reg.Personaje = true;
 			 FlxG.switchState(new PlayState());
+			 Reg.numlvl = 1;
 		 }
 		if (FlxG.keys.justPressed.SHIFT)
 		{
 			Reg.Personaje = false;
 			FlxG.switchState(new PlayState());
+			Reg.numlvl = 2;
 		}
 	}
 }

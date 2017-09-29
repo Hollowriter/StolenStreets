@@ -109,7 +109,10 @@ class PlayState extends FlxState{
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
 		//puertaDePrueba = new Puertas(1800, 2600);
-		ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
+		if (Reg.numlvl == 1)
+			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
+		else if (Reg.numlvl == 2)
+			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);

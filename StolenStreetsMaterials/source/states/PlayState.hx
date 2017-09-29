@@ -193,8 +193,8 @@ class PlayState extends FlxState{
 				}
 			}
 		}
-		for (a in 0...Reg.Enemigos.length){
-			// pending
+		for (a in 0...Reg.PuertasLimitadoras.length){
+			FlxG.collide(Reg.PuertasLimitadoras.members[a], Reg.Enemigos);
 		}
 		//Colision entre Mili y el tilemap
 		for (v in 0...Reg.Pinches.length){

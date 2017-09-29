@@ -43,6 +43,7 @@ class Jugador extends FlxSprite{
 	private var contadorpinches:Int = 0;
 	private static inline var unSegundo:Int = 1;
 	private var golpeAlAire:FlxSound;
+	private var sonidoRespawn:FlxSound;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
@@ -85,7 +86,9 @@ class Jugador extends FlxSprite{
 		golpeAlAire = new FlxSound();
 		golpeAlAire.loadEmbedded(AssetPaths.airslap__wav);
 		golpeAlAire.volume = 1;
-		
+		sonidoRespawn = new FlxSound();
+		sonidoRespawn.loadEmbedded(AssetPaths.respawn__wav);
+		sonidoRespawn.volume = 1;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
@@ -301,7 +304,7 @@ class Jugador extends FlxSprite{
 		if (vidaActual <= 0){
 			if (vencida == false){
 				vencida = true;
-			}
+				}
 			if (animation.getByName("Muerte").paused){
 					animation.play("Muerte");
 			}
@@ -311,6 +314,7 @@ class Jugador extends FlxSprite{
 					x = Reg.checkpointX;
 					y = Reg.checkpointY;
 					life--;
+					sonidoRespawn.play();
 				}
 				if (life == 0){
 					kill();
@@ -443,6 +447,7 @@ class Jugador extends FlxSprite{
 				corriendo = false;
 		}
 		Muerte();
+		
 		/*trace("datos");
 		trace(CPX);
 		trace(CPY);

@@ -16,7 +16,7 @@
     <Width>50000</Width>
     <Height>30000</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\822\Desktop\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
+  <Filename>C:\Users\822\Desktop\Repo\StolenStreets\StolenStreetsMaterials\assets\data\Niveles.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -193,8 +193,8 @@
     </EntityDefinition>
     <EntityDefinition Name="pisoletal" Limit="100" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
-        <Width>256</Width>
-        <Height>16</Height>
+        <Width>274</Width>
+        <Height>23</Height>
       </Size>
       <Origin>
         <X>0</X>

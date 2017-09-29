@@ -378,5 +378,10 @@
     <caramelos id="41" x="192" y="2736" />
     <helados id="79" x="240" y="2736" />
     <botiquines id="133" x="288" y="2736" />
+    <Puertas id="138" x="3296" y="1952" />
+    <Puertas id="145" x="2848" y="1952" />
+    <Puertas id="230" x="1520" y="1488" />
+    <Puertas id="231" x="1136" y="1760" />
+    <Puertas id="232" x="2064" y="832" />
   </entidades>
 </level>

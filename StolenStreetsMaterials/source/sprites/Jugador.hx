@@ -45,6 +45,8 @@ class Jugador extends FlxSprite{
 	private var golpeAlAire:FlxSound;
 	private var sonidoRespawn:FlxSound;
 	private var sonidoSalto:FlxSound;
+	private var sonidoSaltoTrampolin:FlxSound;
+	private var sonidoMuerte:FlxSound;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
@@ -87,12 +89,19 @@ class Jugador extends FlxSprite{
 		golpeAlAire = new FlxSound();
 		golpeAlAire.loadEmbedded(AssetPaths.airslap__wav);
 		golpeAlAire.volume = 1;
+		//sonidos
 		sonidoRespawn = new FlxSound();
 		sonidoRespawn.loadEmbedded(AssetPaths.respawn__wav);
 		sonidoRespawn.volume = 1;
 		sonidoSalto = new FlxSound();
 		sonidoSalto.loadEmbedded(AssetPaths.jump__wav);
 		sonidoSalto.volume = 1;
+		sonidoSaltoTrampolin = new FlxSound();
+		sonidoSaltoTrampolin.loadEmbedded(AssetPaths.trampolin__wav);
+		sonidoSaltoTrampolin.volume = 1;
+		sonidoMuerte = new FlxSound();
+		sonidoMuerte.loadEmbedded(AssetPaths.muerte__wav);
+		sonidoMuerte.volume = 1;
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
@@ -169,6 +178,7 @@ class Jugador extends FlxSprite{
 			velocity.y = Reg.velocidadDelTrampolin; 
 			animation.stop();
 			animation.play("CaidaLibre");
+			sonidoSaltoTrampolin.play();
 		}
 	}
 	// comportamiento que adopta el personaje cuando colisiona con el pinche
@@ -196,6 +206,7 @@ class Jugador extends FlxSprite{
 				}
 				else if (theHits == Reg.comboFuerteJugador - 1){
 					animation.play("SegundoGolpe");
+					golpeAlAire.play();
 				}
 				else{
 					animation.play("Golpe");
@@ -203,6 +214,7 @@ class Jugador extends FlxSprite{
 			}
 			else if (jump == true){
 				animation.play("Patada");
+				golpeAlAire.play();
 			}
 			if (corriendo == true){	
 				if (direccion == true){
@@ -309,6 +321,7 @@ class Jugador extends FlxSprite{
 		if (vidaActual <= 0){
 			if (vencida == false){
 				vencida = true;
+				sonidoMuerte.play();
 				}
 			if (animation.getByName("Muerte").paused){
 					animation.play("Muerte");

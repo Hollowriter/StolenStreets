@@ -16,7 +16,7 @@ class Trampolin extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(70, 5, FlxColor.YELLOW);
+		loadGraphic(AssetPaths.PuertayTrampolin__png, true, 70, 10);
 		immovable = true;
 	}
 	

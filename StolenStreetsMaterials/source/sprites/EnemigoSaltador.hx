@@ -159,6 +159,9 @@ class EnemigoSaltador extends BaseEnemigo{
 				velocity.y = Reg.velocidadDeVueloY;
 			}
 		}
+		else if (isHurt == source.EstadoEnemigo.Lanzado || isHurt == source.EstadoEnemigo.Lastimado){
+			punioEnemigo.PosicionarGE();
+		}
 		else if (saltito == true && animation.getByName("Saltar").finished && isHurt == source.EstadoEnemigo.Normal){
 			punioEnemigo.PunietazoEnemigo(this, direccion);
 		}

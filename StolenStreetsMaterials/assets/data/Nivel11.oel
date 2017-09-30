@@ -366,9 +366,6 @@
     <Puertas id="20" x="2528" y="2624" />
     <Puertas id="42" x="3456" y="2384" />
     <Puertas id="78" x="4096" y="2624" />
-    <caramelos id="41" x="192" y="2736" />
-    <helados id="79" x="240" y="2736" />
-    <botiquines id="133" x="288" y="2736" />
     <Puertas id="138" x="3296" y="1952" />
     <Puertas id="145" x="2848" y="1952" />
     <Puertas id="230" x="1520" y="1488" />

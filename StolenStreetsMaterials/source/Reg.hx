@@ -16,6 +16,7 @@ import sprites.Trampolin;
 import sprites.SueloPeligroso;
 import sprites.Drops;
 import sprites.PisoLetal;
+import sprites.PisoLetalGrande;
 import sprites.CheckPoint;
 import sprites.Puertas;
 
@@ -104,6 +105,7 @@ class Reg{
 	static public var Helados:FlxTypedGroup<DropsVidaHelado>;
 	static public var Botiquines:FlxTypedGroup<DropsVidaBotiquin>;
 	static public var PisosLetales:FlxTypedGroup<PisoLetal>;
+	static public var PisosLetalesGrandes:FlxTypedGroup<PisoLetalGrande>;
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
 	static public var Personaje:Bool;

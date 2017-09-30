@@ -26,8 +26,8 @@ import sprites.Trampolin;
 import sprites.DropsVida;
 import sprites.Obstaculo;
 import sprites.DropFalling;
-import sprites.SueloPeligroso;
 import sprites.PisoLetal;
+import sprites.PisoLetalGrande;
 import sprites.Instanciador;
 import sprites.CheckPoint;
 import sprites.Puertas;
@@ -106,6 +106,7 @@ class PlayState extends FlxState{
 		Reg.Helados = new FlxTypedGroup<DropsVidaHelado>();
 		Reg.Botiquines = new FlxTypedGroup<DropsVidaBotiquin>();
 		Reg.PisosLetales = new FlxTypedGroup<PisoLetal>();
+		Reg.PisosLetalesGrandes = new FlxTypedGroup<PisoLetalGrande>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
 		//puertaDePrueba = new Puertas(1800, 2600);
@@ -149,6 +150,7 @@ class PlayState extends FlxState{
 		add(Reg.Trampolines);
 		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
+		add(Reg.PisosLetalesGrandes);
 		add(Reg.PuertasLimitadoras);
 		//add(puertaDePrueba);
 		/*for (i in 0...(Reg.Enemigos.length)){
@@ -238,7 +240,6 @@ class PlayState extends FlxState{
 		//colision entre Mili y el piso letal (Y enemigos y piso letal)
 		for (i in 0...(Reg.PisosLetales.length)){
 			if(FlxG.collide(Reg.Players.members[0], Reg.PisosLetales.members[i])){
-			//if (FlxG.overlap(Reg.Players.members[0], Reg.PisosLetales.members[i])){
 				Reg.Players.members[0].instaKill();
 			}
 			for (o in 0...Reg.Enemigos.length){
@@ -246,7 +247,16 @@ class PlayState extends FlxState{
 					Reg.Enemigos.members[o].SetVida(0);
 				}
 			}
-			//}
+		}
+		for (i in 0...(Reg.PisosLetalesGrandes.length)){
+			if(FlxG.collide(Reg.Players.members[0], Reg.PisosLetalesGrandes.members[i])){
+				Reg.Players.members[0].instaKill();
+			}
+			for (o in 0...Reg.Enemigos.length){
+				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.PisosLetalesGrandes.members[o])){
+					Reg.Enemigos.members[o].SetVida(0);
+				}
+			}
 		}
 		for (i in 0...(Reg.Checkpoints.length)){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Checkpoints.members[i])){
@@ -321,6 +331,9 @@ class PlayState extends FlxState{
 		for (k in 0...Reg.PisosLetales.length){
 			instanciando.CrearPisoLetal(Reg.PisosLetales.members[k]);
 		}
+		for (k in 0...Reg.PisosLetalesGrandes.length){
+			instanciando.CrearPisoLetalGrande(Reg.PisosLetalesGrandes.members[k]);
+		}
 		for (c in 0...Reg.Checkpoints.length){
 			instanciando.CrearCheckPoint(Reg.Checkpoints.members[c]);
 		}
@@ -358,6 +371,8 @@ class PlayState extends FlxState{
 				Reg.Helados.add(new DropsVidaHelado(entityStartX, entityStartY));
 			case "botiquines":
 				Reg.Botiquines.add(new DropsVidaBotiquin(entityStartX, entityStartY));
+			case "pisoletalgrande":
+				Reg.PisosLetalesGrandes.add(new PisoLetalGrande(entityStartX, entityStartY));
 			case "pisoletal":
 				Reg.PisosLetales.add(new PisoLetal(entityStartX, entityStartY));
 			case "checkpoint":

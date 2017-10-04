@@ -358,7 +358,7 @@ class PlayState extends FlxState{
 			case "trampolin":
 				Reg.Trampolines.add(new Trampolin(entityStartX, entityStartY));
 			case "jugador":
-				Reg.Players.add(new Jugador(entityStartX, entityStartY, false));
+				Reg.Players.add(new Jugador(entityStartX, entityStartY, Reg.rosaOgotica));
 			case "cajas":
 				Reg.Cajitas.add(new Obstaculo(entityStartX, entityStartY));
 			case "pinches":

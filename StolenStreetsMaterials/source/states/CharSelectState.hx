@@ -24,9 +24,9 @@ class CharSelectState extends FlxState{
 		opcion1 = new FlxText();
 		opcion2 = new FlxText();
 		orden.text = "Choose your character";
-		opcion1.text = "Mili";
-		opcion2.text = "Sofia";
-		orden.text = FlxColor.CYAN;
+		opcion1.text = "Press M Mili";
+		opcion2.text = "Press S Sofia";
+		orden.color = FlxColor.CYAN;
 		opcion1.color = FlxColor.PINK;
 		opcion2.color = FlxColor.PURPLE;
 		orden.scale.x = 4;
@@ -37,10 +37,10 @@ class CharSelectState extends FlxState{
 		opcion2.scale.y = 2;
 		orden.x = (FlxG.width / 2) - orden.scale.x;
 		orden.y = (FlxG.height / 4) - orden.scale.y;
-		opcion1.x = (FlxG.width / 2) - opcion1.scale.x;
-		opcion1.y = (FlxG.height / 4) - opcion1.scale.y;
+		opcion1.x = (FlxG.width / 4) - opcion1.scale.x;
+		opcion1.y = (FlxG.height / 2) - opcion1.scale.y;
 		opcion2.x = (FlxG.width / 2) - opcion2.scale.x;
-		opcion2.y = (FlxG.height / 4) - opcion2.scale.y;
+		opcion2.y = (FlxG.height / 2) - opcion2.scale.y;
 		orden.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		opcion1.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		opcion2.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
@@ -53,5 +53,16 @@ class CharSelectState extends FlxState{
 		add(orden);
 		add(opcion1);
 		add(opcion2);
+	}
+		override public function update(elapsed:Float):Void{
+		super.update(elapsed);
+		if (FlxG.keys.justPressed.M){
+			 Reg.rosaOgotica = false;
+			 FlxG.switchState(new PlayState());
+		 }
+		if (FlxG.keys.justPressed.S){
+			Reg.rosaOgotica = true;
+			FlxG.switchState(new PlayState());
+		}
 	}
 }

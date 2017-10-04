@@ -23,6 +23,7 @@ class Jugador extends FlxSprite{
 	private var time:Int; // timer para efectos (principalmente para cuando el golpe esta en pantalla)
 	private var theHits:Int; // cantidad de golpes que se hacen durante un cierto lapso de tiempo (Combo)
 	private var ComboActivation:Bool; // se utiliza para ver si la consecucion de golpes esta activada (Combo)
+	private var miliOsofi:Bool; // se usa para saber si la personaje elegida es Mili o Sofia
 	private var meHurt:EstadoEnemigo; // se utiliza para saber si el personaje fue lastimado
 	private var vidaActual:Int = Reg.VidaMili; //Hace que la vida actual sea igual que la base
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
@@ -48,16 +49,22 @@ class Jugador extends FlxSprite{
 	private var sonidoSaltoTrampolin:FlxSound;
 	private var sonidoMuerte:FlxSound;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset){
+	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset, ?chicas:Bool){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
 		trace("ZonaDeIncio");
 		trace(X);
 		trace(Y);
-		loadGraphic(AssetPaths.MiliFinal__png, true, 73, 82);
+		miliOsofi = chicas;
+		if (chicas == false){
+			loadGraphic(AssetPaths.MiliFinal__png, true, 73, 82);
+		}
+		else{
+			loadGraphic(AssetPaths.SofiSpriteSheet__png, true, 73, 82);
+		}
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		animation.add("Natural", [0, 10], 2, true);
-		animation.add("Caminar", [0, 5, 6, 7,8,9], 6, true);
+		animation.add("Caminar", [0, 5, 6, 7, 8, 9], 6, true);
 		animation.add("Saltar", [1, 2, 2, 3], 5, false);
 		animation.add("Aterrizaje", [4], 6, false);
 		animation.add("CaidaLibre", [3], 2, true);
@@ -69,8 +76,14 @@ class Jugador extends FlxSprite{
 		animation.add("Caida", [25], 1, true);
 		animation.add("Muerte", [26, 26, 26, 26], 1, false);
 		animation.add("EnElSuelo", [26, 26], 2, false);
-		animation.add("Agarre", [29, 29, 29], 5, false);
-		animation.add("Agarrando", [29], 2, true);
+		if (chicas == false){
+			animation.add("Agarre", [29, 29, 29], 5, false);
+			animation.add("Agarrando", [29], 2, true);
+		}
+		else{
+			animation.add("Agarre", [28, 28, 28], 5, false);
+			animation.add("Agarrando", [28], 2, true);
+		}
 		animation.play("Natural");
 		// animation.play("Caminar");
 		acceleration.y = Reg.gravedad; // gravedad

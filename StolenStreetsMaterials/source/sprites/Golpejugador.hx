@@ -83,7 +83,6 @@ class Golpejugador extends FlxSprite{
 				if (GolpeDuro == true || GolpeDuro == false && Pum.GetHurt() == source.EstadoEnemigo.Saltando 
 				|| GolpeDuro == true && Pum.GetHurt() == source.EstadoEnemigo.Saltando){ // pero si es un golpe duro
 					Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
-					trace("entra");
 					if (personaje.GetJump() == true || personaje.GetCorriendo() == true){
 						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorFuerte);
 					}

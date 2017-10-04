@@ -85,6 +85,7 @@ class Reg{
 	static public var widthJugador:Float; //guarda el ancho del jugador
 	static public var heightJugador:Float; //guardar el alto del jugador
 	static public var direccionJugador:Bool;
+	static public var rosaOgotica:Bool = false;
 	
 	static public var checkpointX:Float;
 	static public var checkpointY:Float;

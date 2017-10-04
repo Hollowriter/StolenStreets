@@ -20,8 +20,8 @@ class MenuState extends FlxState{
 		comando = new FlxText();
 		comando.text = "PRESS ENTER TO PLAY";
 		comando.color = 0xB2FFB5;
-		comando.scale.x = 5;
-		comando.scale.y = 5;
+		comando.scale.x = 4;
+		comando.scale.y = 4;
 		comando.x = (FlxG.width / 2) - comando.scale.x;
 		comando.y = (FlxG.height / 4) - comando.scale.y;
 		comando.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);

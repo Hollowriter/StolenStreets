@@ -9,6 +9,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
 import sprites.Golpejugador;
 import flixel.system.FlxSound;
+import states.MenuState;
 /**
  * ...
  * @author RodrigoDiazKlipphan(inicial)
@@ -348,6 +349,7 @@ class Jugador extends FlxSprite{
 					sonidoRespawn.play();
 				}
 				if (life == 0){
+					FlxG.switchState(new MenuState());
 					kill();
 				}
 			}

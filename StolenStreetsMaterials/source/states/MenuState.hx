@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.system.FlxSound;
 import flixel.addons.display.FlxBackdrop;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;

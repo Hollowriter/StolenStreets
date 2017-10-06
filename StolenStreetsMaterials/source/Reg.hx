@@ -19,6 +19,8 @@ import sprites.PisoLetal;
 import sprites.PisoLetalGrande;
 import sprites.CheckPoint;
 import sprites.Puertas;
+import flixel.system.FlxSound;
+
 
 /**
  * ...
@@ -110,4 +112,6 @@ class Reg{
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
 	static public var numlvl:Int;
+	static public var musica:FlxSound;
+
 }

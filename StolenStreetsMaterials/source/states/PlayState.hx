@@ -55,7 +55,6 @@ class PlayState extends FlxState{
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
 	var fondito:FlxBackdrop;
-	var musica:FlxSound;
 	override public function create():Void{
 		super.create();
 		musica = new FlxSound();

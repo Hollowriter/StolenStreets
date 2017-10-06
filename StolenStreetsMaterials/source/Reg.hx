@@ -112,6 +112,5 @@ class Reg{
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
 	static public var numlvl:Int;
-	static public var musica:FlxSound;
 
 }

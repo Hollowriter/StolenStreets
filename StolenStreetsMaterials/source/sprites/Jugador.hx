@@ -65,12 +65,14 @@ class Jugador extends FlxSprite{
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		if (chicas == false){
+			//Mili
 			animation.add("Natural", [0, 10], 2, true);
 			animation.add("Caminar", [0, 5, 6, 7, 8, 9], 6, true);
 		}
 		else{
-			animation.add("Natural", [0], 2, true);
-			animation.add("Caminar", [5, 6, 7, 8, 9, 10], 6, true);
+			//Sofi
+			animation.add("Natural", [6], 2, true);
+			animation.add("Caminar", [5, 6, 7, 8, 9, 10], 7, true);
 		}
 		animation.add("Saltar", [1, 2, 2, 3], 5, false);
 		animation.add("Aterrizaje", [4], 6, false);
@@ -78,7 +80,7 @@ class Jugador extends FlxSprite{
 		animation.add("Golpe", [17, 18, 19], 7, false);
 		animation.add("SegundoGolpe", [20, 21, 22], 7, false);
 		animation.add("Patada", [24], 2, true);
-		animation.add("Correr", [11, 12, 13, 14, 15, 16], 6, true);
+		animation.add("Correr", [11, 12, 13, 14, 15, 16], 7, true);
 		animation.add("Danio", [23, 23, 23], 1, false);
 		animation.add("Caida", [25], 1, true);
 		animation.add("Muerte", [26, 26, 26, 26], 1, false);

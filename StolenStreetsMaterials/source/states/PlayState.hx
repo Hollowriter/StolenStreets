@@ -1,5 +1,6 @@
 package states;
 
+import flash.media.Sound;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -56,10 +57,14 @@ class PlayState extends FlxState{
 	var tmpMap:TiledObjectLayer;
 	var fondito:FlxBackdrop;
 	var musica:FlxSound;
+
 	override public function create():Void{
 		super.create();
 		musica = new FlxSound();
-		musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
+		if (Reg.numlvl == 1)
+			musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
+		else if (Reg.numlvl == 2)
+			musica.loadEmbedded(AssetPaths.demo__ogg, true);
 		musica.volume = 0.1;
 		instanciando = new Instanciador();
 		lifes = new FlxText (150, 30);

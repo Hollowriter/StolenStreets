@@ -41,6 +41,7 @@ class Jugador extends FlxSprite{
 	private var alturaObjeto:Int = 30;
 	private var hitboxPosX = 20;
 	private var hitboxPosY = 0;
+	private var victoriosa:Bool;
 	private var vencida:Bool;
 	private var contadorpinches:Int = 0;
 	private static inline var unSegundo:Int = 1;
@@ -68,11 +69,13 @@ class Jugador extends FlxSprite{
 			//Mili
 			animation.add("Natural", [0, 10], 2, true);
 			animation.add("Caminar", [0, 5, 6, 7, 8, 9], 6, true);
+			animation.add("Victoria", [27, 28, 27, 28, 27, 28, 28, 28], 5, false);
 		}
 		else{
 			//Sofi
 			animation.add("Natural", [6], 2, true);
 			animation.add("Caminar", [5, 6, 7, 8, 9, 10], 7, true);
+			animation.add("Victoria", [27, 27, 27, 27, 27, 27], 5, false);
 		}
 		animation.add("Saltar", [1, 2, 2, 3], 5, false);
 		animation.add("Aterrizaje", [4], 6, false);
@@ -86,10 +89,12 @@ class Jugador extends FlxSprite{
 		animation.add("Muerte", [26, 26, 26, 26], 1, false);
 		animation.add("EnElSuelo", [26, 26], 2, false);
 		if (usaASofi == false){
+			// Mili
 			animation.add("Agarre", [29, 29, 29], 5, false);
 			animation.add("Agarrando", [29], 2, true);
 		}
 		else{
+			// Sofi
 			animation.add("Agarre", [28, 28, 28], 5, false);
 			animation.add("Agarrando", [28], 2, true);
 		}
@@ -106,6 +111,7 @@ class Jugador extends FlxSprite{
 		ComboActivation = false;
 		jump = false;
 		agarrando = false; // sin uso
+		victoriosa = false;
 		vencida = false;
 		meHurt = source.EstadoEnemigo.Normal; // Lo cambie de Bool a Uint para poder diferenciar entre no estar lastimado, estarlo y estar lastimado por un golpe fuerte
 		golpeAlAire = new FlxSound();
@@ -366,6 +372,15 @@ class Jugador extends FlxSprite{
 		vencida = false;
 		return false;
 	}
+	public function Victoria(punto:VictoryPoint){
+		if (overlaps(punto) && victoriosa == false){
+			animation.play("Victoria");
+			victoriosa = true;
+		}
+		if (victoriosa == true && animation.getByName("Victoria").finished){
+			Reg.victoria = victoriosa;
+		}
+	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)
 	public function GetDireccion(){
 		return direccion;
@@ -443,6 +458,12 @@ class Jugador extends FlxSprite{
 	public function GetYJugador():Float{
 		return y;
 	}
+	public function SetVictoriosa(yay:Bool){
+		victoriosa = yay;
+	}
+	public function GetVictoriosa():Bool{
+		return victoriosa;
+	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// camara
@@ -457,7 +478,7 @@ class Jugador extends FlxSprite{
 			x = FlxG.camera.scroll.x + FlxG.camera.width - width;*/
 		//Â¿Cuanta vida tiene?
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
-		if (!Muerte()){
+		if (!Muerte() && victoriosa == false){
 			if (piniaCorriendo == false){
 				MovimientoDelJugador();
 				Combo();
@@ -488,7 +509,6 @@ class Jugador extends FlxSprite{
 				corriendo = false;
 		}
 		Muerte();
-		
 		/*trace("datos");
 		trace(CPX);
 		trace(CPY);

@@ -19,7 +19,7 @@ import sprites.PisoLetal;
 import sprites.PisoLetalGrande;
 import sprites.CheckPoint;
 import sprites.Puertas;
-import flixel.system.FlxSound;
+import sprites.VictoryPoint;
 
 
 /**
@@ -47,14 +47,12 @@ class Reg{
 	public static inline var friction:Float = 15; // friccion estandar
 	public static inline var effectTimer:Float = 20; // maximo de un timer de comportamiento estandar (aunque por ahora estoy haciendo cualquier cosa)
 	public static inline var comboTimer:Float = 10;
-	public static inline var comboTimerMax:Float = comboTimer * 2;
 	public static inline var maxEffectTimer:Float = effectTimer * 5; // un timer de comportamiento por encima del estandar (por si algo dura sin efecto)
 	public static inline var jumpSpeed:Float = -600; // velocidad estandar de un Salto
 	public static inline var VidaMili:Int = 100; //Vida base de Mili
 	public static inline var posicionDeLosPunios:Int = 0; // a donde se van las hitboxes cuando no aparecen
 	public static inline var velocidadPlataformasFlotantes:Float = 50; // velocidad de las plataformas que flotan
 	public static inline var golpeFuerteMax:Int = 100;
-	public static inline var golpeCombo:Int = 200;
 	public static inline var punietazoEnemigoDerecha:Int = 25;
 	public static inline var punietazoEnemigoIzquierda:Int = -5;
 	public static inline var punietazoEnemigoPosVertical:Int = 30;
@@ -88,6 +86,7 @@ class Reg{
 	static public var heightJugador:Float; //guardar el alto del jugador
 	static public var direccionJugador:Bool;
 	static public var rosaOgotica:Bool = false;
+	static public var victoria:Bool = false;
 	
 	static public var checkpointX:Float;
 	static public var checkpointY:Float;
@@ -95,6 +94,7 @@ class Reg{
 	static public var puntaje:Int = 0; //guarda el puntaje
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
+	static public var numlvl:Int;
 	
 	static public var enemigosNivel1 = [1, 3, 5, 8, 10, 11, 13, 16, 17, 20, 25]; // el ultimo numero ignorenlo, despues contamos bien
 	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;
@@ -111,6 +111,6 @@ class Reg{
 	static public var PisosLetalesGrandes:FlxTypedGroup<PisoLetalGrande>;
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
-	static public var numlvl:Int;
+	static public var PuntoDeVictoria:FlxTypedGroup<VictoryPoint>;
 
 }

@@ -163,4 +163,12 @@ class Instanciador extends FlxSprite{
 			puertas.kill();
 		}
 	}
+	public function CrearPuntoDeVictoria(victoriaYay:VictoryPoint){
+		if (!(victoriaYay.isOnScreen())){
+			victoriaYay.kill();
+		}
+		else{
+			victoriaYay.revive();
+		}
+	}
 }

@@ -37,6 +37,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.tile.FlxTilemap;
 import flixel.FlxObject;
+import sprites.VictoryPoint;
 
 class PlayState extends FlxState{
 	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
@@ -115,11 +116,14 @@ class PlayState extends FlxState{
 		Reg.PisosLetalesGrandes = new FlxTypedGroup<PisoLetalGrande>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
+		Reg.PuntoDeVictoria = new FlxTypedGroup<VictoryPoint>();
 		fondoNoche = new FondoDeNoche();
 		//puertaDePrueba = new Puertas(1800, 2600);
 		if (Reg.numlvl == 1)
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		else if (Reg.numlvl == 2)
+			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
+		else
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -182,10 +186,6 @@ class PlayState extends FlxState{
 				FlxG.collide(Reg.Cajitas.members[i], Reg.Cajitas.members[b]);
 			}
 		}
-		//COLISIONES DE LOS ENEMIGOS CON EL MAPA
-		/*for (a in 0...Reg.Pinches.length){
-			FlxG.collide(Reg.Pinches.members[a], tileMap);
-		}*/
 		for (a in 0...Reg.Enemigos.length){
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
@@ -300,6 +300,11 @@ class PlayState extends FlxState{
 			}
 		}
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
+		if (Reg.victoria == true){
+			musica.stop();
+			FlxG.resetState();
+			Reg.numlvl++;
+		}
 		if (FlxG.keys.justPressed.R){
 			musica.stop();
 			FlxG.resetState();
@@ -347,6 +352,9 @@ class PlayState extends FlxState{
 		for (b in 0...Reg.PuertasLimitadoras.length){
 			instanciando.CrearPuerta(Reg.PuertasLimitadoras.members[b]);
 		}
+		for (y in 0...Reg.PuntoDeVictoria.length){
+			instanciando.CrearPuntoDeVictoria(Reg.PuntoDeVictoria.members[y]);
+		}
 	}
 }
 	private function entityCreator(entityName:String, entityData:Xml):Void{
@@ -386,6 +394,8 @@ class PlayState extends FlxState{
 				Reg.Checkpoints.add(new CheckPoint(entityStartX, entityStartY));
 			case "Puertas":
 				Reg.PuertasLimitadoras.add(new Puertas(entityStartX, entityStartY));
+			case "victoria":
+				Reg.PuntoDeVictoria.add(new VictoryPoint(entityStartX, entityStartY));
 		}
 	}
 }

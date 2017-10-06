@@ -13,10 +13,6 @@ class VictoryPoint extends FlxSprite{
 		super(X, Y, SimpleGraphic);
 		makeGraphic(20, 20, FlxColor.WHITE);
 	}
-	public function NextLevel(jugador:Jugador){
-		if (overlaps(jugador)){
-		}
-	}
 	override public function update(elapsed:Float){
 		super.update(elapsed);
 	}

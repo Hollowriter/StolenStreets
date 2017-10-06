@@ -148,7 +148,7 @@ class PlayState extends FlxState{
 		add(lifes);
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
-		// add(Reg.Players.members[0].GetGolpear());	// testing testing
+		add(Reg.Players.members[0].GetGolpear());	// testing testing
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);

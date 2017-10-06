@@ -17,6 +17,8 @@ class Golpejugador extends FlxSprite{
 	private var sonidoGolpeJugadorFuerte:FlxSound;
 	private var GolpeDuro:Bool; // detecta cuando es un golpe que te tira al piso
 	private var Agarrada:Bool; // para determinar si el jugador intenta hacer un agarre
+	private var diferenciaPatadaMiliY = -15;
+	private var diferenciaPatadaX = 5;
 		
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset){
 		super(X, Y, SimpleGraphic);
@@ -45,7 +47,7 @@ class Golpejugador extends FlxSprite{
 		}
 	}
 	// puñetazo del jugador
-	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool, corriendo:Bool):Void{ // Pendiente de testear
+	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool, corriendo:Bool, usaASofi:Bool):Void{ // Pendiente de testear
 		// trace("ESTOY EN PUNIETAZOJUGADOR");
 		if (personaje != null){ // si el personaje existe
 			y = personaje.y; // se encuentra a la misma altura del personaje
@@ -58,7 +60,20 @@ class Golpejugador extends FlxSprite{
 				y = personaje.y + Reg.punietazoJugadorPosVertical;
 			}
 			if (saltando == true){ // esto es un Salto y patada
-				y = personaje.y + Reg.patadaJugadorVertical; // por lo que se encuentra mas abajo
+				if (usaASofi == true){
+					y = personaje.y + Reg.patadaJugadorVertical - height; // por lo que se encuentra mas abajo
+					if (mirando == false)
+						x += diferenciaPatadaX;
+					else
+						x -= diferenciaPatadaX;
+				}
+				else{
+					y = personaje.y + (Reg.patadaJugadorVertical + diferenciaPatadaMiliY);
+					if (mirando == false)
+						x += 5;
+					else
+						x -= 5;
+				}
 			}
 			if (personaje.GetCombo() > 2 || saltando == true){ // golpe duro comprobado
 				GolpeDuro = true;

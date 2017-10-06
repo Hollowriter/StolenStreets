@@ -50,13 +50,13 @@ class Jugador extends FlxSprite{
 	private var sonidoSaltoTrampolin:FlxSound;
 	private var sonidoMuerte:FlxSound;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset, ?chicas:Bool){
+	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset, ?usaASofi:Bool){
 		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
 		trace("ZonaDeIncio");
 		trace(X);
 		trace(Y);
-		miliOsofi = chicas;
-		if (chicas == false){
+		miliOsofi = usaASofi;
+		if (usaASofi == false){
 			loadGraphic(AssetPaths.MiliFinal__png, true, 73, 82);
 		}
 		else{
@@ -64,7 +64,7 @@ class Jugador extends FlxSprite{
 		}
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
-		if (chicas == false){
+		if (usaASofi == false){
 			//Mili
 			animation.add("Natural", [0, 10], 2, true);
 			animation.add("Caminar", [0, 5, 6, 7, 8, 9], 6, true);
@@ -85,7 +85,7 @@ class Jugador extends FlxSprite{
 		animation.add("Caida", [25], 1, true);
 		animation.add("Muerte", [26, 26, 26, 26], 1, false);
 		animation.add("EnElSuelo", [26, 26], 2, false);
-		if (chicas == false){
+		if (usaASofi == false){
 			animation.add("Agarre", [29, 29, 29], 5, false);
 			animation.add("Agarrando", [29], 2, true);
 		}
@@ -254,7 +254,7 @@ class Jugador extends FlxSprite{
 			time = 0; // reinicia el timer
 		}
 		if (check == true){ // el punietazo esta presente
-			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo); // colocacion del puÃ±etazo
+			punios.PunietazoJugador(this, direccion, jump, piniaCorriendo, miliOsofi); // colocacion del puÃ±etazo
 			if (jump == false){ // el personaje se detiene al pegar
 				velocity.x = 0;
 				velocity.y = 0;
@@ -319,7 +319,7 @@ class Jugador extends FlxSprite{
 				if (jump == false){ // in progress
 					animation.play("Agarre");
 					punios.SetAgarrada(true);
-					punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
+					punios.PunietazoJugador(this, direccion, jump, piniaCorriendo, miliOsofi);
 				}
 			}
 			if (punios.GetAgarrada() == true && pobreVictima.GetHurt() == source.EstadoEnemigo.Agarrado){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
@@ -466,7 +466,7 @@ class Jugador extends FlxSprite{
 			Golpear();
 			if (piniaCorriendo == true){
 				punios.SetGolpeDuro(true);
-				punios.PunietazoJugador(this, direccion, jump, piniaCorriendo);
+				punios.PunietazoJugador(this, direccion, jump, piniaCorriendo, miliOsofi);
 				contadorPiniaCorriendo++;
 			}
 			if (contadorPiniaCorriendo >= piniaCorriendoTiempoMax){

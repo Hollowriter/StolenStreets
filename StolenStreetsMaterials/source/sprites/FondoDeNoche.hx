@@ -13,9 +13,9 @@ class FondoDeNoche extends FlxSprite{
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.Noche__png, false, 1920, 1080);
 	}
-}
-override public function update(elapsed:Float){
-	super.update(elpased);
-	x = Reg.posXjugador;
-	y = Reg.posYjugador;
+	override public function update(elapsed:Float){
+		super.update(elapsed);
+		x = Reg.posXjugador - 1000;
+		y = Reg.posYjugador - 500;
+	}
 }

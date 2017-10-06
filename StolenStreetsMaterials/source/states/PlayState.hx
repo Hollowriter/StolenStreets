@@ -15,6 +15,7 @@ import sprites.DropsVidaBotiquin;
 import sprites.DropsVidaHelado;
 import sprites.EnemigoConBate;
 import sprites.EnemigoSaltador;
+import sprites.FondoDeNoche;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
@@ -51,6 +52,7 @@ class PlayState extends FlxState{
 	private var pinches:SueloPeligroso;
 	private var instanciando:Instanciador;
 	private var cpActivo:Int = -1;
+	private var fondoNoche:FondoDeNoche;
 	//private var puertaDePrueba:Puertas;
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
@@ -113,6 +115,7 @@ class PlayState extends FlxState{
 		Reg.PisosLetalesGrandes = new FlxTypedGroup<PisoLetalGrande>();
 		Reg.Checkpoints = new FlxTypedGroup<CheckPoint>();
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
+		fondoNoche = new FondoDeNoche();
 		//puertaDePrueba = new Puertas(1800, 2600);
 		if (Reg.numlvl == 1)
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
@@ -132,8 +135,8 @@ class PlayState extends FlxState{
 		for (i in 0...Reg.PuertasLimitadoras.length){
 			Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel1[i]);
 		}
-		fondito = new FlxBackdrop(AssetPaths.Noche__png, 1, 1, true, true, 0, 0);
-		add(fondito);
+		//fondito = new FlxBackdrop(AssetPaths.Noche__png, 1, 1, true, true, 0, 0);
+		add(fondoNoche);
 		add(tileMap);
 		musica.play();
 		add(instanciando);

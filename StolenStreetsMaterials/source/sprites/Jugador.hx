@@ -64,8 +64,14 @@ class Jugador extends FlxSprite{
 		}
 		width = anchuraObjeto;								//AFECTA A LA POSICION DE LOS GOLPES
 		offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
-		animation.add("Natural", [0, 10], 2, true);
-		animation.add("Caminar", [0, 5, 6, 7, 8, 9], 6, true);
+		if (chicas == false){
+			animation.add("Natural", [0, 10], 2, true);
+			animation.add("Caminar", [0, 5, 6, 7, 8, 9], 6, true);
+		}
+		else{
+			animation.add("Natural", [0], 2, true);
+			animation.add("Caminar", [5, 6, 7, 8, 9, 10], 6, true);
+		}
 		animation.add("Saltar", [1, 2, 2, 3], 5, false);
 		animation.add("Aterrizaje", [4], 6, false);
 		animation.add("CaidaLibre", [3], 2, true);

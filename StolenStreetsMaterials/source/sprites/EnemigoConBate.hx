@@ -82,9 +82,9 @@ class EnemigoConBate extends BaseEnemigo
 				flipX = false;
 			}
 		}
-		if ((x < enemyRightMin - Reg.widthJugador && x > ((enemyLeftMin - Reg.widthJugador * 2) - Reg.enemigoPegaDerecha) 
+		if ((x < enemyRightMin - Reg.widthJugador && x > ((enemyLeftMin - Reg.widthJugador * 2) + Reg.enemigoPegaDerecha) 
 			&& isHurt == source.EstadoEnemigo.Normal)
-			|| (x > enemyLeftMin + Reg.widthJugador && x < ((enemyRightMin + Reg.widthJugador * 2) - Reg.enemigoPegaIzquierda)) 
+			|| (x > enemyLeftMin + Reg.widthJugador && x < ((enemyRightMin + Reg.widthJugador * 2) + Reg.enemigoPegaIzquierda)) 
 			&& isHurt == source.EstadoEnemigo.Normal){
 				velocity.x = 0;
 			if (timer <= Reg.effectTimer){

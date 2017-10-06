@@ -98,26 +98,8 @@ class Enemigo1 extends BaseEnemigo
 					animation.play("GolpeFuerte");
 				}
 				still = true;
-				if (golpesVarios > Reg.golpeFuerteMax && isHurt == source.EstadoEnemigo.Normal){
-					punioEnemigo.SetGolpeFuerte(true);
+				if (isHurt == source.EstadoEnemigo.Normal){
 					punioEnemigo.PunietazoEnemigo(this, direccion);
-				}
-				else if (isHurt == source.EstadoEnemigo.Normal){
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-				}
-				if (golpesVarios > Reg.golpeCombo && isHurt == source.EstadoEnemigo.Normal){
-					combo = true;
-					punioEnemigo.PunietazoEnemigo(this, direccion);
-					if (comboTimer > Reg.comboTimer){
-						if (comboTimer > Reg.comboTimerMax){
-							punioEnemigo.PosicionarGE();
-							punioEnemigo.PunietazoEnemigo(this, direccion);
-							golpesVarios = 0;
-							combo = false;
-							comboTimer = 0;
-						}
-					}
-					comboTimer++;
 				}
 			}
 			else{

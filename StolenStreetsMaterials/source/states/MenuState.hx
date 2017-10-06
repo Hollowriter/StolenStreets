@@ -18,6 +18,7 @@ class MenuState extends FlxState{
 	private var camarita:FlxCamera;
 	override public function create():Void{
 		super.create();
+		Reg.musica = new FlxSound();
 		camarita = new FlxCamera(1, 1);
 		comando = new FlxText();
 		comando.text = "PRESS ENTER TO PLAY";
@@ -38,6 +39,8 @@ class MenuState extends FlxState{
 		super.update(elapsed);
 		/*FlxCamera.defaultCameras = [FlxG.camera];
 		seinFondo.cameras = [camarita];*/
+		if (Reg.musica.persist)
+			Reg.musica.stop;
 		if (FlxG.keys.justPressed.ENTER){
 			FlxG.switchState(new CharSelectState());
 			Reg.numlvl = 1;

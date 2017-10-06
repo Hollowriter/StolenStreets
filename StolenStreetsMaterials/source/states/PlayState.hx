@@ -57,9 +57,8 @@ class PlayState extends FlxState{
 	var fondito:FlxBackdrop;
 	override public function create():Void{
 		super.create();
-		musica = new FlxSound();
-		musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
-		musica.volume = 0.1;
+		Reg.musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
+		Reg.musica.volume = 0.1;
 		instanciando = new Instanciador();
 		lifes = new FlxText (150, 30);
 		lifes.text = "LIFE?";
@@ -129,7 +128,7 @@ class PlayState extends FlxState{
 		fondito = new FlxBackdrop(AssetPaths.Noche__png, 1, 1, true, true, 0, 0);
 		add(fondito);
 		add(tileMap);
-		musica.play();
+		Reg.musica.play();
 		add(instanciando);
 		add(Reg.Monedas);
 		add(Reg.Caramelos);
@@ -292,7 +291,7 @@ class PlayState extends FlxState{
 		}
 		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
 		if (FlxG.keys.justPressed.R){
-			musica.stop();
+			Reg.musica.stop();
 			FlxG.resetState();
 			Reg.guita = 0;
 			Reg.puntaje = 0;

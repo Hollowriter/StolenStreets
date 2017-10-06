@@ -355,7 +355,6 @@ class Jugador extends FlxSprite{
 					sonidoRespawn.play();
 				}
 				if (life == 0){
-					FlxG.
 					FlxG.switchState(new MenuState());
 					kill();
 				}

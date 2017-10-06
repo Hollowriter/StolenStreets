@@ -20,12 +20,12 @@ class MenuState extends FlxState{
 		camarita = new FlxCamera(1, 1);
 		comando = new FlxText();
 		comando.text = "PRESS ENTER TO PLAY";
-		comando.color = 0xB2FFB5;
+		comando.color = 0xFFFFFFF;
 		comando.scale.x = 3.5;
 		comando.scale.y = 3.5;
-		comando.x = (FlxG.width / 2) - comando.scale.x;
-		comando.y = (FlxG.height / 1.5) - comando.scale.y;
-		comando.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
+		comando.x = (FlxG.width / 2.25) - comando.scale.x;
+		comando.y = (FlxG.height / 1.45) - comando.scale.y;
+		comando.setBorderStyle(FlxTextBorderStyle.OUTLINE_FAST, 0xFF0000FF);
 		comando.scrollFactor.set(0, 0);
 		comando.visible = true;
 		seinFondo = new TitleScreen(350, 50);
@@ -38,12 +38,10 @@ class MenuState extends FlxState{
 		/*FlxCamera.defaultCameras = [FlxG.camera];
 		seinFondo.cameras = [camarita];*/
 		if (FlxG.keys.justPressed.ENTER){
-			Reg.Personaje = true;
 			FlxG.switchState(new CharSelectState());
 			Reg.numlvl = 1;
 		}
 		if (FlxG.keys.justPressed.SHIFT){
-			Reg.Personaje = false;
 			FlxG.switchState(new CharSelectState());
 			Reg.numlvl = 2;
 		}

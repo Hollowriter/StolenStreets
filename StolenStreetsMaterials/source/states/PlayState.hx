@@ -175,9 +175,9 @@ class PlayState extends FlxState{
 			}
 		}
 		//COLISIONES DE LOS ENEMIGOS CON EL MAPA
-		for (a in 0...Reg.Pinches.length){
+		/*for (a in 0...Reg.Pinches.length){
 			FlxG.collide(Reg.Pinches.members[a], tileMap);
-		}
+		}*/
 		for (a in 0...Reg.Enemigos.length){
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
@@ -242,7 +242,7 @@ class PlayState extends FlxState{
 				Reg.Players.members[0].instaKill();
 			}
 			for (o in 0...Reg.Enemigos.length){
-				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.PisosLetales.members[o])){
+				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.PisosLetales.members[i])){
 					Reg.Enemigos.members[o].SetVida(0);
 				}
 			}

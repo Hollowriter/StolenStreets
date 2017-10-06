@@ -17,7 +17,6 @@ import sprites.EnemigoSaltador;
 import sprites.Golpejugador;
 import sprites.Jugador;
 import sprites.PlataformaFlotante;
-//import sprites.PlataformaPrueba;
 import sprites.BaseEnemigo;
 import sprites.Enemigo1;
 import source.Reg;

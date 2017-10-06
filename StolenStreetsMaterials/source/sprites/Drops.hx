@@ -9,7 +9,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import source.Reg;
 /**
  * ...
- * @author MorenaMontero
+ * @author MorenaMontero(Inicial)
  */
 class Drops extends FlxSprite{
 	private var puntos:Int; // cantidad de puntos que da el objeto

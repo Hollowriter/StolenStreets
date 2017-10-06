@@ -21,9 +21,9 @@ class Puertas extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		loadGraphic(AssetPaths.PuertayTrampolin__png, true, 15, 75);
-		animation.add("Cerrada", [10], 1, true);
-		animation.add("Abriendose", [10, 11, 12, 13], 4, false);
+		loadGraphic(AssetPaths.Puerta__png, true, 15, 75);
+		animation.add("Cerrada", [0], 1, true);
+		animation.add("Abriendose", [0, 1, 2, 3], 4, false);
 		animation.play("Cerrada");
 		immovable = true;
 		enemigosAAsesinar = 1;

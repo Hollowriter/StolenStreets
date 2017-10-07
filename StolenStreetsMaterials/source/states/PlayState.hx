@@ -297,7 +297,7 @@ class PlayState extends FlxState{
 				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
-		Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]);
+		//Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]);
 		if (Reg.vidasJugador == 1 && Reg.saludJugador == 0){
 			musica.stop();
 		}

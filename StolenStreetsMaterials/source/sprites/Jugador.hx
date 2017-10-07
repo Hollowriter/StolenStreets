@@ -472,11 +472,8 @@ class Jugador extends FlxSprite{
 		Reg.widthJugador = width;
 		Reg.heightJugador = height; //actualiza el reg con los datos del jugador
 		Reg.direccionJugador = direccion;
-		/*if (x <= FlxG.camera.scroll.x + 5)
-			x = FlxG.camera.scroll.x + 5;
-		if (x + width >= FlxG.camera.scroll.x + FlxG.camera.width)
-			x = FlxG.camera.scroll.x + FlxG.camera.width - width;*/
-		//Â¿Cuanta vida tiene?
+		Reg.vidasJugador = life;
+		Reg.saludJugador = vidaActual;
 		// reformulacion con updates comentada (comentar en playstate estas acciones y descomentar aca)
 		if (!Muerte() && victoriosa == false){
 			if (piniaCorriendo == false){

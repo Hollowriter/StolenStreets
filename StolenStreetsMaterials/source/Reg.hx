@@ -95,6 +95,8 @@ class Reg{
 	static public var guita:Float = 0; // guerda el dinero del personaje
 	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
 	static public var numlvl:Int;
+	static public var vidasJugador:Int;
+	static public var saludJugador:Int;
 	
 	static public var enemigosNivel1 = [1, 3, 5, 8, 10, 11, 13, 16, 17, 20, 25]; // el ultimo numero ignorenlo, despues contamos bien
 	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;

@@ -298,6 +298,9 @@ class PlayState extends FlxState{
 			}
 		}
 		// Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]); Cuando tengan el punto en el nivel descomenten esta accion
+		if (Reg.vidasJugador == 1 && Reg.saludJugador == 0){
+			musica.stop();
+		}
 		if (Reg.victoria == true){
 			musica.stop();
 			FlxG.switchState(new PlayStateNivel2());

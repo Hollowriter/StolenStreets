@@ -10,6 +10,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.FlxCamera;
 import sprites.TitleScreen;
+import states.PlayState;
 import source.Reg;
 
 class MenuState extends FlxState{

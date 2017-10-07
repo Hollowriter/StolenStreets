@@ -176,8 +176,7 @@ class Jugador extends FlxSprite{
 	// el Salto 
 	public function Salto(){
 		// para saltar
-		if (vencida == false)
-		{
+		if (vencida == false){
 		if 
 		(
 		 FlxG.keys.justPressed.UP &&(isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)) && check == false && meHurt == source.EstadoEnemigo.Normal || 
@@ -187,7 +186,7 @@ class Jugador extends FlxSprite{
 			sonidoSalto.play();
 		}
 		// chequea si el personaje esta en el aire/saltando
-		if (isTouching(FlxObject.FLOOR) || isTouching(FlxObject.ANY)){
+		if (isTouching(FlxObject.FLOOR) && victoriosa == false || isTouching(FlxObject.ANY) && victoriosa == false){
 			if (jump == true)
 				animation.play("Aterrizaje");
 			jump = false;
@@ -374,8 +373,9 @@ class Jugador extends FlxSprite{
 	}
 	public function Victoria(punto:VictoryPoint){
 		if (overlaps(punto) && victoriosa == false){
-			animation.play("Victoria");
 			victoriosa = true;
+			animation.stop();
+			animation.play("Victoria");
 		}
 		if (victoriosa == true && animation.getByName("Victoria").finished){
 			Reg.victoria = victoriosa;

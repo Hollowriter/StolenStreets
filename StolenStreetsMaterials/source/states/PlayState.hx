@@ -297,13 +297,13 @@ class PlayState extends FlxState{
 				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
-		// Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]); Cuando tengan el punto en el nivel descomenten esta accion
+		Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]);
 		if (Reg.vidasJugador == 1 && Reg.saludJugador == 0){
 			musica.stop();
 		}
 		if (Reg.victoria == true){
 			musica.stop();
-			FlxG.switchState(new PlayStateNivel2());
+			//FlxG.switchState(new PlayStateNivel2());
 		}
 		if (FlxG.keys.justPressed.R){
 			musica.stop();

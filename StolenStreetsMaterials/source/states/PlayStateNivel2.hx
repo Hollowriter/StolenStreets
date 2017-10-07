@@ -64,14 +64,11 @@ class PlayStateNivel2 extends FlxState{
 	override public function create():Void{
 		super.create();
 		musica2 = new FlxSound();
-		if (Reg.numlvl == 1)
-			musica2.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
-		else if (Reg.numlvl == 2)
-			musica2.loadEmbedded(AssetPaths.demo__ogg, true);
+		musica2.loadEmbedded(AssetPaths.demo__ogg, true);
 		musica2.volume = 0.1;
 		instanciando = new Instanciador();
 		//lifes = new FlxText (150, 30);
-		lifes.text = "LIFE?";
+		/*lifes.text = "LIFE?";
 		lifes.color = 0xB2FFB5;
 		lifes.scale.x = 2;
 		lifes.scale.y = 2;
@@ -101,7 +98,7 @@ class PlayStateNivel2 extends FlxState{
 		vida.scale.y = 2;
 		vida.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff77aacc);
 		vida.scrollFactor.set(0, 0);
-		vida.visible = true;
+		vida.visible = true;*/
 		/*Reg.Players = new FlxTypedGroup<Jugador>();
 		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
@@ -122,6 +119,7 @@ class PlayStateNivel2 extends FlxState{
 		ogmoLoader2 = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
 		tileMap2 = ogmoLoader2.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader2.loadEntities(entityCreator2, "entidades");
+		trace("AAAAaahh");
 		FlxG.worldBounds.set(0, 0, tileMap2.width, tileMap2.height);
 		for (i in 0...17){
 			if (i == 0 || i == 6 || i == 7 || i == 8 || i == 9 || i == 15 || i == 16 || i == 17){
@@ -135,8 +133,8 @@ class PlayStateNivel2 extends FlxState{
 			Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel1[i]);
 		}
 		//fondito = new FlxBackdrop(AssetPaths.Noche__png, 1, 1, true, true, 0, 0);
-		add(fondoNoche);
-		add(tileMap2);
+		/*add(fondoNoche);
+		add(tileMap2);*/
 		musica2.play();
 		add(instanciando);
 		add(Reg.Monedas);
@@ -144,10 +142,10 @@ class PlayStateNivel2 extends FlxState{
 		add(Reg.Helados);
 		add(Reg.Botiquines);
 		add(Reg.Pinches);
-		add(puntaje);
+		/*add(puntaje);
 		add(money);
 		add(vida);
-		add(lifes);
+		add(lifes);*/
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
 		//add(Reg.Players.members[0].GetGolpear());	// testing testing

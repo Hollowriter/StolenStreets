@@ -123,8 +123,6 @@ class PlayState extends FlxState{
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		else if (Reg.numlvl == 2)
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
-		else
-			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
@@ -299,11 +297,10 @@ class PlayState extends FlxState{
 				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
-		//En caso que el personaje se quede sin vidas y muera... Reinicia el juego
+		// Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]); Cuando tengan el punto en el nivel descomenten esta accion
 		if (Reg.victoria == true){
 			musica.stop();
-			FlxG.resetState();
-			Reg.numlvl++;
+			FlxG.switchState(new PlayStateNivel2());
 		}
 		if (FlxG.keys.justPressed.R){
 			musica.stop();

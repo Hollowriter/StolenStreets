@@ -1,0 +1,13 @@
+El punto de victoria esta programado, ahora hagan lo siguiente:
+
+1.entren a ogmo.
+2.seleccionen el nivel 1.
+3.arrastren el punto que se llama "victoria" cerca de mili para asi pueden probarlo.
+4.cierren ogmo.
+5.vayan a Playstate y bajen hasta la linea 300 del codigo.
+6.descomenten esa linea.
+
+Si funciona, genial, ponganla en el final del nivel y pusheen. 
+Si no anda, comenten la linea denuevo y borren el punto del nivel.
+
+Disculpen, estoy en lo de mi abuela y no tiene un mouse con ruedita.

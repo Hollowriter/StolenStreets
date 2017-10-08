@@ -13,11 +13,10 @@ import source.Reg;
  */
 class Drops extends FlxSprite{
 	private var puntos:Int; // cantidad de puntos que da el objeto
-	private var valor:Int = FlxG.random.int(0, 3); // decide que tipo de moneda aparecera
 	private var creado:Bool = true;
 	private var recolectado:Bool = false;
 	public function Juntado():Void{
-		Reg.guita += puntos;
+		Reg.score += puntos;
 		recolectado = true;
 	}
 	public function Recoleccion(){
@@ -29,7 +28,7 @@ class Drops extends FlxSprite{
 		loadGraphic(AssetPaths.Items__png, true, 15, 19);
 		animation.add("Vueltas", [0, 1, 2, 3, 4], 5, true);
 		animation.play("Vueltas");
-		puntos = 5;
+		puntos = 10;
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

@@ -42,10 +42,9 @@ class MenuState extends FlxState{
 		if (FlxG.keys.justPressed.ENTER){
 			FlxG.switchState(new CharSelectState());
 			Reg.numlvl = 1;
-		}
-		if (FlxG.keys.justPressed.SHIFT){
-			FlxG.switchState(new CharSelectState());
-			Reg.numlvl = 2;
+			Reg.score = 0;
+			Reg.puntaje = 0;
+			Reg.enemigosMuertos = 0;
 		}
 	}
 }

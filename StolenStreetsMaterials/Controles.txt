@@ -1,21 +1,8 @@
-WASD:
-W: Arriba/Saltar
-A: izquierda
-S: Abajo (por ahora no es nada)
-D: Derecha
-J: Atacar
-K: Saltar
-L y SHIFT: Correr
-I: Esquivar
-U: Agarrar
-
 Arrows:
 Up: Arriba
 Left: Izquierda
 Right: Derecha
-Down: Abajo (por ahora no es nada)
 D: Atacar
-S y SHIFT: Saltar
-A: Correr
-W: Esquivar
-E: Agarrar
+S: Saltar
+A y SHIFT: Correr
+E: Agarrar (D para soltar)

@@ -92,8 +92,8 @@ class Reg{
 	static public var checkpointY:Float;
 	
 	static public var puntaje:Int = 0; //guarda el puntaje
-	static public var guita:Float = 0; // guerda el dinero del personaje
-	public static inline var VidaTotales:Int = 3; // vidas que tiene el jugador
+	static public var score:Float = 0; // guerda el dinero del personaje
+	public static inline var VidaTotales:Int = 6; // vidas que tiene el jugador
 	static public var numlvl:Int;
 	static public var vidasJugador:Int;
 	static public var saludJugador:Int;
@@ -114,5 +114,4 @@ class Reg{
 	static public var Checkpoints:FlxTypedGroup<CheckPoint>;
 	static public var PuertasLimitadoras:FlxTypedGroup<Puertas>;
 	static public var PuntoDeVictoria:FlxTypedGroup<VictoryPoint>;
-
 }

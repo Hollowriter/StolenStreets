@@ -45,9 +45,8 @@ class PlayState extends FlxState{
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
 	private var Cajas:Obstaculo;
 	private var funca:Bool = false; // esto no se que es, por favor explicar
-	private var puntaje:FlxText; // HUD puntaje
 	private var vida:FlxText; // HUD vida
-	private var money:FlxText; //Buena cancion de Pink Floyd // HUD dinero
+	private var puntajetext:FlxText; //Buena cancion de Pink Floyd // HUD dinero
 	private var lifes:FlxText;
 	private var life:Int; // vida
 	private var pinches:SueloPeligroso;
@@ -71,29 +70,21 @@ class PlayState extends FlxState{
 		musica.volume = 0.1;
 		instanciando = new Instanciador();
 		lifes = new FlxText (150, 30);
-		lifes.text = "LIFE?";
+		lifes.text = "LIVES?";
 		lifes.color = 0xB2FFB5;
 		lifes.scale.x = 2;
 		lifes.scale.y = 2;
 		lifes.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		lifes.scrollFactor.set(0, 0);
 		lifes.visible = true;
-		money = new FlxText (150, 1);
-		money.text = "MONEY?";
-		money.color = 0x00FFFF;
-		money.scale.x = 2;
-		money.scale.y = 2;
-		money.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
-		money.scrollFactor.set(0, 0);
-		money.visible = true;
-		puntaje = new FlxText(20, 1);
-		puntaje.color = 0xefff0a;
-		puntaje.text = "SCORE?";
-		puntaje.scale.x = 2;
-		puntaje.scale.y = 2;
-		puntaje.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
-		puntaje.scrollFactor.set(0, 0);
-		puntaje.visible = true;
+		puntajetext = new FlxText (20, 1);
+		puntajetext.text = "SCORE?";
+		puntajetext.color = 0x00FFFF;
+		puntajetext.scale.x = 2;
+		puntajetext.scale.y = 2;
+		puntajetext.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
+		puntajetext.scrollFactor.set(0, 0);
+		puntajetext.visible = true;
 		vida = new FlxText(30, 30);
 		vida.color = 0x800000;
 		vida.text = "HEALTH?";
@@ -123,6 +114,7 @@ class PlayState extends FlxState{
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		else if (Reg.numlvl == 2)
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
+
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
 		FlxG.worldBounds.set(0, 0, tileMap.width, tileMap.height);
@@ -147,8 +139,7 @@ class PlayState extends FlxState{
 		add(Reg.Helados);
 		add(Reg.Botiquines);
 		add(Reg.Pinches);
-		add(puntaje);
-		add(money);
+		add(puntajetext);
 		add(vida);
 		add(lifes);
 		add(Reg.Players);
@@ -172,8 +163,7 @@ class PlayState extends FlxState{
 		super.update(elapsed);
 		// HUD
 		lifes.text = ("LIFE: " + Reg.Players.members[0].GetLife());
-		money.text = ("MONEY: $" + Reg.guita);
-		puntaje.text = ("SCORE: " + Reg.puntaje);
+		puntajetext.text = ("SCORE: " + Reg.score);
 		vida.text = ("HEALTH: " + Reg.Players.members[0].GetVida());
 		// HUD
 		FlxG.collide(Reg.Players.members[0], tileMap);
@@ -297,20 +287,24 @@ class PlayState extends FlxState{
 				Reg.Enemigos.members[i].SetSaltito(true);
 			}
 		}
-		//Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]);
+		Reg.Players.members[0].Victoria(Reg.PuntoDeVictoria.members[0]);
 		if (Reg.vidasJugador == 1 && Reg.saludJugador == 0){
 			musica.stop();
 		}
 		if (Reg.victoria == true){
 			musica.stop();
-			//FlxG.switchState(new PlayStateNivel2());
-		}
-		if (FlxG.keys.justPressed.R){
-			musica.stop();
+			trace(Reg.numlvl);
+			if (Reg.numlvl == 1)
+			{
+			Reg.numlvl++;
+			Reg.victoria = false;
 			FlxG.resetState();
-			Reg.guita = 0;
-			Reg.puntaje = 0;
-			Reg.enemigosMuertos = 0;
+			}
+			else if (Reg.numlvl == 2)
+			{
+				Reg.victoria = false;
+				FlxG.switchState(new MenuState());
+			}
 		}
 	//Instanciador
 		for (i in 0...Reg.Enemigos.length){

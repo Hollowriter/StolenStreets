@@ -379,6 +379,7 @@ class Jugador extends FlxSprite{
 		}
 		if (victoriosa == true && animation.getByName("Victoria").finished){
 			Reg.victoria = victoriosa;
+			victoriosa = false;
 		}
 	}
 	// setter y getter del bool de direccion (para donde esta mirando el personaje)

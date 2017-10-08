@@ -382,5 +382,6 @@
     <pisoletal id="140" x="2112" y="1232" />
     <pisoletal id="233" x="2688" y="2080" />
     <pisoletal id="234" x="2016" y="2080" />
+    <victoria id="41" x="320" y="2608" />
   </entidades>
 </level>

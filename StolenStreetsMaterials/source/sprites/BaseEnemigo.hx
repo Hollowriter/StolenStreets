@@ -38,7 +38,6 @@ class BaseEnemigo extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		acceleration.y = Reg.gravedad;
-		// offset.set(hitboxPosX, hitboxPosY); //traslada el hitbox //AFECTA A LA POSICION DE LOS GOLPES
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		guia = new GuiaEnemigo(x, y);
 		camarada = new GuiaEnemigo(x, y);

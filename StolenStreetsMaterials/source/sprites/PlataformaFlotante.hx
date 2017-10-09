@@ -24,7 +24,6 @@ class PlataformaFlotante extends FlxSprite
 	{
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.PlataformaF__png, true, 82, 9);
-		//makeGraphic(82, 9, FlxColor.YELLOW);
 		puntoMedioVertical = y;
 		puntoMedioHorizontal = x;
 		immovable = true;

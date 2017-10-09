@@ -53,7 +53,6 @@ class PlayState extends FlxState{
 	private var instanciando:Instanciador;
 	private var cpActivo:Int = -1;
 	private var fondoNoche:FondoDeNoche;
-	//private var puertaDePrueba:Puertas;
 	var ogmoLoader:FlxOgmoLoader;
 	var tileMap:FlxTilemap;
 	var tmpMap:TiledObjectLayer;
@@ -112,7 +111,6 @@ class PlayState extends FlxState{
 		Reg.PuertasLimitadoras = new FlxTypedGroup<Puertas>();
 		Reg.PuntoDeVictoria = new FlxTypedGroup<VictoryPoint>();
 		fondoNoche = new FondoDeNoche();
-		//puertaDePrueba = new Puertas(1800, 2600);
 		if (Reg.numlvl == 1)
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		else if (Reg.numlvl == 2)
@@ -137,7 +135,6 @@ class PlayState extends FlxState{
 				Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel2[i]);
 			}
 		}
-		//fondito = new FlxBackdrop(AssetPaths.Noche__png, 1, 1, true, true, 0, 0);
 		add(fondoNoche);
 		add(tileMap);
 		musica.play();
@@ -152,7 +149,6 @@ class PlayState extends FlxState{
 		add(lives);
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
-		//add(Reg.Players.members[0].GetGolpear());	// testing testing
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
@@ -161,12 +157,6 @@ class PlayState extends FlxState{
 		add(Reg.PisosLetalesGrandes);
 		add(Reg.PuertasLimitadoras);
 		Reg.enemigosMuertos = 0;
-		//add(puertaDePrueba);
-		/*for (i in 0...(Reg.Enemigos.length)){
-			add(Reg.Enemigos.members[i].GetGolpeEnemigo());
-			add(Reg.Enemigos.members[i].GetGuia());
-			add(Reg.Enemigos.members[i].GetCamarada());
-		}*/
 	}
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);

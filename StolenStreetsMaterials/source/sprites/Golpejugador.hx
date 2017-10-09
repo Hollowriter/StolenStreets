@@ -48,7 +48,6 @@ class Golpejugador extends FlxSprite{
 	}
 	// puñetazo del jugador
 	public function PunietazoJugador(?personaje:Jugador = null, mirando:Bool, saltando:Bool, corriendo:Bool, usaASofi:Bool):Void{ // Pendiente de testear
-		// trace("ESTOY EN PUNIETAZOJUGADOR");
 		if (personaje != null){ // si el personaje existe
 			y = personaje.y; // se encuentra a la misma altura del personaje
 			if (mirando == false){

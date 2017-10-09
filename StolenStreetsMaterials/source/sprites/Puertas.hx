@@ -8,18 +8,16 @@ import source.Reg;
 
 /**
  * ...
- * @author ...
+ * @author MorenaMontero
  */
-class Puertas extends FlxSprite 
-{
+class Puertas extends FlxSprite {
 	var enemigosAAsesinar:Int;
 	var enemigosPedidos:Int = 0;
 	var empujarJugador:Bool;
 	var conseguido:Bool = false;
 	var puertaAbierta:Bool = false;
 	var puertaDesruida:Bool = false;
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
-	{
+	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
 		loadGraphic(AssetPaths.Puerta__png, true, 15, 75);
 		animation.add("Cerrada", [0], 1, true);

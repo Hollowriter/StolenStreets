@@ -30,7 +30,6 @@ class Jugador extends FlxSprite{
 	private var life:Int = Reg.VidaTotales; //Cuantas veces se puede reiniciar la barra si cae en 0
 	private var ay:Int; //descomentar si querer testear vida de jugador;
 	private var auch:Int; // descomentar si querer testear vida de jugador
-	private var esquivando:Bool = false; //indica si el jugador esta ejecutando su esquivada
 	private var contadorEsquivar:Int = 0; //Cuenta la cantidad de frames en los que el personaje esta esquivando
 	private var corriendo:Bool = false;
 	private var velocidadCorrer:Int = 350;
@@ -52,7 +51,7 @@ class Jugador extends FlxSprite{
 	private var sonidoMuerte:FlxSound;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset, ?usaASofi:Bool){
-		super(/*2563.7222222222*/X, /*2618*/Y, SimpleGraphic);
+		super(X, Y, SimpleGraphic);
 		trace("ZonaDeIncio");
 		trace(X);
 		trace(Y);
@@ -99,9 +98,7 @@ class Jugador extends FlxSprite{
 			animation.add("Agarrando", [28], 2, true);
 		}
 		animation.play("Natural");
-		// animation.play("Caminar");
 		acceleration.y = Reg.gravedad; // gravedad
-		// makeGraphic(30, 30, FlxColor.PINK);
 		drag.x = Reg.jugadorDrag; // delimito la velocidad
 		punios = new Golpejugador(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		direccion = false;
@@ -133,7 +130,7 @@ class Jugador extends FlxSprite{
 	}
 	// todos los aspectos del movimiento del personaje
 	public function MovimientoDelJugador():Void{
-		if (check == false && meHurt == source.EstadoEnemigo.Normal && esquivando == false && agarrando == false){
+		if (check == false && meHurt == source.EstadoEnemigo.Normal && agarrando == false){
 			if (FlxG.keys.pressed.RIGHT){
 				if(corriendo == false){
 					velocity.x = Reg.hSpeed;
@@ -493,29 +490,11 @@ class Jugador extends FlxSprite{
 				contadorPiniaCorriendo = 0;
 				punios.posicionar();
 			}
-			// delimitacion de la habilidad de escape del personaje
-			if (contadorEsquivar >= Reg.retardoEsquivar){
-				esquivando = false;
-				contadorEsquivar = 0;
-			}
-			else if (esquivando == true){
-				contadorEsquivar++;
-			}
 			if (FlxG.keys.pressed.A || FlxG.keys.pressed.SHIFT)
 				corriendo = true;
 			else
 				corriendo = false;
 		}
 		Muerte();
-		/*trace("datos");
-		trace(CPX);
-		trace(CPY);
-		trace("donde estoy");
-		trace(x);
-		trace(y);
-		trace("donde realmente estoy");
-		trace(Reg.posXjugador);
-		trace(Reg.posYjugador);*/
-		//trace((FlxG.camera.scroll.x + 5) + " " + x);
 	}
 }

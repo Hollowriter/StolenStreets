@@ -47,7 +47,7 @@ class PlayState extends FlxState{
 	private var funca:Bool = false; // esto no se que es, por favor explicar
 	private var vida:FlxText; // HUD vida
 	private var puntajetext:FlxText; //Buena cancion de Pink Floyd // HUD dinero
-	private var lifes:FlxText;
+	private var lives:FlxText;
 	private var life:Int; // vida
 	private var pinches:SueloPeligroso;
 	private var instanciando:Instanciador;
@@ -69,15 +69,17 @@ class PlayState extends FlxState{
 			musica.loadEmbedded(AssetPaths.demo__ogg, true);
 		musica.volume = 0.1;
 		instanciando = new Instanciador();
-		lifes = new FlxText (150, 30);
-		lifes.text = "LIVES?";
-		lifes.color = 0xB2FFB5;
-		lifes.scale.x = 2;
-		lifes.scale.y = 2;
-		lifes.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
-		lifes.scrollFactor.set(0, 0);
-		lifes.visible = true;
-		puntajetext = new FlxText (20, 1);
+		lives = new FlxText (20, 60);
+		lives.setFormat(AssetPaths.StolenStreet_Regular__ttf, 10);
+		lives.text = "LIVES?";
+		lives.color = 0xB2FFB5;
+		lives.scale.x = 2;
+		lives.scale.y = 2;
+		lives.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
+		lives.scrollFactor.set(0, 0);
+		lives.visible = true;
+		puntajetext = new FlxText (30, 0);
+		puntajetext.setFormat(AssetPaths.StolenStreet_Regular__ttf, 10);
 		puntajetext.text = "SCORE?";
 		puntajetext.color = 0x00FFFF;
 		puntajetext.scale.x = 2;
@@ -85,7 +87,8 @@ class PlayState extends FlxState{
 		puntajetext.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff1abcc9);
 		puntajetext.scrollFactor.set(0, 0);
 		puntajetext.visible = true;
-		vida = new FlxText(30, 30);
+		vida = new FlxText(35, 30);
+		vida.setFormat(AssetPaths.StolenStreet_Regular__ttf, 10);
 		vida.color = 0x800000;
 		vida.text = "HEALTH?";
 		vida.scale.x = 2;
@@ -141,7 +144,7 @@ class PlayState extends FlxState{
 		add(Reg.Pinches);
 		add(puntajetext);
 		add(vida);
-		add(lifes);
+		add(lives);
 		add(Reg.Players);
 		camera.follow(Reg.Players.members[0]);
 		//add(Reg.Players.members[0].GetGolpear());	// testing testing
@@ -162,7 +165,7 @@ class PlayState extends FlxState{
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		// HUD
-		lifes.text = ("LIFE: " + Reg.Players.members[0].GetLife());
+		lives.text = ("LIVES: " + Reg.Players.members[0].GetLife());
 		puntajetext.text = ("SCORE: " + Reg.score);
 		vida.text = ("HEALTH: " + Reg.Players.members[0].GetVida());
 		// HUD
@@ -367,7 +370,7 @@ class PlayState extends FlxState{
 			case "trampolin":
 				Reg.Trampolines.add(new Trampolin(entityStartX, entityStartY));
 			case "jugador":
-				Reg.Players.add(new Jugador(entityStartX, entityStartY, Reg.rosaOgotica));
+				Reg.Players.add(new Jugador(entityStartX, entityStartY, Reg.sofiElegida));
 			case "cajas":
 				Reg.Cajitas.add(new Obstaculo(entityStartX, entityStartY));
 			case "pinches":

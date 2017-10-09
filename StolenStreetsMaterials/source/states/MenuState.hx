@@ -22,7 +22,7 @@ class MenuState extends FlxState{
 		camarita = new FlxCamera(1, 1);
 		comando = new FlxText();
 		comando.setFormat(AssetPaths.StolenStreet_Regular__ttf, 14);
-		comando.text = "PRESS ENTER TO PLAY";
+		comando.text = "PRESS ENTER TO START";
 		comando.color = 0xFFFFFFF;
 		comando.scale.x = 3.5;
 		comando.scale.y = 3.5;

@@ -26,7 +26,6 @@ class CharSelectState extends FlxState{
 	private var sofi:FlxSprite;
 	
 	override public function create(){
-		
 		mili = new FlxSprite();
 		sofi = new FlxSprite();
 		mili.loadGraphic(AssetPaths.MiliCS__png);
@@ -34,9 +33,12 @@ class CharSelectState extends FlxState{
 		orden = new FlxText();
 		opcion1 = new FlxText();
 		opcion2 = new FlxText();
-		orden.text = "Choose your character";
-		opcion1.text = "Press M Mili";
-		opcion2.text = "Press S Sofia";
+		orden.setFormat(AssetPaths.StolenStreet_Regular__ttf, 10);
+		opcion1.setFormat(AssetPaths.StolenStreet_Regular__ttf, 7);
+		opcion2.setFormat(AssetPaths.StolenStreet_Regular__ttf, 7);
+		orden.text = "CHOOSE YOUR CHARACTER";
+		opcion1.text = "PRESS LEFT TO PLAY AS MILI";
+		opcion2.text = "PRESS RIGHT TO PLAY AS SOFIA";
 		orden.color = FlxColor.CYAN;
 		opcion1.color = FlxColor.PINK;
 		opcion2.color = FlxColor.PURPLE;
@@ -77,13 +79,13 @@ class CharSelectState extends FlxState{
 	}
 		override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		if (FlxG.keys.justPressed.M){
-			 Reg.rosaOgotica = false;
-			 FlxG.switchState(new PlayState());
+		if (FlxG.keys.justPressed.LEFT){
+			 Reg.sofiElegida = false;
+			 FlxG.switchState(new InstructionsState());
 		 }
-		if (FlxG.keys.justPressed.S){
-			Reg.rosaOgotica = true;
-			FlxG.switchState(new PlayState());
+		if (FlxG.keys.justPressed.RIGHT){
+			Reg.sofiElegida = true;
+			FlxG.switchState(new InstructionsState());
 		}
 	}
 }

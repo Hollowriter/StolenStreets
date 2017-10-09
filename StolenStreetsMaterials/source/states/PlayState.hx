@@ -160,6 +160,7 @@ class PlayState extends FlxState{
 		add(Reg.PisosLetales);
 		add(Reg.PisosLetalesGrandes);
 		add(Reg.PuertasLimitadoras);
+		Reg.enemigosMuertos = 0;
 		//add(puertaDePrueba);
 		/*for (i in 0...(Reg.Enemigos.length)){
 			add(Reg.Enemigos.members[i].GetGolpeEnemigo());

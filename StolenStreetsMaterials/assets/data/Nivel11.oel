@@ -384,5 +384,6 @@
     <botiquines id="133" x="2080" y="1904" />
     <botiquines id="158" x="576" y="1264" />
     <botiquines id="159" x="2000" y="832" />
+    <Puertas id="152" x="3024" y="928" />
   </entidades>
 </level>

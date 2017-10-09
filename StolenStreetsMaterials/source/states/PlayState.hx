@@ -130,7 +130,12 @@ class PlayState extends FlxState{
 			}
 		}
 		for (i in 0...Reg.PuertasLimitadoras.length){
-			Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel1[i]);
+			if (Reg.numlvl == 1){
+				Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel1[i]);
+			}
+			else if (Reg.numlvl == 2){
+				Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel2[i]);
+			}
 		}
 		//fondito = new FlxBackdrop(AssetPaths.Noche__png, 1, 1, true, true, 0, 0);
 		add(fondoNoche);

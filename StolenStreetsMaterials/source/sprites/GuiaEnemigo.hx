@@ -29,7 +29,7 @@ class GuiaEnemigo extends FlxSprite{
 			x = enemigoX + 30;
 		}
 	}
-	public function DetectorDeCamaradas(enemigoX:Float, enemigoY:Float, enemigoFlip:Bool){
+	public function RadarDeEnemigos(enemigoX:Float, enemigoY:Float, enemigoFlip:Bool){
 		flipX = enemigoFlip;
 		y = enemigoY + 20;
 		if (flipX == false){
@@ -47,9 +47,9 @@ class GuiaEnemigo extends FlxSprite{
 			movete = false;
 		}
 	}
-	public function HayUnCamarada(meinFriend:BaseEnemigo){
-		if (overlaps(meinFriend)){
-			if (meinFriend.alive){
+	public function HayUndetectorDeEnemigos(unEnemigo:BaseEnemigo){
+		if (overlaps(unEnemigo)){
+			if (unEnemigo.alive){
 				noEnemigos = false;
 			}
 			else{

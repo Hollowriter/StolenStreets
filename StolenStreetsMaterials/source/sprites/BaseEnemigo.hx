@@ -16,13 +16,13 @@ class BaseEnemigo extends FlxSprite
 {
 	private var vidaEnemiga:Int; // vida del enemigo
 	private var direccion:Bool; // para donde esta mirando
-	private var isHurt:EstadoEnemigo; // chequea si recibio un golpe
+	private var estaLastimado:EstadoEnemigo; // chequea si recibio un golpe
 	private var saltito:Bool; // chequea si esta en el aire
 	private var punioEnemigo:GolpeEnemigo; // nuevo golpe del enemigo
 	private var anchuraObjeto:Int = 30;
 	private var alturaObjeto:Int = 30;
 	private var guia:GuiaEnemigo;
-	private var camarada:GuiaEnemigo;
+	private var detectorDeEnemigos:GuiaEnemigo;
 	private var enemyRightMin:Float;
 	private var timer:Int;
 	private var comboTimer:Int;
@@ -40,18 +40,17 @@ class BaseEnemigo extends FlxSprite
 		acceleration.y = Reg.gravedad;
 		punioEnemigo = new GolpeEnemigo(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios);
 		guia = new GuiaEnemigo(x, y);
-		camarada = new GuiaEnemigo(x, y);
+		detectorDeEnemigos = new GuiaEnemigo(x, y);
 		animacionEmpezo = false;
 		muriendo = false;
 	}
 	public function move(){};
-	public function gotHitted(){};
 	public function EnElAire(){}
 	public function DolorDelEnemigo(agresor:Jugador){
-		if (isHurt == source.EstadoEnemigo.Lastimado){ // si esta lastimado normalmente
+		if (estaLastimado == source.EstadoEnemigo.Lastimado){ // si esta lastimado normalmente
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 		} // esta cosa con timer hacia OP a mili
-		else if (isHurt == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
+		else if (estaLastimado == source.EstadoEnemigo.Lanzado){ // si esta lastimado por un golpe duro
 			punioEnemigo.PosicionarGE(); // elimina el ataque del enemigo
 		}
 	}
@@ -68,12 +67,12 @@ class BaseEnemigo extends FlxSprite
 		return vidaEnemiga;
 	}
 	// setter del dolor del enemigo
-	public function SetHurt(hurted:EstadoEnemigo){
-		isHurt = hurted;
+	public function SetDolorEnemigo(hurted:EstadoEnemigo){
+		estaLastimado = hurted;
 	}
 	// retorna si el enemigo esta lastimado
-	public function GetHurt():EstadoEnemigo{
-		return isHurt;
+	public function GetDolorEnemigo():EstadoEnemigo{
+		return estaLastimado;
 	}
 	// setter y getter del timer de comportamiento
 	public function SetTimer(forThyTimer:Int){
@@ -101,8 +100,8 @@ class BaseEnemigo extends FlxSprite
 	public function GetGuia():GuiaEnemigo{
 		return guia;
 	}
-	public function GetCamarada():GuiaEnemigo{
-		return camarada;
+	public function GetdetectorDeEnemigos():GuiaEnemigo{
+		return detectorDeEnemigos;
 	}
 	public function SetMuerto(moribundo:Bool){
 		muerto = moribundo;

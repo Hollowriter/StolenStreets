@@ -24,19 +24,6 @@ class Instanciador extends FlxSprite{
 			enemigo.kill();
 		}
 	}
-	public function CrearObstaculo(obstaculo:Obstaculo){
-		if (!(obstaculo.GetRoto())){
-			if (!(obstaculo.isOnScreen())){
-				obstaculo.kill();
-			}
-			else{
-				obstaculo.revive();
-			}
-		}
-		else{
-			obstaculo.kill();
-		}
-	}
 	public function CrearPlataformaFlotante(plataformaFlotante:PlataformaFlotante){
 		if (!(plataformaFlotante.isOnScreen())){
 			plataformaFlotante.kill();
@@ -127,19 +114,6 @@ class Instanciador extends FlxSprite{
 		}
 		else{
 			sueloPeligroso.revive();
-		}
-	}
-	public function CrearDropFalling(dropFalling:DropFalling){
-		if (!(dropFalling.Recoleccion())){
-			if (!(dropFalling.isOnScreen())){
-				dropFalling.kill();
-			}
-			else{
-				dropFalling.revive();
-			}
-		}
-		else{
-			dropFalling.kill();
 		}
 	}
 	public function CrearCheckPoint(checkPoint:CheckPoint){

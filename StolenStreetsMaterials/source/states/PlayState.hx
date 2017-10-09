@@ -25,8 +25,6 @@ import source.Reg;
 import sprites.SueloPeligroso;
 import sprites.Trampolin;
 import sprites.DropsVida;
-import sprites.Obstaculo;
-import sprites.DropFalling;
 import sprites.PisoLetal;
 import sprites.PisoLetalGrande;
 import sprites.Instanciador;
@@ -40,10 +38,7 @@ import flixel.FlxObject;
 import sprites.VictoryPoint;
 
 class PlayState extends FlxState{
-	private var Plata = new FlxTypedGroup<Drops>(2); // dinero
-	private var Botiquin = new FlxTypedGroup<DropsVida>(2); // botiquines
 	private var cantM:Int = 2; // cantidad de prueba para el array de Drops
-	private var Cajas:Obstaculo;
 	private var funca:Bool = false; // esto no se que es, por favor explicar
 	private var vida:FlxText; // HUD vida
 	private var puntajetext:FlxText; //Buena cancion de Pink Floyd // HUD dinero
@@ -99,7 +94,6 @@ class PlayState extends FlxState{
 		Reg.Enemigos = new FlxTypedGroup<BaseEnemigo>();
 		Reg.PlataformasFlotantes = new FlxTypedGroup<PlataformaFlotante>();
 		Reg.Trampolines = new FlxTypedGroup<Trampolin>();
-		Reg.Cajitas = new FlxTypedGroup<Obstaculo>();
 		Reg.Pinches = new FlxTypedGroup<SueloPeligroso>();
 		Reg.Monedas = new FlxTypedGroup<Drops>();
 		Reg.Caramelos = new FlxTypedGroup<DropsVida>();
@@ -152,7 +146,6 @@ class PlayState extends FlxState{
 		add(Reg.Enemigos);
 		add(Reg.PlataformasFlotantes);
 		add(Reg.Trampolines);
-		add(Reg.Cajitas);
 		add(Reg.PisosLetales);
 		add(Reg.PisosLetalesGrandes);
 		add(Reg.PuertasLimitadoras);
@@ -166,25 +159,18 @@ class PlayState extends FlxState{
 		vida.text = ("HEALTH: " + Reg.Players.members[0].GetVida());
 		// HUD
 		FlxG.collide(Reg.Players.members[0], tileMap);
-		for (i in 0...Reg.Cajitas.length){
-			FlxG.collide(Reg.Cajitas.members[i], Reg.Players.members[0]);
-			FlxG.collide(Reg.Cajitas.members[i], tileMap);
-			for (b in 0...Reg.Cajitas.length){
-				FlxG.collide(Reg.Cajitas.members[i], Reg.Cajitas.members[b]);
-			}
-		}
 		for (a in 0...Reg.Enemigos.length){
 			Reg.Enemigos.members[a].GetGuia().HayPiso(tileMap);
 		}
 		for (a in 0...Reg.Enemigos.length){
 			for (b in 0...Reg.Enemigos.length){
 				if (b != a){
-					if (Reg.Enemigos.members[a].GetCamarada().overlaps(Reg.Enemigos.members[b]) && Reg.Enemigos.members[b].alive){
-						Reg.Enemigos.members[a].GetCamarada().SetNoEnemigos(false);
+					if (Reg.Enemigos.members[a].GetdetectorDeEnemigos().overlaps(Reg.Enemigos.members[b]) && Reg.Enemigos.members[b].alive){
+						Reg.Enemigos.members[a].GetdetectorDeEnemigos().SetNoEnemigos(false);
 						Reg.Enemigos.members[a].SetearVelocidadACero();
 					}
 					else{
-						Reg.Enemigos.members[a].GetCamarada().SetNoEnemigos(true);
+						Reg.Enemigos.members[a].GetdetectorDeEnemigos().SetNoEnemigos(true);
 					}
 				}
 			}
@@ -292,7 +278,6 @@ class PlayState extends FlxState{
 		}
 		if (Reg.victoria == true){
 			musica.stop();
-			trace(Reg.numlvl);
 			if (Reg.numlvl == 1)
 			{
 			Reg.numlvl++;
@@ -314,9 +299,6 @@ class PlayState extends FlxState{
 		}
 		for (m in 0...Reg.PlataformasFlotantes.length){
 			instanciando.CrearPlataformaFlotante(Reg.PlataformasFlotantes.members[m]);
-		}
-		for (l in 0...Reg.Cajitas.length){
-			instanciando.CrearObstaculo(Reg.Cajitas.members[l]);
 		}
 		for (p in 0...Reg.Monedas.length){
 			instanciando.CrearDrops(Reg.Monedas.members[p]);
@@ -367,8 +349,6 @@ class PlayState extends FlxState{
 				Reg.Trampolines.add(new Trampolin(entityStartX, entityStartY));
 			case "jugador":
 				Reg.Players.add(new Jugador(entityStartX, entityStartY, Reg.sofiElegida));
-			case "cajas":
-				Reg.Cajitas.add(new Obstaculo(entityStartX, entityStartY));
 			case "pinches":
 				Reg.Pinches.add(new SueloPeligroso(entityStartX, entityStartY));
 			case "monedas":

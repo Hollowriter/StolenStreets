@@ -87,16 +87,16 @@ class Golpejugador extends FlxSprite{
 	}
 	public function ColisionDelGolpe(Pum:BaseEnemigo, personaje:Jugador):Void{ // ahora tambien tiene al jugador por el tema de chequear el agarre
 		if (overlaps(Pum) && !(Pum.GetMuerto())){ // si el golpe es del jugador y choca con el enemigo
-			if (Pum.GetHurt() == source.EstadoEnemigo.Normal && Agarrada == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
+			if (Pum.GetDolorEnemigo() == source.EstadoEnemigo.Normal && Agarrada == false){ // chequea que el enemigo no haya recibido un golpe con anterioridad
 				if (GolpeDuro == false){ // si es un golpe normal
-					Pum.SetHurt(source.EstadoEnemigo.Lastimado); // lo lastima
+					Pum.SetDolorEnemigo(source.EstadoEnemigo.Lastimado); // lo lastima
 					Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorNormal); // le quita vida con el setter y getter
 					personaje.SetCheck(false);
 					sonidoGolpeJugador.play();
 				}
-				if (GolpeDuro == true || GolpeDuro == false && Pum.GetHurt() == source.EstadoEnemigo.Saltando 
-				|| GolpeDuro == true && Pum.GetHurt() == source.EstadoEnemigo.Saltando){ // pero si es un golpe duro
-					Pum.SetHurt(source.EstadoEnemigo.Lanzado); // lo lastima duramente
+				if (GolpeDuro == true || GolpeDuro == false && Pum.GetDolorEnemigo() == source.EstadoEnemigo.Saltando 
+				|| GolpeDuro == true && Pum.GetDolorEnemigo() == source.EstadoEnemigo.Saltando){ // pero si es un golpe duro
+					Pum.SetDolorEnemigo(source.EstadoEnemigo.Lanzado); // lo lastima duramente
 					if (personaje.GetJump() == true || personaje.GetCorriendo() == true){
 						Pum.SetVida(Pum.GetVida() + Reg.danioPunioJugadorFuerte);
 					}
@@ -114,15 +114,15 @@ class Golpejugador extends FlxSprite{
 				if (overlaps(Pum) && !(Pum.GetMuerto())){
 					personaje.velocity.x = 0;
 					personaje.velocity.y = 0;
-					Pum.SetHurt(source.EstadoEnemigo.Agarrado);
+					Pum.SetDolorEnemigo(source.EstadoEnemigo.Agarrado);
 					personaje.animation.play("Agarrando");
 					GolpeDuro = true;
 				}
 			}
 		}
-		if (!overlaps(Pum) && Pum.GetHurt() == source.EstadoEnemigo.Agarrado){
-			if (Pum.GetHurt() != source.EstadoEnemigo.Lanzado && Pum.GetHurt() != source.EstadoEnemigo.Lastimado){
-				Pum.SetHurt(source.EstadoEnemigo.Normal);
+		if (!overlaps(Pum) && Pum.GetDolorEnemigo() == source.EstadoEnemigo.Agarrado){
+			if (Pum.GetDolorEnemigo() != source.EstadoEnemigo.Lanzado && Pum.GetDolorEnemigo() != source.EstadoEnemigo.Lastimado){
+				Pum.SetDolorEnemigo(source.EstadoEnemigo.Normal);
 				Pum.GetGolpeEnemigo().PosicionarGE();
 			}
 		}

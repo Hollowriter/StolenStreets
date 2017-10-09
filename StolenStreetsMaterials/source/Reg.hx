@@ -8,7 +8,6 @@ import sprites.DropsVidaBotiquin;
 import sprites.Jugador;
 import sprites.Golpejugador;
 import sprites.Enemigo1;
-import sprites.Obstaculo;
 import sprites.PlataformaFlotante;
 import sprites.BaseEnemigo;
 import sprites.Puertas;
@@ -96,7 +95,6 @@ class Reg{
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
 	static public var Trampolines:FlxTypedGroup<Trampolin>;
 	static public var Players:FlxTypedGroup<Jugador>;
-	static public var Cajitas:FlxTypedGroup<Obstaculo>;
 	static public var Pinches:FlxTypedGroup<SueloPeligroso>;
 	static public var Monedas:FlxTypedGroup<Drops>;
 	static public var Caramelos:FlxTypedGroup<DropsVida>;

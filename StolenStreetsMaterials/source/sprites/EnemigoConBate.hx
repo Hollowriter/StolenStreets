@@ -40,7 +40,7 @@ class EnemigoConBate extends BaseEnemigo
 		timer = 0;
 		comboTimer = 0;
 		golpesVarios = 0;
-		isHurt = source.EstadoEnemigo.Normal;
+		estaLastimado = source.EstadoEnemigo.Normal;
 		saltito = false;
 		animacionEmpezo = false;
 		muriendo = false;
@@ -48,18 +48,18 @@ class EnemigoConBate extends BaseEnemigo
 	}
 	// movimiento de este enemigo
 	override public function move(){
-		if (isHurt == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){ // mientras no esta lastimado y no esta en el aire va poder moverse
+		if (estaLastimado == source.EstadoEnemigo.Normal && saltito == false && vidaEnemiga > 0){ // mientras no esta lastimado y no esta en el aire va poder moverse
 		if (!still){
 			timer = 0;
 			if (x < enemyRightMin && x < (enemyRightMax)){
 				direccion = false;
 				punioEnemigo.PosicionarGE();
 				if (saltito == false){
-					if (guia.GetMovete() == true && camarada.GetNoEnemigos() == true){
+					if (guia.GetMovete() == true && detectorDeEnemigos.GetNoEnemigos() == true){
 						velocity.x = Reg.velocidadEnemiga;
 						animation.play("Caminar");
 					}
-					else if (guia.GetMovete() == false || camarada.GetNoEnemigos() == false){
+					else if (guia.GetMovete() == false || detectorDeEnemigos.GetNoEnemigos() == false){
 						velocity.x = 0;
 						animation.play("Normal");
 					}
@@ -70,11 +70,11 @@ class EnemigoConBate extends BaseEnemigo
 				direccion = true;
 				punioEnemigo.PosicionarGE();
 				if (saltito == false){
-					if (guia.GetMovete() == true && camarada.GetNoEnemigos() == true){
+					if (guia.GetMovete() == true && detectorDeEnemigos.GetNoEnemigos() == true){
 						velocity.x = -(Reg.velocidadEnemiga);
 						animation.play("Caminar");
 					}
-					else if (guia.GetMovete() == false || camarada.GetNoEnemigos() == false){
+					else if (guia.GetMovete() == false || detectorDeEnemigos.GetNoEnemigos() == false){
 						velocity.x = 0;
 						animation.play("Normal");
 					}
@@ -83,16 +83,16 @@ class EnemigoConBate extends BaseEnemigo
 			}
 		}
 		if ((x < enemyRightMin - Reg.widthJugador && x > ((enemyLeftMin - Reg.widthJugador * 2) + Reg.enemigoPegaDerecha) 
-			&& isHurt == source.EstadoEnemigo.Normal)
+			&& estaLastimado == source.EstadoEnemigo.Normal)
 			|| (x > enemyLeftMin + Reg.widthJugador && x < ((enemyRightMin + Reg.widthJugador * 2) + Reg.enemigoPegaIzquierda)) 
-			&& isHurt == source.EstadoEnemigo.Normal){
+			&& estaLastimado == source.EstadoEnemigo.Normal){
 				velocity.x = 0;
 			if (timer <= Reg.effectTimer){
 				punioEnemigo.SetGolpeFuerte(true);
 				golpesVarios++;
 				animation.play("Pegar");
 				still = true;
-				if (isHurt == source.EstadoEnemigo.Normal){
+				if (estaLastimado == source.EstadoEnemigo.Normal){
 					punioEnemigo.PunietazoEnemigo(this, direccion);
 				}
 			}
@@ -105,14 +105,14 @@ class EnemigoConBate extends BaseEnemigo
 				}
 			}
 			timer++;
-			if (animation.finished && isHurt == source.EstadoEnemigo.Normal){
+			if (animation.finished && estaLastimado == source.EstadoEnemigo.Normal){
 				animation.play("Normal");
 			}
 		}
 		else
 			still = false;
 		}
-		else if (isHurt == source.EstadoEnemigo.Lastimado || isHurt == source.EstadoEnemigo.Agarrado){
+		else if (estaLastimado == source.EstadoEnemigo.Lastimado || estaLastimado == source.EstadoEnemigo.Agarrado){
 			punioEnemigo.PosicionarGE();
 			velocity.x = 0;
 		}
@@ -120,24 +120,24 @@ class EnemigoConBate extends BaseEnemigo
 	override public function DolorDelEnemigo(agresor:Jugador){
 		super.DolorDelEnemigo(agresor);
 		if (saltito == false){
-			if (isHurt == source.EstadoEnemigo.Lastimado){
+			if (estaLastimado == source.EstadoEnemigo.Lastimado){
 				if (animation.getByName("Ouch").paused){
 					animation.play("Ouch");
 				}
 			}
-			if (isHurt == source.EstadoEnemigo.Lanzado){
+			if (estaLastimado == source.EstadoEnemigo.Lanzado){
 				if (animation.getByName("Lanzado").paused){
 					animation.play("Lanzado");
 					velocity.y = Reg.jumpSpeed;
 				}
 			}
 		}
-		if (isHurt == source.EstadoEnemigo.Lastimado){
+		if (estaLastimado == source.EstadoEnemigo.Lastimado){
 			if (animation.getByName("Ouch").finished){
-				isHurt = source.EstadoEnemigo.Normal;
+				estaLastimado = source.EstadoEnemigo.Normal;
 			}
 		}
-		if (isHurt == source.EstadoEnemigo.Lanzado){
+		if (estaLastimado == source.EstadoEnemigo.Lanzado){
 			if (!(animation.getByName("Lanzado").finished)){
 				velocity.y = Reg.velocidadDeVueloY;
 				if (direccion == false){
@@ -147,21 +147,21 @@ class EnemigoConBate extends BaseEnemigo
 					velocity.x = Reg.velocidadDeVueloX;
 				}
 			}
-			if (saltito == false && animation.getByName("Lanzado").finished && isHurt == source.EstadoEnemigo.Lanzado){
-				isHurt = source.EstadoEnemigo.EnElPiso;
+			if (saltito == false && animation.getByName("Lanzado").finished && estaLastimado == source.EstadoEnemigo.Lanzado){
+				estaLastimado = source.EstadoEnemigo.EnElPiso;
 				velocity.x = 0;
 				animation.play("Caido");
 			}
 		}
-		if (isHurt == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
+		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
 			velocity.x = 0;
 			velocity.y = 0;
-			isHurt = source.EstadoEnemigo.Normal;
+			estaLastimado = source.EstadoEnemigo.Normal;
 		}
 	}
 	override public function EnElAire(){
 		super.EnElAire();
-		if (saltito == true && isHurt == source.EstadoEnemigo.Normal){
+		if (saltito == true && estaLastimado == source.EstadoEnemigo.Normal){
 			animation.play("CaidaLibre");
 		}
 	}
@@ -170,7 +170,7 @@ class EnemigoConBate extends BaseEnemigo
 		if (vidaEnemiga <= 0){
 			velocity.x = 0;
 			guia.MuerteEnemigo();
-			camarada.MuerteEnemigo();
+			detectorDeEnemigos.MuerteEnemigo();
 			if (animacionEmpezo == false){
 				animation.play("Muerte");
 				animacionEmpezo = true;
@@ -187,13 +187,13 @@ class EnemigoConBate extends BaseEnemigo
 		}
 	}
 	public function Sequito():Void{
-		if (isHurt == source.EstadoEnemigo.Normal){
+		if (estaLastimado == source.EstadoEnemigo.Normal){
 			guia.Seguidor(x, y, flipX);
-			camarada.DetectorDeCamaradas(x, y, flipX);
+			detectorDeEnemigos.RadarDeEnemigos(x, y, flipX);
 		}
 		else{
 			guia.Seguidor(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios, flipX);
-			camarada.DetectorDeCamaradas(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios, flipX);
+			detectorDeEnemigos.RadarDeEnemigos(Reg.posicionDeLosPunios, Reg.posicionDeLosPunios, flipX);
 		}
 	}
 	override public function update(elapsed:Float):Void{
@@ -204,7 +204,7 @@ class EnemigoConBate extends BaseEnemigo
 			Sequito();
 		}
 		else{
-			isHurt = source.EstadoEnemigo.Muerto;
+			estaLastimado = source.EstadoEnemigo.Muerto;
 			Morir();
 		}
 	}

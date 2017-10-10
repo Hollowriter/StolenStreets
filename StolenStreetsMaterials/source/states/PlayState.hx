@@ -182,6 +182,9 @@ class PlayState extends FlxState{
 		for (v in 0...Reg.Pinches.length){
 			if (FlxG.overlap(Reg.Players.members[0], Reg.Pinches.members[v])){
 				Reg.Players.members[0].ColisiondeSP();
+				if (!(Reg.Players.members[0].Muerte())){
+					Reg.Pinches.members[v].SonidoPisada();
+				}
 			}
 				for (o in 0...Reg.Enemigos.length){
 				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.Pinches.members[v])){
@@ -214,7 +217,6 @@ class PlayState extends FlxState{
 		}
 		//Colision entre Mili y las plataformas flotantes
 		for (i in 0...(Reg.PlataformasFlotantes.members.length)){
-			if((Reg.Players.members[0].y + Reg.Players.members[0].height) <  (Reg.PlataformasFlotantes.members[i]).y +  Reg.PlataformasFlotantes.members[i].height)
 			FlxG.collide(Reg.Players.members[0], Reg.PlataformasFlotantes.members[i]);
 		}
 		//colision entre Mili y el piso letal (Y enemigos y piso letal)

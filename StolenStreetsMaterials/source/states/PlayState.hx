@@ -287,7 +287,7 @@ class PlayState extends FlxState{
 			else if (Reg.numlvl == 2)
 			{
 				Reg.victoria = false;
-				FlxG.switchState(new MenuState());
+				FlxG.switchState(new CreditsState());
 			}
 		}
 	//Instanciador

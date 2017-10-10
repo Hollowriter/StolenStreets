@@ -13,6 +13,7 @@ import source.Reg;
 import flixel.animation.FlxAnimation;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
+import flixel.system.FlxSound;
 
 /**
  * ...
@@ -24,8 +25,13 @@ class CharSelectState extends FlxState{
 	private var opcion2:FlxText;
 	private var mili:FlxSprite;
 	private var sofi:FlxSprite;
+	private var musica:FlxSound;
 	
 	override public function create(){
+		musica = new FlxSound();
+		musica.loadEmbedded(AssetPaths.character_select_2__ogg, true);
+		musica.volume = 0.1;
+		musica.play();
 		mili = new FlxSprite();
 		sofi = new FlxSprite();
 		mili.loadGraphic(AssetPaths.MiliCS__png);
@@ -81,10 +87,12 @@ class CharSelectState extends FlxState{
 		super.update(elapsed);
 		if (FlxG.keys.justPressed.LEFT){
 			 Reg.sofiElegida = false;
+			 musica.stop();
 			 FlxG.switchState(new InstructionsState());
 		 }
 		if (FlxG.keys.justPressed.RIGHT){
 			Reg.sofiElegida = true;
+			musica.stop();
 			FlxG.switchState(new InstructionsState());
 		}
 	}

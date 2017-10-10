@@ -26,7 +26,7 @@ class MenuState extends FlxState{
 		comando.color = 0xFFFFFFF;
 		comando.scale.x = 3.5;
 		comando.scale.y = 3.5;
-		comando.x = (FlxG.width / 2.25) - comando.scale.x;
+		comando.x = (FlxG.width / 2.50) - comando.scale.x;
 		comando.y = (FlxG.height / 1.45) - comando.scale.y;
 		comando.setBorderStyle(FlxTextBorderStyle.OUTLINE_FAST, 0xFF0000FF);
 		comando.scrollFactor.set(0, 0);

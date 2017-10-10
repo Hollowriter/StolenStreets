@@ -11,14 +11,20 @@ import flixel.math.FlxMath;
 import states.PlayState;
 import source.Reg;
 
+
 class InstructionsState extends FlxState{
 	private var pulsaEnter:FlxText;
 	private var siguientePagina:FlxText;
 	private var enPagina1:Bool = true;
 	private var pagina1:FlxSprite;
 	private var pagina2:FlxSprite;
+	private var musica:FlxSound;
 	override public function create():Void{
 		super.create();
+		musica = new FlxSound();
+		musica.loadEmbedded(AssetPaths.break_clubstar_zone__ogg, true);
+		musica.volume = 0.1;
+		musica.play();
 		pulsaEnter = new FlxText();
 		siguientePagina = new FlxText();
 		pagina1 = new FlxSprite();
@@ -60,6 +66,7 @@ class InstructionsState extends FlxState{
 		else if (FlxG.keys.justPressed.ENTER && enPagina1 == false)
 			{
 				enPagina1 = true;
+				musica.stop();
 				FlxG.switchState(new PlayState());
 			}
 	}

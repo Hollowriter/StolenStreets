@@ -30,6 +30,7 @@ class EnemigoSaltador extends BaseEnemigo{
 		animation.add("Caido", [24, 25, 26], 4, false);
 		animation.add("CaidaLibre", [14], 2, true);
 		animation.add("Muerte", [27, 28, 29, 29, 29], 7, false);
+		animation.add("Agarrado", [21], 1, true);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
@@ -126,7 +127,10 @@ class EnemigoSaltador extends BaseEnemigo{
 				animation.play("Caido");
 			}
 		}
-		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
+		if (estaLastimado == source.EstadoEnemigo.Agarrado){
+			animation.play("Agarrado");
+		}
+		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished && estaLastimado != source.EstadoEnemigo.Agarrado){
 			velocity.x = 0;
 			velocity.y = 0;
 			estaLastimado = source.EstadoEnemigo.Normal;

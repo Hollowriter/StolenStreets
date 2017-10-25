@@ -31,6 +31,7 @@ class EnemigoConBate extends BaseEnemigo
 		animation.add("Caido", [31, 32, 33], 4, false);
 		animation.add("CaidaLibre", [17], 2, true);
 		animation.add("Muerte", [25, 26, 27, 27, 27], 7, false);
+		animation.add("Agarrado", [28], 1, true);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
 		still = false;
@@ -153,7 +154,10 @@ class EnemigoConBate extends BaseEnemigo
 				animation.play("Caido");
 			}
 		}
-		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
+		if (estaLastimado == source.EstadoEnemigo.Agarrado){
+			animation.play("Agarrado");
+		}
+		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished && estaLastimado != source.EstadoEnemigo.Agarrado){
 			velocity.x = 0;
 			velocity.y = 0;
 			estaLastimado = source.EstadoEnemigo.Normal;

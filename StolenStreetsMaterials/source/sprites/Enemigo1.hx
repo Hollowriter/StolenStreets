@@ -32,6 +32,7 @@ class Enemigo1 extends BaseEnemigo
 		animation.add("Saltar", [20, 20, 20], 4, false);
 		animation.add("Caido", [30, 31, 32], 4, false);
 		animation.add("CaidaLibre", [20, 20], 2, true);
+		animation.add("Agarrado", [28], 1, true);
 		animation.add("Muerte", [23, 24, 25, 26, 27, 27, 27], 7, false);
 		animation.play("Normal");
 		vidaEnemiga = Reg.vidaEnemiga;
@@ -56,7 +57,7 @@ class Enemigo1 extends BaseEnemigo
 			if (x < enemyRightMin && x < (enemyRightMax)){
 				direccion = false;
 				punioEnemigo.PosicionarGE();
-				if (saltito == false){
+				if (saltito == false && estaLastimado != source.EstadoEnemigo.Agarrado){
 					if (guia.GetMovete() == true && detectorDeEnemigos.GetNoEnemigos() == true){
 						velocity.x = Reg.velocidadEnemiga;
 						animation.play("Caminar");
@@ -158,10 +159,13 @@ class Enemigo1 extends BaseEnemigo
 				animation.play("Caido");
 			}
 		}
-		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished){
+		if (estaLastimado == source.EstadoEnemigo.EnElPiso && animation.getByName("Caido").finished && estaLastimado != source.EstadoEnemigo.Agarrado){
 			velocity.x = 0;
 			velocity.y = 0;
 			estaLastimado = source.EstadoEnemigo.Normal;
+		}
+		if (estaLastimado == source.EstadoEnemigo.Agarrado){
+			animation.play("Agarrado");
 		}
 	}
 	override public function EnElAire(){

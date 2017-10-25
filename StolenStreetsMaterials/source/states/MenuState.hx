@@ -24,15 +24,15 @@ class MenuState extends FlxState{
 		comando.setFormat(AssetPaths.StolenStreet_Regular__ttf, 14);
 		comando.text = "PRESS ENTER TO START";
 		comando.color = 0xFFFFFFF;
-		comando.scale.x = 3.5;
-		comando.scale.y = 3.5;
+		comando.scale.x = 2;
+		comando.scale.y = 2;
 		comando.x = (FlxG.width / 2.50) - comando.scale.x;
 		comando.y = (FlxG.height / 1.45) - comando.scale.y;
 		comando.setBorderStyle(FlxTextBorderStyle.OUTLINE_FAST, 0xFF0000FF);
 		comando.scrollFactor.set(0, 0);
 		comando.visible = true;
-		seinFondo = new TitleScreen(350, 50);
-		seinFondo.scale.set(2, 2);
+		seinFondo = new TitleScreen(350, 45);
+		seinFondo.scale.set(2, 1.7);
 		add(seinFondo);
 		add(comando);
 	}

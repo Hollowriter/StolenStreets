@@ -132,6 +132,9 @@ class PlayState extends FlxState{
 			else if (Reg.numlvl == 2){
 				Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel2[i]);
 			}
+			else if (Reg.numlvl == 3){
+				Reg.PuertasLimitadoras.members[i].SetEnemigosAAsesinar(Reg.enemigosNivel3[i]);
+			}
 		}
 		add(fondoNoche);
 		add(tileMap);

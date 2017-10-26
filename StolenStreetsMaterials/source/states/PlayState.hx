@@ -111,6 +111,8 @@ class PlayState extends FlxState{
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel11__oel);
 		else if (Reg.numlvl == 2)
 			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel2__oel);
+		else if (Reg.numlvl == 3)
+			ogmoLoader = new FlxOgmoLoader(AssetPaths.Nivel3__oel);
 
 		tileMap = ogmoLoader.loadTilemap(AssetPaths.levelOneTiles__png, 20, 20, "tilesets");
 		ogmoLoader.loadEntities(entityCreator, "entidades");
@@ -282,13 +284,13 @@ class PlayState extends FlxState{
 		}
 		if (Reg.victoria == true){
 			musica.stop();
-			if (Reg.numlvl == 1)
+			if (Reg.numlvl == 1 || Reg.numlvl == 2)
 			{
 			Reg.numlvl++;
 			Reg.victoria = false;
 			FlxG.resetState();
 			}
-			else if (Reg.numlvl == 2)
+			else if (Reg.numlvl == 3)
 			{
 				Reg.victoria = false;
 				FlxG.switchState(new CreditsState());

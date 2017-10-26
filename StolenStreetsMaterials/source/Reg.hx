@@ -91,7 +91,7 @@ class Reg{
 	
 	static public var enemigosNivel1 = [1, 3, 5, 8, 10, 11, 13, 16, 17, 20, 25];
 	static public var enemigosNivel2 = [3, 8, 17, 25];
-	static public var enemigosNivel3 = [6, 10, 17, 22, 29, 36];
+	static public var enemigosNivel3 = [5, 8, 15, 20, 25, 32];
 	static public var Enemigos:FlxTypedGroup<BaseEnemigo>;
 	static public var PlataformasFlotantes:FlxTypedGroup<PlataformaFlotante>;
 	static public var Trampolines:FlxTypedGroup<Trampolin>;

@@ -525,5 +525,11 @@
     <monedas id="372" x="3248" y="1552" />
     <monedas id="373" x="3232" y="1552" />
     <botiquines id="374" x="3240" y="1539" />
+    <Puertas id="375" x="1842" y="1838" />
+    <Puertas id="376" x="3283" y="1939" />
+    <Puertas id="377" x="4661" y="1939" />
+    <Puertas id="378" x="3202" y="1179" />
+    <Puertas id="379" x="1061" y="1239" />
+    <Puertas id="380" x="1322" y="860" />
   </entidades>
 </level>

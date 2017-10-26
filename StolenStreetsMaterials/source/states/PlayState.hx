@@ -61,6 +61,8 @@ class PlayState extends FlxState{
 			musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
 		else if (Reg.numlvl == 2)
 			musica.loadEmbedded(AssetPaths.demo__ogg, true);
+		else
+			musica.loadEmbedded(AssetPaths.demo__ogg, true);
 		musica.volume = 0.1;
 		instanciando = new Instanciador();
 		lives = new FlxText (20, 60);

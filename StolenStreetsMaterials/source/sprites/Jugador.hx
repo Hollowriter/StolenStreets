@@ -311,19 +311,27 @@ class Jugador extends FlxSprite{
 	}
 	// agarre
 	public function Agarrar(pobreVictima:BaseEnemigo){
-		if (pobreVictima.GetDolorEnemigo() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
-			if (FlxG.keys.justPressed.E && check == false && dolorDelJugador == source.EstadoEnemigo.Normal){ // y apretas Z (Para probar, despues cambiamos la letra)
-				if (jump == false){ // in progress
-					animation.play("Agarre");
-					punios.SetAgarrada(true);
-					punios.PunietazoJugador(this, direccion, jump, piniaCorriendo, miliOsofi);
+		if (vencida == false){
+			if (pobreVictima.GetDolorEnemigo() != source.EstadoEnemigo.Lanzado){ // Si el enemigo no esta volando
+				if (FlxG.keys.justPressed.E && check == false && dolorDelJugador == source.EstadoEnemigo.Normal){ // y apretas Z (Para probar, despues cambiamos la letra)
+					if (jump == false){ // in progress
+						animation.play("Agarre");
+						punios.SetAgarrada(true);
+						punios.PunietazoJugador(this, direccion, jump, piniaCorriendo, miliOsofi);
+					}
 				}
-			}
-			if (punios.GetAgarrada() == true && pobreVictima.GetDolorEnemigo() == source.EstadoEnemigo.Agarrado){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
-				if (FlxG.keys.justPressed.D){ // si la sostenes de un lado y apretas Atacar y avanzar
-					punios.SetAgarrada(false);
-					pobreVictima.SetDolorEnemigo(source.EstadoEnemigo.Lanzado); // vuela en esa direccion
-					pobreVictima.SetTimer(0); // y reinicia el timer
+				if (punios.GetAgarrada() == true && pobreVictima.GetDolorEnemigo() == source.EstadoEnemigo.Agarrado){ // ahora, si lo tenes agarrado podes hacer las siguientes cosas
+					if (FlxG.keys.justPressed.D){ // si la sostenes de un lado y apretas Atacar y avanzar
+						punios.SetAgarrada(false);
+						if (miliOsofi == false){
+							animation.play("Golpe");
+						}
+						else{
+							animation.play("SegundoGolpe");
+						}
+						pobreVictima.SetDolorEnemigo(source.EstadoEnemigo.Lanzado); // vuela en esa direccion
+						pobreVictima.SetTimer(0); // y reinicia el timer
+					}
 				}
 			}
 		}

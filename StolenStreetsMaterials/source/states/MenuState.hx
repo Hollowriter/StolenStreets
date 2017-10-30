@@ -47,12 +47,5 @@ class MenuState extends FlxState{
 			Reg.puntaje = 0;
 			Reg.enemigosMuertos = 0;
 		}
-		else if (FlxG.keys.justPressed.SHIFT){
-			FlxG.switchState(new CharSelectState());
-			Reg.numlvl = 3;
-			Reg.score = 0;
-			Reg.puntaje = 0;
-			Reg.enemigosMuertos = 0;
-		}
 	}
 }

@@ -17,7 +17,7 @@ class DropsVida extends FlxSprite{
 	private var recolectado:Bool = false;
 	// te da la salud o la oportunidad extra
 	public function Curado(enfermito:Jugador):Void{
-		if (overlaps(enfermito)){
+		if (overlaps(enfermito) && recolectado == false){
 			if (vidaExtra == false){ // si no es una oportunidad extra
 				if (enfermito.GetVida() < Reg.VidaMili){ // y el jugador esta lastimado
 					enfermito.SetVida(enfermito.GetVida() + salud); // lo cura

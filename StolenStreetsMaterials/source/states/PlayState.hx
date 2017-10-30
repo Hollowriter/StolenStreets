@@ -60,7 +60,7 @@ class PlayState extends FlxState{
 		if (Reg.numlvl == 1)
 			musica.loadEmbedded(AssetPaths.musicaoficial__ogg, true);
 		else if (Reg.numlvl == 2)
-			musica.loadEmbedded(AssetPaths.demo__ogg, true);
+			musica.loadEmbedded(AssetPaths.imjustice__ogg, true);
 		else
 			musica.loadEmbedded(AssetPaths.demo__ogg, true);
 		musica.volume = 0.1;
@@ -193,7 +193,7 @@ class PlayState extends FlxState{
 					Reg.Pinches.members[v].SonidoPisada();
 				}
 			}
-				for (o in 0...Reg.Enemigos.length){
+			for (o in 0...Reg.Enemigos.length){
 				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.Pinches.members[v])){
 					Reg.Enemigos.members[o].SetVida(0);
 				}
@@ -242,7 +242,7 @@ class PlayState extends FlxState{
 				Reg.Players.members[0].instaKill();
 			}
 			for (o in 0...Reg.Enemigos.length){
-				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.PisosLetalesGrandes.members[o])){
+				if (FlxG.overlap(Reg.Enemigos.members[o], Reg.PisosLetalesGrandes.members[i])){
 					Reg.Enemigos.members[o].SetVida(0);
 				}
 			}
